@@ -40,15 +40,30 @@ export function useRecorder() {
   // In-memory cache for immediate playback (IndexedDB is async)
   const memoryCacheRef = useRef<Record<string, string>>({});
 
-  // Load existing recording keys from IndexedDB on mount + migrate localStorage
+  // Load bundled recordings + user recordings from IndexedDB
   useEffect(() => {
     (async () => {
       try {
-        // Migrate any existing localStorage recordings first
+        // Step 1: Load bundled recordings (shipped with the app)
+        try {
+          const resp = await fetch('/recordings.json');
+          if (resp.ok) {
+            const bundled = await resp.json() as Record<string, string>;
+            for (const [key, value] of Object.entries(bundled)) {
+              if (typeof value === 'string' && value.startsWith('data:audio')) {
+                memoryCacheRef.current[key] = value;
+              }
+            }
+          }
+        } catch {
+          // No bundled recordings available — that's fine
+        }
+
+        // Step 2: Migrate any existing localStorage recordings
         await migrateFromLocalStorage();
-        // Then load all keys
+
+        // Step 3: Load user recordings from IndexedDB (override bundled)
         const keys = await getAllRecordingKeys();
-        // Normalize: if any word: keys have uppercase, re-save as lowercase
         const normalizedKeys: string[] = [];
         for (const key of keys) {
           const data = await dbGet(key);
@@ -56,16 +71,21 @@ export function useRecorder() {
 
           let effectiveKey = key;
           if (key.startsWith('word:') && key !== key.toLowerCase()) {
-            // Migrate uppercase key to lowercase
             const lowerKey = key.toLowerCase();
             await dbSave(lowerKey, data);
             await dbDelete(key);
             effectiveKey = lowerKey;
           }
           normalizedKeys.push(effectiveKey);
-          memoryCacheRef.current[effectiveKey] = data;
+          memoryCacheRef.current[effectiveKey] = data; // user recordings override bundled
         }
-        setRecordingKeys(new Set(normalizedKeys));
+
+        // Merge: bundled keys + user keys
+        const allKeys = new Set([
+          ...Object.keys(memoryCacheRef.current),
+          ...normalizedKeys,
+        ]);
+        setRecordingKeys(allKeys);
       } catch (e) {
         console.warn('Failed to load recordings:', e);
       }
@@ -230,9 +250,10 @@ export function useRecorder() {
     return ALL_SOUND_IDS.length;
   }, []);
 
-  const isSetupComplete = useCallback((childId?: string): boolean => {
-    const key = childId ? `celebration-${childId}` : 'celebration-goodjob';
-    return recordingKeys.has(key);
+  const isSetupComplete = useCallback((_childId?: string): boolean => {
+    // Setup is always complete since recordings are bundled with the app.
+    // The celebration recording is optional — encouraged but not required.
+    return recordingKeys.size > 0;
   }, [recordingKeys]);
 
   // Word recordings — uses "word:" prefix, always lowercase for consistency
