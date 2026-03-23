@@ -4,7 +4,7 @@ A free early literacy app that helps children (ages 4-5) learn to read — from 
 
 ## What is this?
 
-Adventure Readers is a structured reading program that teaches phonics step by step. It follows a scope and sequence similar to Wilson Fundations, one of the most widely used phonics curricula in schools.
+Adventure Readers is a structured, pedagogically aligned reading program that teaches phonics step by step. Built by a former 1st grade teacher who taught in Boston & Oakland.
 
 Your child will learn:
 - **Letter sounds** — all consonants and short vowels
@@ -88,4 +88,4 @@ All recordings and progress data are stored **locally in your browser** — noth
 
 ## Credits
 
-Built with love for early readers everywhere. Curriculum structure inspired by Wilson Fundations.
+Built with love for early readers everywhere by a former 1st grade teacher who taught in Boston & Oakland.

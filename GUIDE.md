@@ -2,7 +2,7 @@
 
 ## What is Adventure Readers?
 
-Adventure Readers is a free, open-source early literacy app designed for children ages 4-5 who are learning to read. It follows a structured phonics scope and sequence similar to Wilson Fundations, guiding children from individual letter sounds through blending, high-frequency words, and sentence reading.
+Adventure Readers is a free, open-source early literacy app designed for children ages 4-5 who are learning to read. It follows a structured, pedagogically aligned phonics scope and sequence, guiding children from individual letter sounds through blending, high-frequency words, and sentence reading. Built by a former 1st grade teacher who taught in Boston & Oakland.
 
 ### What makes it different
 
@@ -169,6 +169,6 @@ The output goes to `dist/` — deploy this folder to any static hosting service.
 
 ## Credits
 
-Built with love for early readers everywhere. Curriculum structure inspired by Wilson Fundations.
+Built with love for early readers everywhere by a former 1st grade teacher who taught in Boston & Oakland.
 
 If you find this helpful, share it with other parents and teachers!
