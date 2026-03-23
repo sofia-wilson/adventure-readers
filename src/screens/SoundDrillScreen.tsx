@@ -49,15 +49,13 @@ export default function SoundDrillScreen({ unitId, onBack, onRate, recorder }: S
     }
   }, [recorder]);
 
-  // === I DO: Show visual card + auto-play sound ===
+  // === I DO: Tap to reveal, auto-play sound, then auto-advance ===
   const handleIDo = () => {
-    if (!currentCard) return;
-    if (!iDoRevealed) {
-      // First tap: reveal the card (show back with visual + keyword)
-      setIDoRevealed(true);
-      setTimeout(() => playSound(currentCard), 300);
-    } else {
-      // Second tap: advance to next card in chunk or move to You Do
+    if (!currentCard || iDoRevealed) return;
+    setIDoRevealed(true);
+    setTimeout(() => playSound(currentCard), 300);
+    // Auto-advance after the sound plays
+    setTimeout(() => {
       if (wordIndex < currentChunk.length - 1) {
         setWordIndex(prev => prev + 1);
         setIDoRevealed(false);
@@ -66,7 +64,7 @@ export default function SoundDrillScreen({ unitId, onBack, onRate, recorder }: S
         setWordIndex(0);
         setFlipped(false);
       }
-    }
+    }, 2000);
   };
 
   // === YOU DO: Show front (letter only), flip for hint, tap again for sound ===
@@ -183,16 +181,50 @@ export default function SoundDrillScreen({ unitId, onBack, onRate, recorder }: S
                 fontFamily: "'Nunito', sans-serif",
                 marginBottom: 16, textAlign: 'center',
               }}>
-                {iDoRevealed ? 'Tap to continue →' : 'Tap to see and hear this sound!'}
+                Tap to see and hear this sound!
               </p>
 
-              <div onClick={handleIDo} style={{ cursor: 'pointer' }}>
-                <SoundCard
-                  card={currentCard}
-                  size="large"
-                  showFront={!iDoRevealed}
-                  onTap={handleIDo}
-                />
+              <SoundCard
+                card={currentCard}
+                size="large"
+                showFront={!iDoRevealed}
+                onTap={handleIDo}
+              />
+
+              {/* Navigation */}
+              <div style={{ display: 'flex', gap: 16, marginTop: 40 }}>
+                <button
+                  onClick={() => {
+                    if (wordIndex > 0) {
+                      setWordIndex(prev => prev - 1);
+                      setIDoRevealed(false);
+                    } else if (chunkIndex > 0) {
+                      setChunkIndex(prev => prev - 1);
+                      setWordIndex(0);
+                      setPhase('i_do');
+                      setIDoRevealed(false);
+                    }
+                  }}
+                  disabled={chunkIndex === 0 && wordIndex === 0}
+                  style={{ ...btnStyle, opacity: (chunkIndex === 0 && wordIndex === 0) ? 0.3 : 1 }}
+                >
+                  ← Prev
+                </button>
+                <button
+                  onClick={() => {
+                    if (wordIndex < currentChunk.length - 1) {
+                      setWordIndex(prev => prev + 1);
+                      setIDoRevealed(false);
+                    } else {
+                      setPhase('you_do');
+                      setWordIndex(0);
+                      setFlipped(false);
+                    }
+                  }}
+                  style={btnStyle}
+                >
+                  Skip →
+                </button>
               </div>
             </>
           )}
