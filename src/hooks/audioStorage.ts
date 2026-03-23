@@ -59,6 +59,48 @@ export async function getAllRecordingKeys(): Promise<string[]> {
   });
 }
 
+// Export all recordings as a JSON file (for transfer between URLs)
+export async function exportAllRecordings(): Promise<void> {
+  const keys = await getAllRecordingKeys();
+  const data: Record<string, string> = {};
+  for (const key of keys) {
+    const value = await getRecording(key);
+    if (value) data[key] = value;
+  }
+  const json = JSON.stringify(data);
+  const blob = new Blob([json], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `adventure-readers-recordings-${new Date().toISOString().slice(0, 10)}.json`;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+// Import recordings from a JSON file
+export async function importRecordings(file: File): Promise<number> {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = async () => {
+      try {
+        const data = JSON.parse(reader.result as string) as Record<string, string>;
+        let count = 0;
+        for (const [key, value] of Object.entries(data)) {
+          if (typeof value === 'string' && value.startsWith('data:audio')) {
+            await saveRecording(key, value);
+            count++;
+          }
+        }
+        resolve(count);
+      } catch (e) {
+        reject(e);
+      }
+    };
+    reader.onerror = () => reject(reader.error);
+    reader.readAsText(file);
+  });
+}
+
 // Migrate existing localStorage recordings to IndexedDB (one-time)
 export async function migrateFromLocalStorage(): Promise<number> {
   const STORAGE_PREFIX = 'space-reader-recording-';

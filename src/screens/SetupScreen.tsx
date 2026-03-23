@@ -1,10 +1,11 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useRef } from 'react';
 import { soundCards } from '../data/soundCards';
 import { blendingWords, getPhoneticSentenceWords } from '../data/curriculum';
 import { trickWords } from '../data/trickWords';
 import ProfileContext from '../components/ProfileContext';
 import type { Recorder } from '../hooks/useRecorder';
 import { isStopConsonant } from '../audio/speechUtils';
+import { exportAllRecordings, importRecordings } from '../hooks/audioStorage';
 
 interface SetupScreenProps {
   onBack: () => void;
@@ -106,6 +107,92 @@ const groups: SoundGroup[] = [
     ids: soundCards.filter(c => c.type === 'suffix').map(c => c.id),
   },
 ];
+
+function ExportImportRecordings() {
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [status, setStatus] = useState<string | null>(null);
+
+  const handleExport = async () => {
+    try {
+      setStatus('Exporting...');
+      await exportAllRecordings();
+      setStatus('✓ Recordings exported! Check your Downloads folder.');
+      setTimeout(() => setStatus(null), 4000);
+    } catch {
+      setStatus('Export failed.');
+    }
+  };
+
+  const handleImport = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    try {
+      setStatus('Importing...');
+      const count = await importRecordings(file);
+      setStatus(`✓ Imported ${count} recordings! Refresh the page to use them.`);
+    } catch {
+      setStatus('Import failed — invalid file.');
+    }
+    // Reset input so the same file can be re-selected
+    if (fileInputRef.current) fileInputRef.current.value = '';
+  };
+
+  return (
+    <div style={{
+      display: 'flex', flexDirection: 'column', alignItems: 'center',
+      gap: 8, marginTop: 12,
+    }}>
+      <div style={{ display: 'flex', gap: 10 }}>
+        <button
+          onClick={handleExport}
+          style={{
+            background: 'rgba(79, 195, 247, 0.1)',
+            border: '1px solid rgba(79, 195, 247, 0.3)',
+            borderRadius: 8, color: '#4FC3F7',
+            padding: '6px 14px', cursor: 'pointer',
+            fontSize: 12, fontFamily: "'Comic Sans MS', cursive",
+          }}
+        >
+          📤 Export Recordings
+        </button>
+        <button
+          onClick={() => fileInputRef.current?.click()}
+          style={{
+            background: 'rgba(76, 175, 80, 0.1)',
+            border: '1px solid rgba(76, 175, 80, 0.3)',
+            borderRadius: 8, color: '#4CAF50',
+            padding: '6px 14px', cursor: 'pointer',
+            fontSize: 12, fontFamily: "'Comic Sans MS', cursive",
+          }}
+        >
+          📥 Import Recordings
+        </button>
+        <input
+          ref={fileInputRef}
+          type="file"
+          accept=".json"
+          onChange={handleImport}
+          style={{ display: 'none' }}
+        />
+      </div>
+      {status && (
+        <p style={{
+          color: status.startsWith('✓') ? '#4CAF50' : '#FF8A65',
+          fontSize: 12, fontFamily: "'Comic Sans MS', cursive",
+          margin: 0,
+        }}>
+          {status}
+        </p>
+      )}
+      <p style={{
+        color: 'rgba(255,255,255,0.25)', fontSize: 11,
+        fontStyle: 'italic', margin: 0, textAlign: 'center',
+      }}>
+        Transfer recordings between devices or URLs
+      </p>
+    </div>
+  );
+}
 
 export default function SetupScreen({ onBack, onComplete, recorder }: SetupScreenProps) {
   const profile = useContext(ProfileContext);
@@ -288,7 +375,7 @@ export default function SetupScreen({ onBack, onComplete, recorder }: SetupScree
           If you'd like to re-record a sound with your own voice, you can do so below.
         </p>
 
-        <div style={{ display: 'flex', justifyContent: 'center' }}>
+        <div style={{ display: 'flex', justifyContent: 'center', gap: 10, flexWrap: 'wrap' }}>
           <button
             onClick={() => setShowSoundsSection(!showSoundsSection)}
             style={{
@@ -302,6 +389,9 @@ export default function SetupScreen({ onBack, onComplete, recorder }: SetupScree
             {showSoundsSection ? '▲ Hide sounds & words' : '▼ View & re-record sounds and words'}
           </button>
         </div>
+
+        {/* Export / Import recordings */}
+        <ExportImportRecordings />
 
         {/* Progress bar */}
         {showSoundsSection && (
