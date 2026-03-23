@@ -147,7 +147,7 @@ export default function ProfileSelectScreen({
                   background: d ? 'rgba(255,255,255,0.05)' : 'transparent',
                   color: '#fff', fontSize: d === '⌫' ? 20 : 24,
                   fontWeight: 'bold', cursor: d ? 'pointer' : 'default',
-                  fontFamily: "'Comic Sans MS', cursive",
+                  fontFamily: "'Nunito', sans-serif",
                 }}
               >
                 {d}
@@ -233,7 +233,7 @@ export default function ProfileSelectScreen({
                       {t.titleEmojis[0]}
                     </div>
                     <div style={{ textAlign: 'left' }}>
-                      <div style={{ color: t.accentColor, fontSize: 16, fontWeight: 'bold', fontFamily: "'Comic Sans MS', cursive" }}>
+                      <div style={{ color: t.accentColor, fontSize: 16, fontWeight: 'bold', fontFamily: "'Nunito', sans-serif" }}>
                         {t.name}
                       </div>
                       <div style={{ color: '#78909C', fontSize: 12 }}>
@@ -275,7 +275,7 @@ export default function ProfileSelectScreen({
                 style={{
                   background: 'none', border: 'none',
                   color: 'rgba(255,255,255,0.4)', fontSize: 12,
-                  fontFamily: "'Comic Sans MS', cursive",
+                  fontFamily: "'Nunito', sans-serif",
                   cursor: 'pointer', marginTop: 12,
                   textDecoration: 'underline',
                 }}
@@ -429,7 +429,7 @@ export default function ProfileSelectScreen({
                 <div style={{ textAlign: 'left', flex: 1 }}>
                   <div style={{
                     color: t.accentColor, fontSize: 20, fontWeight: 'bold',
-                    fontFamily: "'Comic Sans MS', cursive",
+                    fontFamily: "'Nunito', sans-serif",
                   }}>
                     {t.name}
                   </div>
@@ -497,16 +497,16 @@ export default function ProfileSelectScreen({
                 }}>
                   {p.name[0].toUpperCase()}
                 </div>
-                <span style={{ color: '#fff', fontSize: 16, fontFamily: "'Comic Sans MS', cursive" }}>
+                <span style={{ color: '#fff', fontSize: 16, fontFamily: "'Nunito', sans-serif" }}>
                   {p.name}
                 </span>
-                <span style={{ color: pTheme.accentColor, fontSize: 11, fontFamily: "'Comic Sans MS', cursive" }}>
+                <span style={{ color: pTheme.accentColor, fontSize: 11, fontFamily: "'Nunito', sans-serif" }}>
                   {pTheme.titleEmojis[0]} {pTheme.name}
                 </span>
                 {!p.pin && (
                   <span style={{
                     color: '#4CAF50', fontSize: 11,
-                    fontFamily: "'Comic Sans MS', cursive",
+                    fontFamily: "'Nunito', sans-serif",
                     fontStyle: 'italic',
                   }}>
                     Test it out!
@@ -522,7 +522,7 @@ export default function ProfileSelectScreen({
           background: 'linear-gradient(135deg, #4FC3F7, #2196F3)',
           border: 'none', borderRadius: 16, color: '#fff',
           padding: '14px 28px', cursor: 'pointer', fontSize: 16,
-          fontWeight: 'bold', fontFamily: "'Comic Sans MS', cursive",
+          fontWeight: 'bold', fontFamily: "'Nunito', sans-serif",
           boxShadow: '0 4px 20px rgba(33, 150, 243, 0.3)',
         }}>
           + Add New Explorer
@@ -548,7 +548,7 @@ const backBtn: React.CSSProperties = {
 };
 
 const titleStyle: React.CSSProperties = {
-  color: '#FFD700', fontFamily: "'Comic Sans MS', cursive",
+  color: '#FFD700', fontFamily: "'Nunito', sans-serif",
   fontSize: 24, marginBottom: 8,
 };
 
@@ -556,7 +556,7 @@ const inputStyle: React.CSSProperties = {
   background: 'rgba(255,255,255,0.08)',
   border: '2px solid rgba(255,255,255,0.2)',
   borderRadius: 12, color: '#fff', padding: '12px 16px',
-  fontSize: 20, fontFamily: "'Comic Sans MS', cursive",
+  fontSize: 20, fontFamily: "'Nunito', sans-serif",
   outline: 'none', width: '100%', maxWidth: 280,
   marginBottom: 16,
 };
@@ -565,7 +565,7 @@ const primaryBtn: React.CSSProperties = {
   background: 'linear-gradient(135deg, #4CAF50, #2E7D32)',
   border: 'none', borderRadius: 16, color: '#fff',
   padding: '14px 32px', cursor: 'pointer', fontSize: 18,
-  fontWeight: 'bold', fontFamily: "'Comic Sans MS', cursive",
+  fontWeight: 'bold', fontFamily: "'Nunito', sans-serif",
   boxShadow: '0 4px 16px rgba(76, 175, 80, 0.3)',
   marginTop: 8,
 };

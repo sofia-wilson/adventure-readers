@@ -42,7 +42,7 @@ export default function WordWithDots({
           >
             <span style={{
               fontSize, fontWeight: 'bold', color: '#fff',
-              fontFamily: "'Comic Sans MS', cursive", lineHeight: 1,
+              fontFamily: "'Nunito', sans-serif", lineHeight: 1,
             }}>
               {sound.replace(/^-/, '')}
             </span>
@@ -86,7 +86,7 @@ export default function WordWithDots({
         >
           <span style={{
             fontSize, fontWeight: 'bold', color: '#fff',
-            fontFamily: "'Comic Sans MS', cursive", lineHeight: 1,
+            fontFamily: "'Nunito', sans-serif", lineHeight: 1,
           }}>
             {sound.replace(/^-/, '')}
           </span>

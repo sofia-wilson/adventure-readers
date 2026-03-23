@@ -110,7 +110,7 @@ export default function PhoneticWordScreen({ unitId, onBack, onRate, recorder }:
         <div style={{ textAlign: 'center' }}>
           <h2 style={{
             color: '#FFD700',
-            fontFamily: "'Comic Sans MS', cursive",
+            fontFamily: "'Nunito', sans-serif",
             fontSize: 24,
             margin: 0,
           }}>
@@ -157,7 +157,7 @@ export default function PhoneticWordScreen({ unitId, onBack, onRate, recorder }:
           <p style={{
             color: '#B0BEC5',
             fontSize: 18,
-            fontFamily: "'Comic Sans MS', cursive",
+            fontFamily: "'Nunito', sans-serif",
           }}>
             Can you read this word?
           </p>
@@ -177,7 +177,7 @@ export default function PhoneticWordScreen({ unitId, onBack, onRate, recorder }:
           <p style={{
             color: 'rgba(255,255,255,0.4)',
             fontSize: 13,
-            fontFamily: "'Comic Sans MS', cursive",
+            fontFamily: "'Nunito', sans-serif",
             fontStyle: 'italic',
           }}>
             tap each letter to hear its sound
@@ -232,5 +232,5 @@ const btnStyle: React.CSSProperties = {
   padding: '8px 16px',
   cursor: 'pointer',
   fontSize: 14,
-  fontFamily: "'Comic Sans MS', cursive",
+  fontFamily: "'Nunito', sans-serif",
 };

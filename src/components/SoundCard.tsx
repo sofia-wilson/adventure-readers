@@ -67,7 +67,7 @@ export default function SoundCard({
           cursor: 'pointer',
           padding: isLarge ? 16 : 10,
           transition: 'transform 0.15s, background 0.4s, box-shadow 0.15s',
-          fontFamily: "'Comic Sans MS', 'Chalkboard SE', cursive",
+          fontFamily: "'Nunito', sans-serif",
           position: 'relative',
           overflow: 'hidden',
         }}

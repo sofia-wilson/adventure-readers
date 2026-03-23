@@ -96,7 +96,7 @@ export default function GrandFinale({ prizes, onDone }: GrandFinaleProps) {
       ))}
 
       <h1 style={{
-        color: '#FFD700', fontFamily: "'Comic Sans MS', cursive",
+        color: '#FFD700', fontFamily: "'Nunito', sans-serif",
         fontSize: 36, textAlign: 'center', margin: '0 0 8px',
         textShadow: '0 0 30px rgba(255, 215, 0, 0.6)',
         animation: 'streakBounce 0.8s ease-out',
@@ -106,7 +106,7 @@ export default function GrandFinale({ prizes, onDone }: GrandFinaleProps) {
 
       <p style={{
         color: '#B0BEC5', fontSize: 18,
-        fontFamily: "'Comic Sans MS', cursive",
+        fontFamily: "'Nunito', sans-serif",
         marginBottom: 24,
       }}>
         You collected all 10 space prizes!
@@ -146,7 +146,7 @@ export default function GrandFinale({ prizes, onDone }: GrandFinaleProps) {
         <>
           <p style={{
             color: '#fff', fontSize: 24,
-            fontFamily: "'Comic Sans MS', cursive",
+            fontFamily: "'Nunito', sans-serif",
             textAlign: 'center',
             animation: 'streakFadeIn 0.5s ease-out both',
             textShadow: '0 0 20px rgba(255, 215, 0, 0.4)',
@@ -160,7 +160,7 @@ export default function GrandFinale({ prizes, onDone }: GrandFinaleProps) {
               background: 'linear-gradient(135deg, #FFD700, #FFA000)',
               border: 'none', borderRadius: 16, color: '#1a1a2e',
               padding: '16px 40px', cursor: 'pointer', fontSize: 20,
-              fontWeight: 'bold', fontFamily: "'Comic Sans MS', cursive",
+              fontWeight: 'bold', fontFamily: "'Nunito', sans-serif",
               boxShadow: '0 4px 20px rgba(255, 215, 0, 0.4)',
               marginTop: 16,
               animation: 'streakFadeIn 0.5s ease-out 0.3s both',

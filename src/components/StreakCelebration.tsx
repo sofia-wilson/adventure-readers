@@ -201,7 +201,7 @@ export default function StreakCelebration({ streak, onComplete }: StreakCelebrat
       {/* Streak count — big for non-readers */}
       <div style={{
         fontSize: 48, fontWeight: 'bold', color: '#FFD700',
-        fontFamily: "'Comic Sans MS', cursive",
+        fontFamily: "'Nunito', sans-serif",
         animation: 'streakFadeIn 0.4s ease-out 0.3s both',
         textShadow: '0 0 30px rgba(255, 215, 0, 0.8), 0 4px 8px rgba(0,0,0,0.5)',
       }}>

@@ -89,7 +89,7 @@ export default function BlendingReviewScreen({ onBack, onRate, recorder }: Blend
           {isLastRound ? '🏆' : round === 0 ? '🌟' : '🚀'}
         </span>
         <h2 style={{
-          color: '#FFD700', fontFamily: "'Comic Sans MS', cursive",
+          color: '#FFD700', fontFamily: "'Nunito', sans-serif",
           fontSize: 32, textAlign: 'center',
         }}>
           {isLastRound
@@ -98,7 +98,7 @@ export default function BlendingReviewScreen({ onBack, onRate, recorder }: Blend
         </h2>
         <p style={{
           color: '#B0BEC5', fontSize: 18,
-          fontFamily: "'Comic Sans MS', cursive", textAlign: 'center', maxWidth: 350,
+          fontFamily: "'Nunito', sans-serif", textAlign: 'center', maxWidth: 350,
         }}>
           {isLastRound
             ? 'Amazing job! You read all the words!'
@@ -110,7 +110,7 @@ export default function BlendingReviewScreen({ onBack, onRate, recorder }: Blend
             background: 'linear-gradient(135deg, #FFD700, #FFA000)',
             border: 'none', borderRadius: 16, color: '#1a1a2e',
             padding: '16px 40px', cursor: 'pointer', fontSize: 20,
-            fontWeight: 'bold', fontFamily: "'Comic Sans MS', cursive",
+            fontWeight: 'bold', fontFamily: "'Nunito', sans-serif",
             boxShadow: '0 4px 20px rgba(255, 215, 0, 0.4)',
           }}>
             🚀 Start Round {round + 2}!
@@ -137,7 +137,7 @@ export default function BlendingReviewScreen({ onBack, onRate, recorder }: Blend
         width: '100%', maxWidth: 600, marginBottom: 12,
       }}>
         <button onClick={onBack} style={btnStyle}>← Back</button>
-        <h2 style={{ color: '#FFD700', fontFamily: "'Comic Sans MS', cursive", fontSize: 24, margin: 0 }}>
+        <h2 style={{ color: '#FFD700', fontFamily: "'Nunito', sans-serif", fontSize: 24, margin: 0 }}>
           🔄 Blending Review
         </h2>
         <span style={{ color: '#B0BEC5', fontSize: 14 }}>{currentIndex + 1} / {words.length}</span>
@@ -148,7 +148,7 @@ export default function BlendingReviewScreen({ onBack, onRate, recorder }: Blend
         {Array.from({ length: TOTAL_ROUNDS }, (_, i) => (
           <span key={i} style={{
             padding: '4px 12px', borderRadius: 10, fontSize: 12,
-            fontFamily: "'Comic Sans MS', cursive", fontWeight: 'bold',
+            fontFamily: "'Nunito', sans-serif", fontWeight: 'bold',
             background: i === round ? 'rgba(255, 215, 0, 0.2)' : 'rgba(255,255,255,0.05)',
             border: i < round ? '2px solid #4CAF50' : i === round ? '2px solid #FFD700' : '2px solid rgba(255,255,255,0.1)',
             color: i < round ? '#4CAF50' : i === round ? '#FFD700' : '#546E7A',
@@ -170,7 +170,7 @@ export default function BlendingReviewScreen({ onBack, onRate, recorder }: Blend
 
       {currentWord && (
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 16 }}>
-          <p style={{ color: '#B0BEC5', fontSize: 18, fontFamily: "'Comic Sans MS', cursive" }}>
+          <p style={{ color: '#B0BEC5', fontSize: 18, fontFamily: "'Nunito', sans-serif" }}>
             Read this word!
           </p>
 
@@ -205,5 +205,5 @@ export default function BlendingReviewScreen({ onBack, onRate, recorder }: Blend
 const btnStyle: React.CSSProperties = {
   background: 'rgba(255,255,255,0.08)', border: '2px solid rgba(255,255,255,0.2)',
   borderRadius: 12, color: '#fff', padding: '8px 16px', cursor: 'pointer',
-  fontSize: 14, fontFamily: "'Comic Sans MS', cursive",
+  fontSize: 14, fontFamily: "'Nunito', sans-serif",
 };

@@ -97,7 +97,7 @@ export default function SpaceCelebration({ rating, onComplete }: SpaceCelebratio
             fontWeight: 'bold',
             color: theme?.accentColor || '#FFD700',
             textShadow: `0 0 20px ${theme?.accentColor || '#FFD700'}cc, 0 4px 8px rgba(0,0,0,0.5)`,
-            fontFamily: "'Comic Sans MS', cursive",
+            fontFamily: "'Nunito', sans-serif",
             animation: 'popIn 0.5s ease-out 0.3s both',
           }}>
             GREAT JOB{childName ? `, ${childName}` : ''}! 🌟
@@ -115,7 +115,7 @@ export default function SpaceCelebration({ rating, onComplete }: SpaceCelebratio
             fontSize: 28,
             color: '#FFC107',
             fontWeight: 'bold',
-            fontFamily: "'Comic Sans MS', cursive",
+            fontFamily: "'Nunito', sans-serif",
             textShadow: '0 2px 4px rgba(0,0,0,0.5)',
             marginTop: 8,
             animation: 'popIn 0.4s ease-out 0.2s both',
@@ -135,7 +135,7 @@ export default function SpaceCelebration({ rating, onComplete }: SpaceCelebratio
             fontSize: 24,
             color: '#EF9A9A',
             fontWeight: 'bold',
-            fontFamily: "'Comic Sans MS', cursive",
+            fontFamily: "'Nunito', sans-serif",
             textShadow: '0 2px 4px rgba(0,0,0,0.5)',
             marginTop: 8,
           }}>

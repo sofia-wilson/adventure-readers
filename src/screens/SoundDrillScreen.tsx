@@ -98,7 +98,7 @@ export default function SoundDrillScreen({ unitId, onBack, onRate, recorder }: S
         <div style={{ textAlign: 'center' }}>
           <h2 style={{
             color: '#FFD700',
-            fontFamily: "'Comic Sans MS', cursive",
+            fontFamily: "'Nunito', sans-serif",
             fontSize: 24,
             margin: 0,
           }}>
@@ -150,7 +150,7 @@ export default function SoundDrillScreen({ unitId, onBack, onRate, recorder }: S
           <p style={{
             color: '#B0BEC5',
             fontSize: 18,
-            fontFamily: "'Comic Sans MS', cursive",
+            fontFamily: "'Nunito', sans-serif",
           }}>
             {currentCard.grapheme.replace(/[A-Z-]/g, '').length > 1
               ? 'What sound do these letters make?'
@@ -169,7 +169,7 @@ export default function SoundDrillScreen({ unitId, onBack, onRate, recorder }: S
           <p style={{
             color: 'rgba(255,255,255,0.4)',
             fontSize: 13,
-            fontFamily: "'Comic Sans MS', cursive",
+            fontFamily: "'Nunito', sans-serif",
             fontStyle: 'italic',
           }}>
             {!flipped
@@ -232,5 +232,5 @@ const btnStyle: React.CSSProperties = {
   padding: '8px 16px',
   cursor: 'pointer',
   fontSize: 14,
-  fontFamily: "'Comic Sans MS', cursive",
+  fontFamily: "'Nunito', sans-serif",
 };

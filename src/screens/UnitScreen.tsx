@@ -138,7 +138,7 @@ export default function UnitScreen({ unitId, onBack, onActivity }: UnitScreenPro
 
       <h2 style={{
         color: theme?.accentColor || '#FFD700',
-        fontFamily: "'Comic Sans MS', cursive",
+        fontFamily: "'Nunito', sans-serif",
         fontSize: 28,
         margin: '0 0 4px',
       }}>
@@ -148,7 +148,7 @@ export default function UnitScreen({ unitId, onBack, onActivity }: UnitScreenPro
         color: '#B0BEC5',
         fontSize: 16,
         margin: '0 0 8px',
-        fontFamily: "'Comic Sans MS', cursive",
+        fontFamily: "'Nunito', sans-serif",
       }}>
         {unit.name} — {unit.description}
       </p>
@@ -157,7 +157,7 @@ export default function UnitScreen({ unitId, onBack, onActivity }: UnitScreenPro
         color: '#78909C',
         fontSize: 14,
         marginBottom: 24,
-        fontFamily: "'Comic Sans MS', cursive",
+        fontFamily: "'Nunito', sans-serif",
       }}>
         Choose an activity to explore!
       </p>
@@ -181,7 +181,7 @@ export default function UnitScreen({ unitId, onBack, onActivity }: UnitScreenPro
               }}>
                 <h3 style={{
                   color: '#FFD700',
-                  fontFamily: "'Comic Sans MS', cursive",
+                  fontFamily: "'Nunito', sans-serif",
                   fontSize: 16,
                   margin: '0 0 2px',
                 }}>
@@ -238,7 +238,7 @@ export default function UnitScreen({ unitId, onBack, onActivity }: UnitScreenPro
                         color: '#fff',
                         fontSize: 17,
                         fontWeight: 'bold',
-                        fontFamily: "'Comic Sans MS', cursive",
+                        fontFamily: "'Nunito', sans-serif",
                         display: 'block',
                       }}>
                         {info.label}
@@ -246,7 +246,7 @@ export default function UnitScreen({ unitId, onBack, onActivity }: UnitScreenPro
                       <span style={{
                         color: '#B0BEC5',
                         fontSize: 12,
-                        fontFamily: "'Comic Sans MS', cursive",
+                        fontFamily: "'Nunito', sans-serif",
                       }}>
                         {info.description}
                       </span>
@@ -272,6 +272,6 @@ const backBtnStyle: React.CSSProperties = {
   padding: '8px 16px',
   cursor: 'pointer',
   fontSize: 14,
-  fontFamily: "'Comic Sans MS', cursive",
+  fontFamily: "'Nunito', sans-serif",
   alignSelf: 'flex-start',
 };

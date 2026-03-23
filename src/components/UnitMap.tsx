@@ -30,7 +30,7 @@ export default function UnitMap({
       {/* Title */}
       <h1 style={{
         color: theme?.accentColor || '#FFD700',
-        fontFamily: "'Comic Sans MS', cursive",
+        fontFamily: "'Nunito', sans-serif",
         fontSize: 36,
         textShadow: `0 0 20px ${theme?.accentColor || '#FFD700'}80`,
         marginBottom: 8,
@@ -41,7 +41,7 @@ export default function UnitMap({
         color: '#B0BEC5',
         fontSize: 16,
         marginBottom: 24,
-        fontFamily: "'Comic Sans MS', cursive",
+        fontFamily: "'Nunito', sans-serif",
       }}>
         {theme?.subtitle(childName) || (childName ? `${childName}'s Reading Adventure!` : 'Your reading adventure starts here!')}
       </p>
@@ -77,7 +77,7 @@ export default function UnitMap({
             color: theme?.accentColor || '#FFD700',
             fontSize: 18,
             fontWeight: 'bold',
-            fontFamily: "'Comic Sans MS', cursive",
+            fontFamily: "'Nunito', sans-serif",
             display: 'block',
           }}>
             {theme?.setupLabel || 'Mission Control'}
@@ -85,7 +85,7 @@ export default function UnitMap({
           <span style={{
             color: '#B0BEC5',
             fontSize: 13,
-            fontFamily: "'Comic Sans MS', cursive",
+            fontFamily: "'Nunito', sans-serif",
           }}>
             {setupComplete
               ? 'All sounds recorded! Tap to re-record any sound.'
@@ -187,7 +187,7 @@ export default function UnitMap({
                 color: '#fff',
                 fontWeight: 'bold',
                 fontSize: 14,
-                fontFamily: "'Comic Sans MS', cursive",
+                fontFamily: "'Nunito', sans-serif",
               }}>
                 {unit.name}
               </span>
@@ -240,7 +240,7 @@ export default function UnitMap({
       <p style={{
         color: 'rgba(255,255,255,0.35)',
         fontSize: 12,
-        fontFamily: "'Comic Sans MS', cursive",
+        fontFamily: "'Nunito', sans-serif",
         fontStyle: 'italic',
         textAlign: 'center',
         maxWidth: 360,

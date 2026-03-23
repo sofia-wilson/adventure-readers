@@ -31,7 +31,7 @@ export default function ParentRating({ onRate }: ParentRatingProps) {
           fontSize: 15,
           fontWeight: 'bold',
           color: '#EF5350',
-          fontFamily: "'Comic Sans MS', cursive",
+          fontFamily: "'Nunito', sans-serif",
         }}
         onMouseDown={e => { (e.currentTarget as HTMLElement).style.transform = 'scale(0.93)'; }}
         onMouseUp={e => { (e.currentTarget as HTMLElement).style.transform = 'scale(1)'; }}
@@ -56,7 +56,7 @@ export default function ParentRating({ onRate }: ParentRatingProps) {
           fontSize: 15,
           fontWeight: 'bold',
           color: '#4CAF50',
-          fontFamily: "'Comic Sans MS', cursive",
+          fontFamily: "'Nunito', sans-serif",
         }}
         onMouseDown={e => { (e.currentTarget as HTMLElement).style.transform = 'scale(0.93)'; }}
         onMouseUp={e => { (e.currentTarget as HTMLElement).style.transform = 'scale(1)'; }}

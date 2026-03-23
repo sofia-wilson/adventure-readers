@@ -136,7 +136,7 @@ export default function TrickWordScreen({ unitId, onBack, onRate, mode = 'all', 
         <button onClick={onBack} style={backBtnStyle}>← Back</button>
         <div style={{ textAlign: 'center' }}>
           <h2 style={{
-            color: '#FFD700', fontFamily: "'Comic Sans MS', cursive",
+            color: '#FFD700', fontFamily: "'Nunito', sans-serif",
             fontSize: 24, margin: 0,
           }}>
             {mode === 'phonetic' ? '📖 Word Reading' : '✨ Trick Words'}
@@ -161,7 +161,7 @@ export default function TrickWordScreen({ unitId, onBack, onRate, mode = 'all', 
         <span style={{
           color: phase === 'i_do' ? '#4FC3F7' : '#4CAF50',
           fontSize: 16, fontWeight: 'bold',
-          fontFamily: "'Comic Sans MS', cursive",
+          fontFamily: "'Nunito', sans-serif",
         }}>
           {phase === 'i_do' ? '👀 Watch & Listen' : '🌟 Your Turn!'}
         </span>
@@ -185,7 +185,7 @@ export default function TrickWordScreen({ unitId, onBack, onRate, mode = 'all', 
           {/* Instruction */}
           <p style={{
             color: '#B0BEC5', fontSize: 14,
-            fontFamily: "'Comic Sans MS', cursive",
+            fontFamily: "'Nunito', sans-serif",
             marginBottom: 16, textAlign: 'center',
           }}>
             {phase === 'i_do'
@@ -221,7 +221,7 @@ export default function TrickWordScreen({ unitId, onBack, onRate, mode = 'all', 
                 <span style={{ fontSize: 48 }}>✨</span>
                 <span style={{
                   color: '#B0BEC5', fontSize: 18,
-                  fontFamily: "'Comic Sans MS', cursive",
+                  fontFamily: "'Nunito', sans-serif",
                 }}>
                   Tap to reveal!
                 </span>
@@ -229,7 +229,7 @@ export default function TrickWordScreen({ unitId, onBack, onRate, mode = 'all', 
             ) : (
               <span style={{
                 fontSize: 56, fontWeight: 'bold', color: '#fff',
-                fontFamily: "'Comic Sans MS', cursive",
+                fontFamily: "'Nunito', sans-serif",
               }}>
                 {currentWord.word}
               </span>
@@ -240,7 +240,7 @@ export default function TrickWordScreen({ unitId, onBack, onRate, mode = 'all', 
           {phase === 'you_do' && (
             <p style={{
               color: 'rgba(255,255,255,0.3)', fontSize: 12,
-              fontFamily: "'Comic Sans MS', cursive", fontStyle: 'italic',
+              fontFamily: "'Nunito', sans-serif", fontStyle: 'italic',
               margin: '0 0 12px',
             }}>
               tap the word to hear it
@@ -281,7 +281,7 @@ const backBtnStyle: React.CSSProperties = {
   border: '2px solid rgba(255,255,255,0.2)',
   borderRadius: 12, color: '#fff',
   padding: '8px 16px', cursor: 'pointer',
-  fontSize: 14, fontFamily: "'Comic Sans MS', cursive",
+  fontSize: 14, fontFamily: "'Nunito', sans-serif",
 };
 
 const navBtnStyle: React.CSSProperties = {
@@ -289,5 +289,5 @@ const navBtnStyle: React.CSSProperties = {
   border: '2px solid rgba(255,255,255,0.2)',
   borderRadius: 12, color: '#fff',
   padding: '10px 24px', cursor: 'pointer',
-  fontSize: 16, fontFamily: "'Comic Sans MS', cursive",
+  fontSize: 16, fontFamily: "'Nunito', sans-serif",
 };

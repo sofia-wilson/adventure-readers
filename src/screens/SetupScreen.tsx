@@ -150,7 +150,7 @@ function ExportImportRecordings() {
             border: '1px solid rgba(79, 195, 247, 0.3)',
             borderRadius: 8, color: '#4FC3F7',
             padding: '6px 14px', cursor: 'pointer',
-            fontSize: 12, fontFamily: "'Comic Sans MS', cursive",
+            fontSize: 12, fontFamily: "'Nunito', sans-serif",
           }}
         >
           📤 Export Recordings
@@ -162,7 +162,7 @@ function ExportImportRecordings() {
             border: '1px solid rgba(76, 175, 80, 0.3)',
             borderRadius: 8, color: '#4CAF50',
             padding: '6px 14px', cursor: 'pointer',
-            fontSize: 12, fontFamily: "'Comic Sans MS', cursive",
+            fontSize: 12, fontFamily: "'Nunito', sans-serif",
           }}
         >
           📥 Import Recordings
@@ -178,7 +178,7 @@ function ExportImportRecordings() {
       {status && (
         <p style={{
           color: status.startsWith('✓') ? '#4CAF50' : '#FF8A65',
-          fontSize: 12, fontFamily: "'Comic Sans MS', cursive",
+          fontSize: 12, fontFamily: "'Nunito', sans-serif",
           margin: 0,
         }}>
           {status}
@@ -240,7 +240,7 @@ export default function SetupScreen({ onBack, onComplete, recorder }: SetupScree
         <button onClick={onBack} style={btnStyle}>← Back</button>
         <h2 style={{
           color: accentColor,
-          fontFamily: "'Comic Sans MS', cursive",
+          fontFamily: "'Nunito', sans-serif",
           fontSize: 24,
           margin: 0,
         }}>
@@ -265,7 +265,7 @@ export default function SetupScreen({ onBack, onComplete, recorder }: SetupScree
       }}>
         <h3 style={{
           color: accentColor,
-          fontFamily: "'Comic Sans MS', cursive",
+          fontFamily: "'Nunito', sans-serif",
           fontSize: 20,
           margin: '0 0 8px',
         }}>
@@ -274,7 +274,7 @@ export default function SetupScreen({ onBack, onComplete, recorder }: SetupScree
         <p style={{
           color: '#B0BEC5',
           fontSize: 14,
-          fontFamily: "'Comic Sans MS', cursive",
+          fontFamily: "'Nunito', sans-serif",
           marginBottom: 16,
           lineHeight: 1.5,
         }}>
@@ -303,7 +303,7 @@ export default function SetupScreen({ onBack, onComplete, recorder }: SetupScree
                   cursor: 'pointer',
                   fontSize: 18,
                   fontWeight: 'bold',
-                  fontFamily: "'Comic Sans MS', cursive",
+                  fontFamily: "'Nunito', sans-serif",
                   boxShadow: '0 4px 16px rgba(76, 175, 80, 0.3)',
                 }}
               >
@@ -318,7 +318,7 @@ export default function SetupScreen({ onBack, onComplete, recorder }: SetupScree
                 >
                   🎙️ ↻
                 </button>
-                <span style={{ color: '#4CAF50', fontSize: 14, fontFamily: "'Comic Sans MS', cursive" }}>✓ Recorded!</span>
+                <span style={{ color: '#4CAF50', fontSize: 14, fontFamily: "'Nunito', sans-serif" }}>✓ Recorded!</span>
               </div>
             </div>
           ) : (
@@ -368,7 +368,7 @@ export default function SetupScreen({ onBack, onComplete, recorder }: SetupScree
           fontSize: 13,
           textAlign: 'center',
           lineHeight: 1.5,
-          fontFamily: "'Comic Sans MS', cursive",
+          fontFamily: "'Nunito', sans-serif",
           marginBottom: 12,
         }}>
           All sounds for this curriculum have been pre-recorded to be phonetically correct.
@@ -383,7 +383,7 @@ export default function SetupScreen({ onBack, onComplete, recorder }: SetupScree
               border: '1px solid rgba(255,255,255,0.15)',
               borderRadius: 10, color: '#B0BEC5',
               padding: '8px 20px', cursor: 'pointer',
-              fontSize: 13, fontFamily: "'Comic Sans MS', cursive",
+              fontSize: 13, fontFamily: "'Nunito', sans-serif",
             }}
           >
             {showSoundsSection ? '▲ Hide sounds & words' : '▼ View & re-record sounds and words'}
@@ -454,7 +454,7 @@ export default function SetupScreen({ onBack, onComplete, recorder }: SetupScree
               <span style={{ fontSize: 22 }}>{group.emoji}</span>
               <h3 style={{
                 color: groupDone ? '#4CAF50' : '#fff',
-                fontFamily: "'Comic Sans MS', cursive",
+                fontFamily: "'Nunito', sans-serif",
                 fontSize: 18,
                 margin: 0,
               }}>
@@ -557,7 +557,7 @@ export default function SetupScreen({ onBack, onComplete, recorder }: SetupScree
                         color: '#fff',
                         fontSize: 13,
                         fontWeight: 'bold',
-                        fontFamily: "'Comic Sans MS', cursive",
+                        fontFamily: "'Nunito', sans-serif",
                       }}>
                         {card.keyword}
                         {isStop && <span style={{ color: '#FFD54F', fontSize: 10, marginLeft: 6 }}>⚠️ clip it!</span>}
@@ -648,7 +648,7 @@ export default function SetupScreen({ onBack, onComplete, recorder }: SetupScree
                 <span style={{ fontSize: 22 }}>📝</span>
                 <h3 style={{
                   color: wordsRecorded === unitWords.length ? '#4CAF50' : '#fff',
-                  fontFamily: "'Comic Sans MS', cursive", fontSize: 18, margin: 0,
+                  fontFamily: "'Nunito', sans-serif", fontSize: 18, margin: 0,
                 }}>
                   {wu.label}
                   {wordsRecorded === unitWords.length && ' ✓'}
@@ -696,7 +696,7 @@ export default function SetupScreen({ onBack, onComplete, recorder }: SetupScree
                           style={{
                             background: 'none', border: 'none',
                             color: '#fff', fontSize: 20, fontWeight: 'bold',
-                            fontFamily: "'Comic Sans MS', cursive",
+                            fontFamily: "'Nunito', sans-serif",
                             cursor: wordRecorded ? 'pointer' : 'default',
                             flex: 1, textAlign: 'left', padding: 0,
                           }}
@@ -740,7 +740,7 @@ export default function SetupScreen({ onBack, onComplete, recorder }: SetupScree
                         }}>
                           <span style={{
                             color: '#FF8A65', fontSize: 12,
-                            fontFamily: "'Comic Sans MS', cursive",
+                            fontFamily: "'Nunito', sans-serif",
                             flex: 1,
                           }}>
                             🔊 blended slowly
@@ -793,7 +793,7 @@ export default function SetupScreen({ onBack, onComplete, recorder }: SetupScree
           }}>
             <span style={{ fontSize: 22 }}>📖</span>
             <h2 style={{
-              color: accentColor, fontFamily: "'Comic Sans MS', cursive",
+              color: accentColor, fontFamily: "'Nunito', sans-serif",
               fontSize: 22, margin: 0,
             }}>
               High Frequency Words
@@ -831,7 +831,7 @@ export default function SetupScreen({ onBack, onComplete, recorder }: SetupScree
                     <span style={{ fontSize: 18 }}>{hu.phonetic ? '🔤' : '⭐'}</span>
                     <h3 style={{
                       color: recorded === words.length ? '#4CAF50' : '#fff',
-                      fontFamily: "'Comic Sans MS', cursive", fontSize: 16, margin: 0,
+                      fontFamily: "'Nunito', sans-serif", fontSize: 16, margin: 0,
                     }}>
                       {hu.label}
                       {recorded === words.length && ' ✓'}
@@ -863,7 +863,7 @@ export default function SetupScreen({ onBack, onComplete, recorder }: SetupScree
                         }}>
                           <span style={{
                             color: '#fff', fontSize: 18, fontWeight: 'bold',
-                            fontFamily: "'Comic Sans MS', cursive",
+                            fontFamily: "'Nunito', sans-serif",
                             flex: 1,
                           }}>
                             {w.word}
@@ -920,7 +920,7 @@ export default function SetupScreen({ onBack, onComplete, recorder }: SetupScree
           }}>
             <span style={{ fontSize: 22 }}>📚</span>
             <h2 style={{
-              color: accentColor, fontFamily: "'Comic Sans MS', cursive",
+              color: accentColor, fontFamily: "'Nunito', sans-serif",
               fontSize: 22, margin: 0,
             }}>
               Sentence Reading Words (Phonetic)
@@ -944,7 +944,7 @@ export default function SetupScreen({ onBack, onComplete, recorder }: SetupScree
                 }}>
                   <h3 style={{
                     color: recorded === sentenceWordList.length ? '#4CAF50' : '#fff',
-                    fontFamily: "'Comic Sans MS', cursive", fontSize: 16, margin: 0,
+                    fontFamily: "'Nunito', sans-serif", fontSize: 16, margin: 0,
                   }}>
                     Phonetic Words for Sentences
                     {recorded === sentenceWordList.length && ' ✓'}
@@ -976,7 +976,7 @@ export default function SetupScreen({ onBack, onComplete, recorder }: SetupScree
                       }}>
                         <span style={{
                           color: '#fff', fontSize: 18, fontWeight: 'bold',
-                          fontFamily: "'Comic Sans MS', cursive",
+                          fontFamily: "'Nunito', sans-serif",
                           flex: 1,
                         }}>
                           {w}
@@ -1046,7 +1046,7 @@ export default function SetupScreen({ onBack, onComplete, recorder }: SetupScree
               cursor: 'pointer',
               fontSize: 20,
               fontWeight: 'bold',
-              fontFamily: "'Comic Sans MS', cursive",
+              fontFamily: "'Nunito', sans-serif",
               boxShadow: '0 4px 20px rgba(76, 175, 80, 0.4)',
             }}
           >
@@ -1059,7 +1059,7 @@ export default function SetupScreen({ onBack, onComplete, recorder }: SetupScree
             padding: '12px 24px',
             color: '#B0BEC5',
             fontSize: 14,
-            fontFamily: "'Comic Sans MS', cursive",
+            fontFamily: "'Nunito', sans-serif",
             textAlign: 'center',
           }}>
             Record your celebration message above to get started!
@@ -1095,5 +1095,5 @@ const btnStyle: React.CSSProperties = {
   padding: '8px 16px',
   cursor: 'pointer',
   fontSize: 14,
-  fontFamily: "'Comic Sans MS', cursive",
+  fontFamily: "'Nunito', sans-serif",
 };

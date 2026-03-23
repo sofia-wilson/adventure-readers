@@ -55,7 +55,7 @@ export default function App() {
     <div style={{
       minHeight: '100vh',
       background: theme.bgGradient,
-      fontFamily: "'Comic Sans MS', 'Chalkboard SE', cursive",
+      fontFamily: "'Nunito', sans-serif",
       position: 'relative',
       overflow: 'hidden',
     }}>
@@ -177,7 +177,7 @@ function MainContent({
           position: 'fixed', top: 12, right: 12, zIndex: 900,
           background: 'rgba(0,0,0,0.4)', border: '1px solid rgba(255,255,255,0.15)',
           borderRadius: 10, color: '#B0BEC5', padding: '6px 12px',
-          cursor: 'pointer', fontSize: 13, fontFamily: "'Comic Sans MS', cursive",
+          cursor: 'pointer', fontSize: 13, fontFamily: "'Nunito', sans-serif",
           backdropFilter: 'blur(8px)',
         }}
       >
@@ -325,5 +325,5 @@ const footerBtn: React.CSSProperties = {
   padding: '10px 20px',
   cursor: 'pointer',
   fontSize: 13,
-  fontFamily: "'Comic Sans MS', cursive",
+  fontFamily: "'Nunito', sans-serif",
 };

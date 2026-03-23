@@ -166,7 +166,7 @@ export default function SpacePrizeGame({ unitNumber, onComplete }: SpacePrizeGam
         </div>
 
         <h2 style={{
-          color: '#FFD700', fontFamily: "'Comic Sans MS', cursive",
+          color: '#FFD700', fontFamily: "'Nunito', sans-serif",
           fontSize: 28, textAlign: 'center', margin: 0,
           animation: 'streakFadeIn 0.5s ease-out 0.3s both',
         }}>
@@ -175,7 +175,7 @@ export default function SpacePrizeGame({ unitNumber, onComplete }: SpacePrizeGam
 
         <p style={{
           color: '#B0BEC5', fontSize: 16,
-          fontFamily: "'Comic Sans MS', cursive",
+          fontFamily: "'Nunito', sans-serif",
           animation: 'streakFadeIn 0.5s ease-out 0.5s both',
         }}>
           Space prize {unitNumber} of 10
@@ -187,7 +187,7 @@ export default function SpacePrizeGame({ unitNumber, onComplete }: SpacePrizeGam
             background: 'linear-gradient(135deg, #4CAF50, #2E7D32)',
             border: 'none', borderRadius: 16, color: '#fff',
             padding: '16px 40px', cursor: 'pointer', fontSize: 20,
-            fontWeight: 'bold', fontFamily: "'Comic Sans MS', cursive",
+            fontWeight: 'bold', fontFamily: "'Nunito', sans-serif",
             boxShadow: '0 4px 20px rgba(76, 175, 80, 0.4)',
             animation: 'streakFadeIn 0.5s ease-out 0.7s both',
             marginTop: 8,
@@ -228,7 +228,7 @@ export default function SpacePrizeGame({ unitNumber, onComplete }: SpacePrizeGam
         padding: '20px 16px 0', position: 'relative', zIndex: 10,
       }}>
         <h2 style={{
-          color: '#FFD700', fontFamily: "'Comic Sans MS', cursive",
+          color: '#FFD700', fontFamily: "'Nunito', sans-serif",
           fontSize: 24, margin: '0 0 8px',
         }}>
           🎮 Tap the rockets!

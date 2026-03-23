@@ -89,7 +89,7 @@ export default function DashboardScreen({ attempts, onBack, onClearProgress }: D
       }}>
         <button onClick={onBack} style={btnStyle}>← Back</button>
         <h2 style={{
-          color: '#FFD700', fontFamily: "'Comic Sans MS', cursive", fontSize: 24, margin: 0,
+          color: '#FFD700', fontFamily: "'Nunito', sans-serif", fontSize: 24, margin: 0,
         }}>
           📊 {childName ? `${childName}'s Progress` : 'Parent Dashboard'}
         </h2>
@@ -136,7 +136,7 @@ export default function DashboardScreen({ attempts, onBack, onClearProgress }: D
             }}>
               {/* Unit header */}
               <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 12 }}>
-                <span style={{ color: '#fff', fontSize: 15, fontWeight: 'bold', fontFamily: "'Comic Sans MS', cursive" }}>
+                <span style={{ color: '#fff', fontSize: 15, fontWeight: 'bold', fontFamily: "'Nunito', sans-serif" }}>
                   {unit.name} — {unit.description}
                 </span>
                 <span style={{ color: '#B0BEC5', fontSize: 13 }}>
@@ -166,7 +166,7 @@ export default function DashboardScreen({ attempts, onBack, onClearProgress }: D
                             border: '1px solid rgba(76, 175, 80, 0.3)',
                             borderRadius: 6, padding: '2px 8px',
                             color: '#4CAF50', fontSize: 12, fontWeight: 'bold',
-                            fontFamily: "'Comic Sans MS', cursive",
+                            fontFamily: "'Nunito', sans-serif",
                           }}>
                             {item}
                           </span>
@@ -187,7 +187,7 @@ export default function DashboardScreen({ attempts, onBack, onClearProgress }: D
                             border: '1px solid rgba(239, 83, 80, 0.3)',
                             borderRadius: 6, padding: '2px 8px',
                             color: '#EF5350', fontSize: 12, fontWeight: 'bold',
-                            fontFamily: "'Comic Sans MS', cursive",
+                            fontFamily: "'Nunito', sans-serif",
                           }}>
                             {item}
                           </span>
@@ -211,7 +211,7 @@ export default function DashboardScreen({ attempts, onBack, onClearProgress }: D
       }}>
         <p style={{
           color: '#B0BEC5', fontSize: 14, lineHeight: 1.7,
-          fontFamily: "'Comic Sans MS', cursive", margin: 0,
+          fontFamily: "'Nunito', sans-serif", margin: 0,
         }}>
           📚 After completing all units, your child will have a strong foundation
           in early literacy — from letter sounds to blending to reading sentences.
@@ -247,7 +247,7 @@ const btnStyle: React.CSSProperties = {
   border: '2px solid rgba(255,255,255,0.2)',
   borderRadius: 12, color: '#fff',
   padding: '8px 16px', cursor: 'pointer',
-  fontSize: 14, fontFamily: "'Comic Sans MS', cursive",
+  fontSize: 14, fontFamily: "'Nunito', sans-serif",
 };
 
 const statBoxStyle: React.CSSProperties = {

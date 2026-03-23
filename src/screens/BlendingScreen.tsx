@@ -159,7 +159,7 @@ export default function BlendingScreen({ unitId, onBack, onRate, recorder }: Ble
         <button onClick={onBack} style={btnStyle}>← Back</button>
         <div style={{ textAlign: 'center' }}>
           <h2 style={{
-            color: theme?.accentColor || '#FFD700', fontFamily: "'Comic Sans MS', cursive",
+            color: theme?.accentColor || '#FFD700', fontFamily: "'Nunito', sans-serif",
             fontSize: 24, margin: 0,
           }}>
             {theme?.blendingEmoji || '🚀'} {theme?.blendingLabel || 'Blending Launchpad'}
@@ -197,7 +197,7 @@ export default function BlendingScreen({ unitId, onBack, onRate, recorder }: Ble
             <>
               <p style={{
                 color: '#B0BEC5', fontSize: 16,
-                fontFamily: "'Comic Sans MS', cursive",
+                fontFamily: "'Nunito', sans-serif",
               }}>
                 {phase === 'blending' ? 'Listen...' : 'Tap each sound to build the word:'}
               </p>
@@ -253,7 +253,7 @@ export default function BlendingScreen({ unitId, onBack, onRate, recorder }: Ble
                         background: droppedSounds[i] ? 'rgba(79, 195, 247, 0.15)' : 'rgba(255,255,255,0.03)',
                         display: 'flex', alignItems: 'center', justifyContent: 'center',
                         fontSize: 28, fontWeight: 'bold', color: '#fff',
-                        fontFamily: "'Comic Sans MS', cursive",
+                        fontFamily: "'Nunito', sans-serif",
                         boxShadow: blendHighlight === i ? '0 0 20px rgba(255, 215, 0, 0.5)' : 'none',
                         cursor: droppedSounds[i] ? 'pointer' : 'default',
                       }}
@@ -280,7 +280,7 @@ export default function BlendingScreen({ unitId, onBack, onRate, recorder }: Ble
                         width: 64, height: 64, borderRadius: 14,
                         border: '3px solid #CE93D8', background: 'rgba(206, 147, 216, 0.15)',
                         color: '#fff', fontSize: 26, fontWeight: 'bold',
-                        cursor: 'pointer', fontFamily: "'Comic Sans MS', cursive",
+                        cursor: 'pointer', fontFamily: "'Nunito', sans-serif",
                       }}
                       onMouseDown={e => { (e.currentTarget as HTMLElement).style.transform = 'scale(0.9)'; }}
                       onMouseUp={e => { (e.currentTarget as HTMLElement).style.transform = 'scale(1)'; }}
@@ -299,7 +299,7 @@ export default function BlendingScreen({ unitId, onBack, onRate, recorder }: Ble
             <>
               <p style={{
                 color: '#FFD700', fontSize: 20,
-                fontFamily: "'Comic Sans MS', cursive", fontWeight: 'bold',
+                fontFamily: "'Nunito', sans-serif", fontWeight: 'bold',
               }}>
                 We do! 👂
               </p>
@@ -340,7 +340,7 @@ export default function BlendingScreen({ unitId, onBack, onRate, recorder }: Ble
                   border: '2px solid rgba(79, 195, 247, 0.4)',
                   borderRadius: 14, color: '#fff', padding: '12px 24px',
                   cursor: 'pointer', fontSize: 15,
-                  fontFamily: "'Comic Sans MS', cursive",
+                  fontFamily: "'Nunito', sans-serif",
                 }}>
                   🔊 Hear it blended slowly — then you say it fast!
                 </button>
@@ -352,7 +352,7 @@ export default function BlendingScreen({ unitId, onBack, onRate, recorder }: Ble
                 border: '2px solid rgba(255, 215, 0, 0.4)',
                 borderRadius: 14, color: '#FFD700', padding: '12px 24px',
                 cursor: 'pointer', fontSize: 15, fontWeight: 'bold',
-                fontFamily: "'Comic Sans MS', cursive",
+                fontFamily: "'Nunito', sans-serif",
               }}>
                 Ready? Your turn! →
               </button>
@@ -364,13 +364,13 @@ export default function BlendingScreen({ unitId, onBack, onRate, recorder }: Ble
             <>
               <p style={{
                 color: '#FFD700', fontSize: 20,
-                fontFamily: "'Comic Sans MS', cursive", fontWeight: 'bold',
+                fontFamily: "'Nunito', sans-serif", fontWeight: 'bold',
               }}>
                 Your turn! 🌟
               </p>
               <p style={{
                 color: '#B0BEC5', fontSize: 14,
-                fontFamily: "'Comic Sans MS', cursive",
+                fontFamily: "'Nunito', sans-serif",
                 textAlign: 'center', maxWidth: 320,
               }}>
                 Run your finger under each dot as you read the word
@@ -432,5 +432,5 @@ const btnStyle: React.CSSProperties = {
   border: '2px solid rgba(255,255,255,0.2)',
   borderRadius: 12, color: '#fff',
   padding: '8px 16px', cursor: 'pointer',
-  fontSize: 14, fontFamily: "'Comic Sans MS', cursive",
+  fontSize: 14, fontFamily: "'Nunito', sans-serif",
 };

@@ -59,7 +59,7 @@ function ScaffoldedWord({ word, recorder }: { word: SentenceWord; recorder: Reco
       >
         <span style={{
           fontSize: 32, fontWeight: 'bold', color: '#FFD700',
-          fontFamily: "'Comic Sans MS', cursive",
+          fontFamily: "'Nunito', sans-serif",
           borderBottom: '2px dashed rgba(255, 215, 0, 0.4)',
           paddingBottom: 2,
           lineHeight: 1,
@@ -148,7 +148,7 @@ export default function SentenceScreen({ onBack, onRate, recorder, unitId }: Sen
         width: '100%', maxWidth: 600, marginBottom: 20,
       }}>
         <button onClick={onBack} style={btnStyle}>← Back</button>
-        <h2 style={{ color: '#FFD700', fontFamily: "'Comic Sans MS', cursive", fontSize: 24, margin: 0 }}>
+        <h2 style={{ color: '#FFD700', fontFamily: "'Nunito', sans-serif", fontSize: 24, margin: 0 }}>
           📚 Read Sentences
         </h2>
         <span style={{ color: '#B0BEC5', fontSize: 14 }}>{currentIndex + 1} / {filteredSentences.length}</span>
@@ -166,7 +166,7 @@ export default function SentenceScreen({ onBack, onRate, recorder, unitId }: Sen
 
       {current && (
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 20 }}>
-          <p style={{ color: '#B0BEC5', fontSize: 16, fontFamily: "'Comic Sans MS', cursive" }}>
+          <p style={{ color: '#B0BEC5', fontSize: 16, fontFamily: "'Nunito', sans-serif" }}>
             Can you read this sentence?
           </p>
 
@@ -196,7 +196,7 @@ export default function SentenceScreen({ onBack, onRate, recorder, unitId }: Sen
                   {current.words.map((word, i) => (
                     <span key={i} style={{
                       fontSize: 36, fontWeight: 'bold', color: '#fff',
-                      fontFamily: "'Comic Sans MS', cursive",
+                      fontFamily: "'Nunito', sans-serif",
                     }}>
                       {word.text}
                     </span>
@@ -208,7 +208,7 @@ export default function SentenceScreen({ onBack, onRate, recorder, unitId }: Sen
               <>
                 <p style={{
                   color: '#4FC3F7', fontSize: 14, marginBottom: 16,
-                  fontFamily: "'Comic Sans MS', cursive", fontStyle: 'italic',
+                  fontFamily: "'Nunito', sans-serif", fontStyle: 'italic',
                 }}>
                   Sound it out! Tap each letter for help.
                 </p>
@@ -227,7 +227,7 @@ export default function SentenceScreen({ onBack, onRate, recorder, unitId }: Sen
           {!flipped && (
             <p style={{
               color: 'rgba(255,255,255,0.35)', fontSize: 13,
-              fontFamily: "'Comic Sans MS', cursive", fontStyle: 'italic',
+              fontFamily: "'Nunito', sans-serif", fontStyle: 'italic',
             }}>
               Need help? Tap the card to see sounds
             </p>
@@ -235,7 +235,7 @@ export default function SentenceScreen({ onBack, onRate, recorder, unitId }: Sen
           {flipped && (
             <p style={{
               color: 'rgba(255,255,255,0.35)', fontSize: 13,
-              fontFamily: "'Comic Sans MS', cursive", fontStyle: 'italic',
+              fontFamily: "'Nunito', sans-serif", fontStyle: 'italic',
             }}>
               Tap card again to hide hints
             </p>
@@ -285,14 +285,14 @@ export default function SentenceScreen({ onBack, onRate, recorder, unitId }: Sen
           }}>
             <div style={{ fontSize: 52, marginBottom: 12 }}>📚🌟</div>
             <h2 style={{
-              color: '#FFD700', fontFamily: "'Comic Sans MS', cursive",
+              color: '#FFD700', fontFamily: "'Nunito', sans-serif",
               fontSize: 22, marginBottom: 12, lineHeight: 1.3,
             }}>
               Great reading!
             </h2>
             <p style={{
               color: '#E0E0E0', fontSize: 15, lineHeight: 1.7,
-              fontFamily: "'Comic Sans MS', cursive", marginBottom: 20,
+              fontFamily: "'Nunito', sans-serif", marginBottom: 20,
             }}>
               {DECODABLE_TIPS[unitId]}
             </p>
@@ -335,21 +335,21 @@ export default function SentenceScreen({ onBack, onRate, recorder, unitId }: Sen
           }}>
             <div style={{ fontSize: 64, marginBottom: 16 }}>🎉🌟🚀</div>
             <h2 style={{
-              color: '#FFD700', fontFamily: "'Comic Sans MS', cursive",
+              color: '#FFD700', fontFamily: "'Nunito', sans-serif",
               fontSize: 26, marginBottom: 16, lineHeight: 1.3,
             }}>
               Amazing Work!
             </h2>
             <p style={{
               color: '#E0E0E0', fontSize: 16, lineHeight: 1.7,
-              fontFamily: "'Comic Sans MS', cursive", marginBottom: 24,
+              fontFamily: "'Nunito', sans-serif", marginBottom: 24,
             }}>
               Your child has been reading words, blending sounds, and practicing sentences
               — they now have a strong foundation in early literacy!
             </p>
             <p style={{
               color: '#4FC3F7', fontSize: 15, lineHeight: 1.6,
-              fontFamily: "'Comic Sans MS', cursive", marginBottom: 32,
+              fontFamily: "'Nunito', sans-serif", marginBottom: 32,
             }}>
               They're ready to start practicing with decodable Level A/B books at home.
               Keep the reading adventures going! 📖✨
@@ -376,5 +376,5 @@ export default function SentenceScreen({ onBack, onRate, recorder, unitId }: Sen
 const btnStyle: React.CSSProperties = {
   background: 'rgba(255,255,255,0.08)', border: '2px solid rgba(255,255,255,0.2)',
   borderRadius: 12, color: '#fff', padding: '8px 16px', cursor: 'pointer',
-  fontSize: 14, fontFamily: "'Comic Sans MS', cursive",
+  fontSize: 14, fontFamily: "'Nunito', sans-serif",
 };
