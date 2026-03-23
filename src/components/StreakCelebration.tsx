@@ -18,6 +18,7 @@ const defaultCelebrations = [
 ];
 
 import { getAudioContext } from '../audio/soundEffects';
+import { getRecording } from '../hooks/audioStorage';
 
 // Play a fun celebration jingle
 function playStreakSound() {
@@ -103,12 +104,12 @@ function generateConfetti(count: number): Confetti[] {
   }));
 }
 
-function playParentCelebration(childId?: string) {
+async function playParentCelebration(childId?: string) {
   try {
     const key = childId
-      ? `space-reader-recording-celebration-${childId}`
-      : 'space-reader-recording-celebration-goodjob';
-    const dataUrl = localStorage.getItem(key);
+      ? `celebration-${childId}`
+      : 'celebration-goodjob';
+    const dataUrl = await getRecording(key);
     if (dataUrl) {
       const audio = new Audio(dataUrl);
       audio.play().catch(() => {});
