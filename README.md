@@ -32,7 +32,7 @@ The program has 10 units that build on each other, with activities at every step
 
 ## Try it
 
-Visit the live app: **[your-vercel-url.vercel.app]**
+Visit the live app: **[adventure-readers.vercel.app](https://adventure-readers.vercel.app/)**
 
 1. Tap **+ Add New Explorer**
 2. Pick a theme
