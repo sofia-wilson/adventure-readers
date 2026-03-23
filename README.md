@@ -84,6 +84,33 @@ See [GUIDE.md](GUIDE.md) for detailed customization instructions.
 
 After completing the program, your child will have a strong foundation in early literacy and will be ready to start reading Level A/B/C books independently.
 
+## Example: How I customized this for my son
+
+I wanted a personal version just for my son Liam — no multi-profile setup, just his name, and a **Space Transformers** theme because he loves Transformers. Here's what I did:
+
+1. **Copied the project** into a new folder
+2. **Removed the profile picker** — the app goes straight to the home screen with Liam's name hardcoded
+3. **Customized the Space theme** — changed the title to "Liam's Space Transformers," swapped in robot and lightning bolt emojis (🤖⚡🦾), and added Transformer-themed streak celebrations like "AUTOBOTS, ROLL OUT!" and "OPTIMUS APPROVES!"
+4. **Created a private GitHub repo** so the code isn't visible to anyone else
+5. **Deployed to a separate Vercel URL** — completely independent from the public version
+
+The whole thing took about 10 minutes and Liam loves it.
+
+You can do the same — make it dinosaur-themed, princess-themed, superhero-themed, whatever your child is into. The theme system is designed to be easy to modify.
+
+## Need help customizing? Use Claude Code
+
+If you're not a developer, you can use [Claude Code](https://claude.ai/download) to help you customize the app. Claude Code is an AI coding assistant that can read your project and make changes for you.
+
+Here are some things you can ask it to do:
+
+- *"Change the theme to dinosaurs — use dinosaur emojis and rename the units to dinosaur names"*
+- *"Remove the multi-profile system and hardcode my daughter's name as Emma"*
+- *"Add 3 new sentences to Unit 5 using glued sounds"*
+- *"Change the celebration message to say ROAR instead of GREAT JOB"*
+
+Just open your forked project in Claude Code, describe what you want, and it will make the changes. No coding experience needed.
+
 ## Privacy
 
 All recordings and progress data are stored **locally in your browser** — nothing is sent to any server. Each person's copy of the app is completely independent.
