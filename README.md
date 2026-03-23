@@ -18,7 +18,7 @@ The program has 10 units that build on each other, with activities at every step
 
 ## What makes it special?
 
-**Phonetically correct sequencing & recordings.** The curriculum is carefully structured to prevent common mistakes that parents and free apps often miss. For example, "ang" in *fang* and "an" in *can* are glued sounds — they should never be broken apart into separate letters. The app handles this correctly throughout, so your child learns the right way from the start.
+**Phonetically correct sequencing & recordings.** The curriculum is carefully structured to prevent common mistakes that parents and free apps often miss. For example, "ang" in *fang* and "an" in *can* are glued sounds — these sounds can be tricky when a child attempts to read them separately by individual letter-sound. The app handles this correctly throughout, so your child learns the right way from the start.
 
 **Your voice, not a computer.** A parent or teacher records every sound and word. Your child hears someone they know and trust — not a robotic voice.
 
