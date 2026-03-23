@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
+import { getAudioContext } from '../audio/soundEffects';
 
 interface SpacePrizeGameProps {
   unitNumber: number;
@@ -30,7 +31,7 @@ interface FloatingItem {
 
 function playPopSound(pitch: number) {
   try {
-    const ctx = new AudioContext();
+    const ctx = getAudioContext();
     const now = ctx.currentTime;
     const osc = ctx.createOscillator();
     const gain = ctx.createGain();
@@ -47,7 +48,7 @@ function playPopSound(pitch: number) {
 
 function playPrizeRevealSound() {
   try {
-    const ctx = new AudioContext();
+    const ctx = getAudioContext();
     const now = ctx.currentTime;
     const notes = [523, 659, 784, 1047, 1319, 1568];
     notes.forEach((freq, i) => {

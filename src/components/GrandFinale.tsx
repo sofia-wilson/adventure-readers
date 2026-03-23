@@ -1,5 +1,6 @@
 import { useEffect, useState, useContext } from 'react';
 import ProfileContext from './ProfileContext';
+import { getAudioContext } from '../audio/soundEffects';
 
 interface GrandFinaleProps {
   prizes: string[];
@@ -8,7 +9,7 @@ interface GrandFinaleProps {
 
 function playFinaleSound() {
   try {
-    const ctx = new AudioContext();
+    const ctx = getAudioContext();
     const now = ctx.currentTime;
 
     // Epic ascending fanfare

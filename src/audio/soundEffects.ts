@@ -2,9 +2,13 @@
 
 let audioCtx: AudioContext | null = null;
 
-function getAudioContext(): AudioContext {
+export function getAudioContext(): AudioContext {
   if (!audioCtx) {
     audioCtx = new AudioContext();
+  }
+  // iOS Safari suspends AudioContext until resumed from a user gesture
+  if (audioCtx.state === 'suspended') {
+    audioCtx.resume();
   }
   return audioCtx;
 }

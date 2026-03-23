@@ -17,10 +17,12 @@ const defaultCelebrations = [
   { emoji: '⭐', bg: '#FFD700' },
 ];
 
+import { getAudioContext } from '../audio/soundEffects';
+
 // Play a fun celebration jingle
 function playStreakSound() {
   try {
-    const ctx = new AudioContext();
+    const ctx = getAudioContext();
     const now = ctx.currentTime;
 
     // Quick ascending arpeggio — do mi sol do!
