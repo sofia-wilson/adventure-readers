@@ -30,8 +30,9 @@ function getLowerGrapheme(grapheme: string): string {
 
 export default function SoundCard({
   card, size = 'large', onTap, highlighted,
-  hasRecording, onPlayRecording, showFront = false,
+  hasRecording: _hasRecording, onPlayRecording: _onPlayRecording, showFront = false,
 }: SoundCardProps) {
+  void _hasRecording; void _onPlayRecording;
   const profile = useContext(ProfileContext);
   const cardGradient = profile?.theme?.cardGradient || 'linear-gradient(135deg, #2a2a5e, #1a1a4e)';
   const handleClick = () => {

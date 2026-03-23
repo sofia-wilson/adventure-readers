@@ -16,7 +16,6 @@ import { useProgress } from './hooks/useProgress';
 import { useRecorder } from './hooks/useRecorder';
 import { useProfiles, type ChildProfile } from './hooks/useProfiles';
 import { getTheme } from './data/themes';
-import type { ThemeConfig } from './data/themes';
 import type { Rating } from './types';
 
 type Screen =

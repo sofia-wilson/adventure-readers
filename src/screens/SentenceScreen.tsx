@@ -135,7 +135,8 @@ export default function SentenceScreen({ onBack, onRate, recorder, unitId }: Sen
   };
 
   // Build plain text from words
-  const sentenceText = current?.words.map(w => w.text).join(' ') || '';
+  const _sentenceText = current?.words.map(w => w.text).join(' ') || '';
+  void _sentenceText;
 
   return (
     <div style={{

@@ -47,7 +47,6 @@ export default function TrickWordScreen({ unitId, onBack, onRate, mode = 'all', 
 
   const currentChunk = chunks[chunkIndex] || [];
   const currentWord = currentChunk[wordIndex];
-  const totalWordsCompleted = chunkIndex * CHUNK_SIZE + (phase === 'you_do' ? wordIndex : 0);
 
   const playWord = useCallback((word: TrickWord) => {
     if (recorder) {
