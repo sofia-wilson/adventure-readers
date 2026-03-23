@@ -1,0 +1,277 @@
+import { useContext } from 'react';
+import { getUnitById, units } from '../data/curriculum';
+import ProfileContext from '../components/ProfileContext';
+
+interface UnitScreenProps {
+  unitId: string;
+  onBack: () => void;
+  onActivity: (activity: string) => void;
+}
+
+interface ActivityDef {
+  emoji: string;
+  label: string;
+  description: string;
+}
+
+const activityInfo: Record<string, ActivityDef> = {
+  sound_drill: {
+    emoji: '🔊',
+    label: 'Sound Drill',
+    description: 'Tap cards to hear each sound',
+  },
+  blending: {
+    emoji: '🚀',
+    label: 'Blending Launchpad',
+    description: 'Blend sounds and build words!',
+  },
+  phonetic_hfw: {
+    emoji: '📖',
+    label: 'Regular Words',
+    description: 'Words you can sound out — they follow the rules!',
+  },
+  trick_word: {
+    emoji: '✨',
+    label: 'Trick Words',
+    description: 'Words you just have to know!',
+  },
+  blending_review: {
+    emoji: '🔄',
+    label: 'Blending Review',
+    description: 'Read words from all units — dots to help you blend!',
+  },
+  trick_review: {
+    emoji: '⚡',
+    label: 'Trick Word Snap',
+    description: 'Read trick words as fast as you can!',
+  },
+  unit_sentences: {
+    emoji: '📖',
+    label: 'Read Sentences',
+    description: 'Practice reading sentences with this unit\'s sounds!',
+  },
+  sentences: {
+    emoji: '📚',
+    label: 'Read Sentences',
+    description: 'Read real sentences with pictures!',
+  },
+};
+
+// Group activities into sections
+interface Section {
+  header?: string;
+  subtitle?: string;
+  activities: string[];
+}
+
+function getSections(activities: string[]): Section[] {
+  const blending = activities.filter(a => a === 'sound_drill' || a === 'blending');
+  const hfw = activities.filter(a => a === 'phonetic_hfw' || a === 'trick_word');
+  const unitSentences = activities.filter(a => a === 'unit_sentences');
+  const standalone = activities.filter(a =>
+    a === 'blending_review' || a === 'trick_review' || a === 'sentences'
+  );
+
+  const sections: Section[] = [];
+
+  if (blending.length > 0) {
+    sections.push({ activities: blending });
+  }
+
+  if (hfw.length > 0) {
+    sections.push({
+      header: 'Read High Frequency Words',
+      subtitle: 'Practice reading words quickly and automatically',
+      activities: hfw,
+    });
+  }
+
+  if (unitSentences.length > 0) {
+    sections.push({
+      header: 'Read Sentences',
+      subtitle: 'Put it all together — read sentences with this unit\'s sounds!',
+      activities: unitSentences,
+    });
+  }
+
+  if (standalone.length > 0) {
+    sections.push({ activities: standalone });
+  }
+
+  return sections;
+}
+
+export default function UnitScreen({ unitId, onBack, onActivity }: UnitScreenProps) {
+  const profile = useContext(ProfileContext);
+  const theme = profile?.theme;
+  const unit = getUnitById(unitId);
+  if (!unit) return null;
+  const unitIdx = units.findIndex(u => u.id === unitId);
+
+  const sections = getSections(unit.activities);
+
+  return (
+    <div style={{
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      padding: '20px 16px',
+      minHeight: '100vh',
+    }}>
+      <button onClick={onBack} style={backBtnStyle}>← Back to Map</button>
+
+      {/* Planet header */}
+      <div style={{
+        width: 100,
+        height: 100,
+        borderRadius: '50%',
+        background: `radial-gradient(circle at 35% 35%, ${(theme?.unitColors[unitIdx] || unit.planetColor)}ee, ${(theme?.unitColors[unitIdx] || unit.planetColor)}88)`,
+        boxShadow: `0 0 30px ${(theme?.unitColors[unitIdx] || unit.planetColor)}66`,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        fontSize: 40,
+        margin: '20px 0 16px',
+      }}>
+        {theme?.titleEmojis[0] || '🪐'}
+      </div>
+
+      <h2 style={{
+        color: theme?.accentColor || '#FFD700',
+        fontFamily: "'Comic Sans MS', cursive",
+        fontSize: 28,
+        margin: '0 0 4px',
+      }}>
+        {(theme?.unitNames[unitIdx]) || unit.planetName}
+      </h2>
+      <p style={{
+        color: '#B0BEC5',
+        fontSize: 16,
+        margin: '0 0 8px',
+        fontFamily: "'Comic Sans MS', cursive",
+      }}>
+        {unit.name} — {unit.description}
+      </p>
+
+      <p style={{
+        color: '#78909C',
+        fontSize: 14,
+        marginBottom: 24,
+        fontFamily: "'Comic Sans MS', cursive",
+      }}>
+        Choose an activity to explore!
+      </p>
+
+      {/* Sections */}
+      <div style={{
+        display: 'flex',
+        flexDirection: 'column',
+        gap: 12,
+        width: '100%',
+        maxWidth: 420,
+      }}>
+        {sections.map((section, sIdx) => (
+          <div key={sIdx}>
+            {/* Section header */}
+            {section.header && (
+              <div style={{
+                marginTop: sIdx > 0 ? 16 : 0,
+                marginBottom: 8,
+                paddingLeft: 4,
+              }}>
+                <h3 style={{
+                  color: '#FFD700',
+                  fontFamily: "'Comic Sans MS', cursive",
+                  fontSize: 16,
+                  margin: '0 0 2px',
+                }}>
+                  {section.header}
+                </h3>
+                {section.subtitle && (
+                  <p style={{
+                    color: '#78909C',
+                    fontSize: 12,
+                    margin: 0,
+                    fontStyle: 'italic',
+                  }}>
+                    {section.subtitle}
+                  </p>
+                )}
+              </div>
+            )}
+
+            {/* Activity buttons */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+              {section.activities.map(activity => {
+                const rawInfo = activityInfo[activity];
+                const info = activity === 'blending' && theme
+                  ? { ...rawInfo, label: theme.blendingLabel, emoji: theme.blendingEmoji }
+                  : rawInfo;
+                return (
+                  <button
+                    key={activity}
+                    onClick={() => onActivity(activity)}
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: 14,
+                      padding: '16px 20px',
+                      borderRadius: 18,
+                      border: '2px solid rgba(255,255,255,0.12)',
+                      background: 'rgba(255,255,255,0.05)',
+                      cursor: 'pointer',
+                      textAlign: 'left',
+                      transition: 'transform 0.1s, background 0.2s',
+                    }}
+                    onMouseEnter={e => {
+                      (e.currentTarget as HTMLElement).style.background = 'rgba(255,255,255,0.1)';
+                      (e.currentTarget as HTMLElement).style.transform = 'scale(1.02)';
+                    }}
+                    onMouseLeave={e => {
+                      (e.currentTarget as HTMLElement).style.background = 'rgba(255,255,255,0.05)';
+                      (e.currentTarget as HTMLElement).style.transform = 'scale(1)';
+                    }}
+                  >
+                    <span style={{ fontSize: 32 }}>{info.emoji}</span>
+                    <div style={{ flex: 1 }}>
+                      <span style={{
+                        color: '#fff',
+                        fontSize: 17,
+                        fontWeight: 'bold',
+                        fontFamily: "'Comic Sans MS', cursive",
+                        display: 'block',
+                      }}>
+                        {info.label}
+                      </span>
+                      <span style={{
+                        color: '#B0BEC5',
+                        fontSize: 12,
+                        fontFamily: "'Comic Sans MS', cursive",
+                      }}>
+                        {info.description}
+                      </span>
+                    </div>
+                    <span style={{ fontSize: 20, color: 'rgba(255,255,255,0.25)' }}>→</span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        ))}
+      </div>
+
+    </div>
+  );
+}
+
+const backBtnStyle: React.CSSProperties = {
+  background: 'rgba(255,255,255,0.1)',
+  border: '2px solid rgba(255,255,255,0.2)',
+  borderRadius: 12,
+  color: '#fff',
+  padding: '8px 16px',
+  cursor: 'pointer',
+  fontSize: 14,
+  fontFamily: "'Comic Sans MS', cursive",
+  alignSelf: 'flex-start',
+};
