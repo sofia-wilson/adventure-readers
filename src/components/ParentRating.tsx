@@ -1,5 +1,6 @@
 import { useContext } from 'react';
 import ProfileContext from './ProfileContext';
+import { unlockAudioForIOS } from '../audio/soundEffects';
 import type { Rating } from '../types';
 
 interface ParentRatingProps {
@@ -17,7 +18,7 @@ export default function ParentRating({ onRate }: ParentRatingProps) {
     }}>
       {/* Not quite — left */}
       <button
-        onClick={() => onRate('red')}
+        onClick={() => { unlockAudioForIOS(); onRate('red'); }}
         style={{
           display: 'flex',
           alignItems: 'center',
@@ -42,7 +43,7 @@ export default function ParentRating({ onRate }: ParentRatingProps) {
 
       {/* Got it — right */}
       <button
-        onClick={() => onRate('green')}
+        onClick={() => { unlockAudioForIOS(); onRate('green'); }}
         style={{
           display: 'flex',
           alignItems: 'center',

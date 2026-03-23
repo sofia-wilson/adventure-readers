@@ -52,13 +52,16 @@ export default function App() {
   const theme = activeChild ? getTheme(activeChild.theme) : getTheme('space');
 
   return (
-    <div style={{
-      minHeight: '100vh',
-      background: theme.bgGradient,
-      fontFamily: "'Nunito', sans-serif",
-      position: 'relative',
-      overflow: 'hidden',
-    }}>
+    <div
+      onClick={() => { import('./audio/soundEffects').then(m => m.unlockAudioForIOS()); }}
+      style={{
+        minHeight: '100vh',
+        background: theme.bgGradient,
+        fontFamily: "'Nunito', sans-serif",
+        position: 'relative',
+        overflow: 'hidden',
+      }}
+    >
       {/* Star background */}
       <div style={{
         position: 'fixed',

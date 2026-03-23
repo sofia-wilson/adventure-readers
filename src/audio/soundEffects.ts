@@ -1,6 +1,7 @@
 // Fun space sound effects using Web Audio API — no external files needed
 
 let audioCtx: AudioContext | null = null;
+let iosUnlocked = false;
 
 export function getAudioContext(): AudioContext {
   if (!audioCtx) {
@@ -11,6 +12,24 @@ export function getAudioContext(): AudioContext {
     audioCtx.resume();
   }
   return audioCtx;
+}
+
+// Call this on any user tap to unlock audio on iOS
+// iOS requires a user-initiated audio play before allowing programmatic playback
+export function unlockAudioForIOS(): void {
+  if (iosUnlocked) return;
+  try {
+    const ctx = getAudioContext();
+    // Play a silent buffer to unlock
+    const buffer = ctx.createBuffer(1, 1, ctx.sampleRate);
+    const source = ctx.createBufferSource();
+    source.buffer = buffer;
+    source.connect(ctx.destination);
+    source.start(0);
+    iosUnlocked = true;
+  } catch {
+    // ignore
+  }
 }
 
 // Create white noise for applause/rocket rumble effects
