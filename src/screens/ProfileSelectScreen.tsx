@@ -266,6 +266,22 @@ export default function ProfileSelectScreen({
               />
               <br />
               <button onClick={submitPin} style={primaryBtn}>Next →</button>
+              <button
+                onClick={() => {
+                  setNewPin('');
+                  const profile = onAddProfile(newName.trim(), '', newTheme);
+                  onSelect(profile);
+                }}
+                style={{
+                  background: 'none', border: 'none',
+                  color: 'rgba(255,255,255,0.4)', fontSize: 12,
+                  fontFamily: "'Comic Sans MS', cursive",
+                  cursor: 'pointer', marginTop: 12,
+                  textDecoration: 'underline',
+                }}
+              >
+                Skip — no PIN needed
+              </button>
             </>
           )}
 
@@ -460,7 +476,10 @@ export default function ProfileSelectScreen({
             return (
               <button
                 key={p.id}
-                onClick={() => { setPinDigits([]); setPinError(false); setMode({ type: 'pin', profile: p }); }}
+                onClick={() => {
+                  if (!p.pin) { onSelect(p); return; }
+                  setPinDigits([]); setPinError(false); setMode({ type: 'pin', profile: p });
+                }}
                 style={{
                   width: 130, padding: '20px 12px',
                   borderRadius: 20, border: `3px solid ${pTheme.accentColor}44`,
@@ -484,6 +503,15 @@ export default function ProfileSelectScreen({
                 <span style={{ color: pTheme.accentColor, fontSize: 11, fontFamily: "'Comic Sans MS', cursive" }}>
                   {pTheme.titleEmojis[0]} {pTheme.name}
                 </span>
+                {!p.pin && (
+                  <span style={{
+                    color: '#4CAF50', fontSize: 11,
+                    fontFamily: "'Comic Sans MS', cursive",
+                    fontStyle: 'italic',
+                  }}>
+                    Test it out!
+                  </span>
+                )}
               </button>
             );
           })}
