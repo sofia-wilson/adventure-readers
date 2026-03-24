@@ -453,7 +453,7 @@ export default function BlendingScreen({ unitId, onBack, onRate, recorder }: Ble
                     fontFamily: "'Nunito', sans-serif", fontStyle: 'italic',
                     textAlign: 'center',
                   }}>
-                    💡 Tip: After hearing it blended slowly, encourage your child to "say it fast" — the whole word at once. If they still space out the sounds, play the blend again or tap the word card for a hint.
+                    💡 Tip: After hearing it blended slowly, encourage the reader to "say it fast" — the whole word at once. If they still space out the sounds, play the blend again or tap the word card for a hint.
                   </p>
                 </div>
               )}

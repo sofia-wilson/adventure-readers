@@ -278,7 +278,7 @@ export default function SetupScreen({ onBack, onComplete, recorder }: SetupScree
           marginBottom: 16,
           lineHeight: 1.5,
         }}>
-          Say <strong style={{ color: '#fff' }}>"Great job, {childName}!"</strong> so your child hears <em>your</em> voice when they get an answer right.
+          Say <strong style={{ color: '#fff' }}>"Great job, {childName}!"</strong> so the reader hears <em>your</em> voice when they get an answer right.
         </p>
 
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 12 }}>
@@ -662,7 +662,7 @@ export default function SetupScreen({ onBack, onComplete, recorder }: SetupScree
               }}>
                 {wu.id === 'K-U6'
                   ? 'Record each word AND a "blended slowly" version (e.g., "s-i-t... sit... s... sits")'
-                  : 'Say each word clearly — your child will hear this in the "We Do" step'}
+                  : 'Say each word clearly — the reader will hear this in the "We Do" step'}
               </p>
 
               <div style={{
@@ -803,7 +803,7 @@ export default function SetupScreen({ onBack, onComplete, recorder }: SetupScree
             color: '#78909C', fontSize: 13, marginBottom: 16, fontStyle: 'italic',
             width: '100%',
           }}>
-            Record each word clearly — your child can tap ⭐ to hear these during sentence reading
+            Record each word clearly — the reader can tap ⭐ to hear these during sentence reading
           </p>
 
           {(() => {
@@ -930,7 +930,7 @@ export default function SetupScreen({ onBack, onComplete, recorder }: SetupScree
             color: '#78909C', fontSize: 13, marginBottom: 16, fontStyle: 'italic',
             width: '100%',
           }}>
-            Record each word clearly — your child can tap ⭐ to hear these during sentence reading (Unit 10). Trick words are already recorded above in the HFW section.
+            Record each word clearly — the reader can tap ⭐ to hear these during sentence reading (Unit 10). Trick words are already recorded above in the HFW section.
           </p>
 
           {(() => {

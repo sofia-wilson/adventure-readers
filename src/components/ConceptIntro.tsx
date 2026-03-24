@@ -200,7 +200,7 @@ export default function ConceptIntro({ unitId, onReady }: ConceptIntroProps) {
           margin: '0 0 6px', textTransform: 'uppercase',
           letterSpacing: 1,
         }}>
-          💡 Say to your child:
+          💡 Say to the reader:
         </p>
         <p style={{
           color: '#CFD8DC', fontSize: 15, lineHeight: 1.6,

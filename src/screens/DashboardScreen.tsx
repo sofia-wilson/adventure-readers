@@ -226,7 +226,7 @@ export default function DashboardScreen({ attempts, onBack, onClearProgress }: D
           color: '#B0BEC5', fontSize: 14, lineHeight: 1.7,
           fontFamily: "'Nunito', sans-serif", margin: 0,
         }}>
-          📚 After completing all units, your child will have a strong foundation
+          📚 After completing all units, the reader will have a strong foundation
           in early literacy — from letter sounds to blending to reading sentences.
           They'll be ready to start practicing with Level A/B/C books at home!
         </p>

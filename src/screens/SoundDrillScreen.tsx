@@ -429,7 +429,7 @@ export default function SoundDrillScreen({ unitId, onBack, onRate, recorder }: S
                     fontFamily: "'Nunito', sans-serif", fontStyle: 'italic',
                     textAlign: 'center',
                   }}>
-                    💡 Tip: Encourage your child to say the sound just by seeing the letter(s). If they're unsure, they can flip for a visual hint or tap again to hear the sound.
+                    💡 Tip: Encourage the reader to say the sound just by seeing the letter(s). If they're unsure, they can flip for a visual hint or tap again to hear the sound.
                   </p>
                 </div>
               )}

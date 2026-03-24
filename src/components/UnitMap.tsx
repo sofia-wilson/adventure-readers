@@ -248,7 +248,7 @@ export default function UnitMap({
         margin: '20px auto 0',
         padding: '0 16px',
       }}>
-        📚 After Unit 10, your child will be ready for Level A/B/C books — the next step in their reading journey!
+        📚 After Unit 10, the reader will be ready for Level A/B/C books — the next step in their reading journey!
       </p>
     </div>
   );

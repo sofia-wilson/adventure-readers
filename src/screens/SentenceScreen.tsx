@@ -12,12 +12,12 @@ import type { Recorder } from '../hooks/useRecorder';
 
 // Decodable reader tips per unit
 const DECODABLE_TIPS: Record<string, string> = {
-  'K-U2': 'Your child can now practice with Level A books — simple CVC word books like "The cat sat on the mat."',
-  'K-U3': 'Try Level A/B books with digraph words (sh, ch, th, wh) — your child is ready!',
+  'K-U2': 'Time to practice with Level A books — simple CVC word books like "The cat sat on the mat."',
+  'K-U3': 'Try Level A/B books with digraph words (sh, ch, th, wh) — ready for the challenge!',
   'K-U4': 'Look for Level A/B books that include words with double letters (ff, ll, ss) — great practice!',
-  'K-U5': 'Your child can read words with glued sounds (am, an) — find Level B books with these patterns!',
-  'K-U6': 'Try Level B books with simple plural words (dogs, cats, maps) — your child can handle the suffix -s!',
-  'K-U7': 'Your child is ready for Level B/C books with ng and nk words — they\'re building a strong foundation!',
+  'K-U5': 'Try Level B books with glued sound patterns (am, an) — great next step!',
+  'K-U6': 'Try Level B books with simple plural words (dogs, cats, maps) — the suffix -s is no problem!',
+  'K-U7': 'Ready for Level B/C books with ng and nk words — what a strong foundation!',
 };
 
 interface SentenceScreenProps {
@@ -334,7 +334,7 @@ export default function SentenceScreen({ onBack, onRate, recorder, unitId }: Sen
               color: '#78909C', fontSize: 12, lineHeight: 1.5,
               fontStyle: 'italic', marginBottom: 24,
             }}>
-              Tip: Leveled readers match the phonics skills your child is learning — look for books that practice this unit's sounds!
+              Tip: Leveled readers match the phonics skills being learned — look for books that practice this unit's sounds!
             </p>
             <button
               onClick={onBack}
@@ -378,8 +378,8 @@ export default function SentenceScreen({ onBack, onRate, recorder, unitId }: Sen
               color: '#E0E0E0', fontSize: 16, lineHeight: 1.7,
               fontFamily: "'Nunito', sans-serif", marginBottom: 24,
             }}>
-              Your child has been reading words, blending sounds, and practicing sentences
-              — they now have a strong foundation in early literacy!
+              Amazing progress — reading words, blending sounds, and practicing sentences!
+              That's a strong foundation in early literacy!
             </p>
             <p style={{
               color: '#4FC3F7', fontSize: 15, lineHeight: 1.6,
