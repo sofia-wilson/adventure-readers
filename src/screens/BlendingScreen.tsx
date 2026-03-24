@@ -143,8 +143,9 @@ export default function BlendingScreen({ unitId, onBack, onRate, recorder }: Ble
       const nextIdx = currentIndex + 1;
       setCurrentIndex(nextIdx);
       initWord(nextIdx);
+      saveProgress({ currentIndex: nextIdx, phase: 'i_do' });
     }
-  }, [currentIndex, words.length, initWord]);
+  }, [currentIndex, words.length, initWord, saveProgress]);
 
   const handleReset = () => { initWord(currentIndex); };
 
@@ -363,7 +364,7 @@ export default function BlendingScreen({ unitId, onBack, onRate, recorder }: Ble
               </div>
 
               {/* Next step */}
-              <button onClick={() => setPhase('you_do')} style={{
+              <button onClick={() => { setPhase('you_do'); saveProgress({ currentIndex, phase: 'you_do' }); }} style={{
                 background: 'rgba(255, 215, 0, 0.15)',
                 border: '2px solid rgba(255, 215, 0, 0.4)',
                 borderRadius: 14, color: '#FFD700', padding: '12px 24px',

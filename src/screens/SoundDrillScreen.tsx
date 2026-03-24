@@ -49,9 +49,9 @@ export default function SoundDrillScreen({ unitId, onBack, onRate, recorder, att
   }, [cards]);
 
   // Restore saved position or start at 0
-  const initialChunk = savedSession && !completedOnce ? Math.min(savedSession.chunkIndex || 0, chunks.length - 1) : 0;
-  const initialPhase = savedSession && !completedOnce ? (savedSession.phase as 'i_do' | 'you_do' || 'i_do') : 'i_do';
-  const initialWordIndex = savedSession && !completedOnce ? (savedSession.wordIndex || 0) : 0;
+  const initialChunk = savedSession ? Math.min(savedSession.chunkIndex || 0, Math.max(0, chunks.length - 1)) : 0;
+  const initialPhase = savedSession ? (savedSession.phase as 'i_do' | 'you_do' || 'i_do') : 'i_do';
+  const initialWordIndex = savedSession ? Math.min(savedSession.wordIndex || 0, Math.max(0, (chunks[initialChunk]?.length || 1) - 1)) : 0;
 
   const [chunkIndex, setChunkIndex] = useState(initialChunk);
   const [phase, setPhase] = useState<'i_do' | 'you_do'>(initialPhase);
@@ -61,7 +61,7 @@ export default function SoundDrillScreen({ unitId, onBack, onRate, recorder, att
   const [celebrationRating, setCelebrationRating] = useState<Rating | null>(null);
   const { streak, showStreakCelebration, recordRating, dismissStreakCelebration } = useStreak();
 
-  // Save progress whenever position changes
+  // Save progress synchronously whenever position changes
   useEffect(() => {
     saveProgress({ currentIndex: chunkIndex * CHUNK_SIZE + wordIndex, chunkIndex, wordIndex, phase });
   }, [chunkIndex, wordIndex, phase, saveProgress]);
@@ -83,12 +83,15 @@ export default function SoundDrillScreen({ unitId, onBack, onRate, recorder, att
     // Auto-advance after the sound plays
     setTimeout(() => {
       if (wordIndex < currentChunk.length - 1) {
-        setWordIndex(prev => prev + 1);
+        const nextWord = wordIndex + 1;
+        setWordIndex(nextWord);
         setIDoRevealed(false);
+        saveProgress({ currentIndex: chunkIndex * CHUNK_SIZE + nextWord, chunkIndex, wordIndex: nextWord, phase: 'i_do' });
       } else {
         setPhase('you_do');
         setWordIndex(0);
         setFlipped(false);
+        saveProgress({ currentIndex: chunkIndex * CHUNK_SIZE, chunkIndex, wordIndex: 0, phase: 'you_do' });
       }
     }, 2000);
   };
@@ -116,17 +119,21 @@ export default function SoundDrillScreen({ unitId, onBack, onRate, recorder, att
     setCelebrationRating(null);
 
     if (wordIndex < currentChunk.length - 1) {
-      setWordIndex(prev => prev + 1);
+      const nextWord = wordIndex + 1;
+      setWordIndex(nextWord);
       setFlipped(false);
+      saveProgress({ currentIndex: chunkIndex * CHUNK_SIZE + nextWord, chunkIndex, wordIndex: nextWord, phase });
     } else if (chunkIndex < chunks.length - 1) {
-      setChunkIndex(prev => prev + 1);
+      const nextChunk = chunkIndex + 1;
+      setChunkIndex(nextChunk);
       setPhase('i_do');
       setWordIndex(0);
       setIDoRevealed(false);
       setFlipped(false);
+      saveProgress({ currentIndex: nextChunk * CHUNK_SIZE, chunkIndex: nextChunk, wordIndex: 0, phase: 'i_do' });
     }
     // else: last chunk done — Done button visible
-  }, [wordIndex, currentChunk.length, chunkIndex, chunks.length]);
+  }, [wordIndex, currentChunk.length, chunkIndex, chunks.length, phase, saveProgress]);
 
   const isLastCard = chunkIndex === chunks.length - 1 && wordIndex === currentChunk.length - 1;
   const isDone = phase === 'you_do' && isLastCard && celebrationRating === null;

@@ -110,19 +110,21 @@ export default function TrickWordScreen({ unitId, onBack, onRate, mode = 'all', 
     setCelebrationRating(null);
 
     if (wordIndex < currentChunk.length - 1) {
-      // Next word in You Do
-      setWordIndex(prev => prev + 1);
+      const nextWord = wordIndex + 1;
+      setWordIndex(nextWord);
       setShowRating(true);
+      saveProgress({ currentIndex: chunkIndex * CHUNK_SIZE + nextWord, chunkIndex, wordIndex: nextWord, phase: 'you_do' });
     } else if (chunkIndex < chunks.length - 1) {
-      // Move to next chunk → back to I Do
-      setChunkIndex(prev => prev + 1);
+      const nextChunk = chunkIndex + 1;
+      setChunkIndex(nextChunk);
       setPhase('i_do');
       setWordIndex(0);
       setRevealed(false);
       setShowRating(false);
+      saveProgress({ currentIndex: nextChunk * CHUNK_SIZE, chunkIndex: nextChunk, wordIndex: 0, phase: 'i_do' });
     }
     // else: last chunk done — stay, Done button is visible
-  }, [wordIndex, currentChunk.length, chunkIndex, chunks.length]);
+  }, [wordIndex, currentChunk.length, chunkIndex, chunks.length, saveProgress]);
 
   const isLastWord = chunkIndex === chunks.length - 1 && wordIndex === currentChunk.length - 1;
   const isDone = phase === 'you_do' && isLastWord && celebrationRating === null && !showRating;
