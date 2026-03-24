@@ -106,7 +106,7 @@ export default function BlendingScreen({ unitId, onBack, onRate, recorder }: Ble
     setAvailableSounds([...word.sounds]);
   }, [words]);
 
-  useEffect(() => { initWord(0); }, []);
+  useEffect(() => { initWord(startIndex); }, []);
 
   const handleSoundTap = (sound: string) => {
     const emptyIdx = droppedSounds.indexOf(null);
