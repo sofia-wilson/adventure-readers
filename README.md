@@ -78,4 +78,4 @@ I made a **Space Transformers** version for my son — took about 10 minutes. Yo
 
 ## Credits
 
-Built with love for early readers everywhere.
+Built with love by a former 1st grade teacher — for early readers everywhere.
