@@ -63,13 +63,25 @@ I made a **Space Transformers** version for my son Liam — removed multi-profil
 
 You can do the same — dinosaurs, princesses, superheroes, whatever your child loves.
 
-## Need help customizing?
+## Need help customizing? Use Claude Code
 
-[Claude Code](https://claude.ai/download) can make changes for you — no coding experience needed. Just describe what you want:
+[Claude Code](https://claude.ai/download) is a free AI coding assistant that can read your project and make changes for you — no coding experience needed.
 
-- *"Change the theme to dinosaurs"*
-- *"Hardcode my daughter's name as Emma"*
-- *"Add new sentences to Unit 5"*
+**How to use it:**
+
+1. Download [Claude Code](https://claude.ai/download) and open it
+2. Tell it to open your forked project folder (e.g., *"Open my adventure-readers folder"*)
+3. Paste a link to this repo so it understands the project: `https://github.com/sofia-wilson/adventure-readers`
+4. Then just describe what you want in plain language — it will find the right files and make the changes
+
+**Example prompts you can try:**
+
+- *"Change the theme to dinosaurs — use dinosaur emojis and rename the units to dinosaur names"* → It will update the theme file with new colors, emojis, and labels
+- *"Remove the multi-profile system and hardcode my daughter's name as Emma"* → It will simplify the app to skip the profile picker and go straight to Emma's home screen
+- *"Add 3 new practice sentences to Unit 5 using glued sounds"* → It will add sentences to the curriculum file with the correct phonetic breakdowns
+- *"Make the celebration sound play a chime instead of applause"* → It will update the audio code
+
+You don't need to know where anything is in the code — just describe what you want and Claude Code will handle the rest.
 
 ## Credits
 
