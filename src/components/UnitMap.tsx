@@ -88,8 +88,8 @@ export default function UnitMap({
             fontFamily: "'Nunito', sans-serif",
           }}>
             {setupComplete
-              ? 'All sounds recorded! Tap to re-record any sound.'
-              : 'Record your voice for each sound'}
+              ? 'Record a celebration message! You can also re-record sounds in your own voice.'
+              : 'Record a personalized celebration message for your reader'}
           </span>
 
           {/* Mini progress bar */}
