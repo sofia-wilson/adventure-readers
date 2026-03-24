@@ -47,40 +47,31 @@ After completing the program, your child will be ready to start reading Level A/
 - **Switching devices?** Use the Export/Import feature in the Command Station to move data between devices.
 - **Each browser is separate.** Safari and Chrome on the same device have independent data.
 
-## Want your own copy?
+## Make it your own
 
-Anyone can fork this and deploy their own version for free:
+We encourage you to create your own copy and customize it for your child, classroom, or family. It's free, and your version runs on its own separate website with its own data.
+
+**If you're comfortable with GitHub:**
 
 1. Click **Fork** at the top of this page
 2. Go to [vercel.com](https://vercel.com), sign in with GitHub, and import your fork
-3. Click **Deploy** — you'll have your own private URL in about a minute
+3. Click **Deploy** — you'll have your own URL in about a minute
 
 For customization details (themes, words, sentences), see [GUIDE.md](GUIDE.md).
 
-## Example: How I customized this for my son
-
-I made a **Space Transformers** version for my son Liam — removed multi-profile, hardcoded his name, and added Transformer-themed celebrations. Deployed to a separate private URL. Took about 10 minutes.
-
-You can do the same — dinosaurs, princesses, superheroes, whatever your child loves.
-
-## Want to customize it? Use Claude Code
-
-[Claude Code](https://claude.ai/download) is a free AI assistant that can set everything up for you and make changes — no coding or GitHub experience needed.
-
-**Just download it, open it, and say this:**
+**If you've never used GitHub — no problem.** Download [Claude Code](https://claude.ai/download), open it, and say:
 
 > *"I want to create my own version of this reading app: https://github.com/sofia-wilson/adventure-readers — help me fork it, customize it, and deploy it to my own URL."*
 
-Claude Code will walk you through every step — creating a GitHub account if you need one, copying the project, making your changes, and putting it live on the internet. You don't need to know how any of the technical stuff works.
+It will walk you through every step — creating accounts, copying the project, making changes, and putting it live. No coding or technical knowledge needed.
 
-**Once your project is set up, you can ask it to make changes like:**
+Once your copy is set up, you can ask Claude Code to make changes anytime:
 
-- *"Change the theme to dinosaurs"* → It will swap in dinosaur emojis, colors, and unit names
-- *"Make it just for my daughter Emma — remove the profile picker"* → It will simplify the app to go straight to Emma's home screen
-- *"Add new practice sentences to Unit 5"* → It will add them with the correct phonetic breakdowns
-- *"Change the celebration sound to a chime"* → It will update the audio
+- *"Change the theme to dinosaurs"* → Swaps in dinosaur emojis, colors, and unit names
+- *"Make it just for my daughter Emma"* → Removes multi-profile and goes straight to Emma's home screen
+- *"Add new practice sentences to Unit 5"* → Adds them with correct phonetic breakdowns
 
-Just describe what you want in plain language. You don't need to know where anything is in the code — Claude Code will find the right files and make the changes for you.
+I made a **Space Transformers** version for my son — took about 10 minutes. You can do the same with whatever your child loves.
 
 ## Credits
 
