@@ -179,7 +179,7 @@ export default function ProfileSelectScreen({
 
         <div style={{ textAlign: 'center', marginTop: 80, padding: '0 32px' }}>
           <h2 style={titleStyle}>
-            {mode.step === 'name' && '👨‍🚀 New Explorer'}
+            {mode.step === 'name' && '📚 New Reader'}
             {mode.step === 'theme' && '🎨 Pick a Theme'}
             {mode.step === 'pin' && '🔒 Set a PIN'}
             {mode.step === 'confirm' && '🔒 Confirm PIN'}
@@ -516,7 +516,7 @@ export default function ProfileSelectScreen({
           fontWeight: 'bold', fontFamily: "'Nunito', sans-serif",
           boxShadow: '0 4px 20px rgba(33, 150, 243, 0.3)',
         }}>
-          + Add New Explorer
+          + Add New Reader
         </button>
       </div>
     </div>
