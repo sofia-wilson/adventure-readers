@@ -104,7 +104,7 @@ function generateConfetti(count: number): Confetti[] {
   }));
 }
 
-async function playParentCelebration(childId?: string) {
+async function preloadCelebrationAudio(childId?: string): Promise<HTMLAudioElement | null> {
   try {
     const key = childId
       ? `celebration-${childId}`
@@ -112,9 +112,11 @@ async function playParentCelebration(childId?: string) {
     const dataUrl = await getRecording(key);
     if (dataUrl) {
       const audio = new Audio(dataUrl);
-      audio.play().catch(() => {});
+      audio.load(); // Preload on iOS
+      return audio;
     }
   } catch { /* */ }
+  return null;
 }
 
 export default function StreakCelebration({ streak, onComplete }: StreakCelebrationProps) {
@@ -128,13 +130,20 @@ export default function StreakCelebration({ streak, onComplete }: StreakCelebrat
 
   useEffect(() => {
     playStreakSound();
-    // Play parent's "Great job!" recording after a short delay so it layers nicely
-    const voiceTimer = setTimeout(() => playParentCelebration(profile?.childId), 400);
+    // Preload celebration audio immediately, then play after delay
+    let voiceTimer: ReturnType<typeof setTimeout>;
+    preloadCelebrationAudio(profile?.childId).then(audio => {
+      if (audio) {
+        voiceTimer = setTimeout(() => {
+          audio.play().catch(() => {});
+        }, 400);
+      }
+    });
     const timer = setTimeout(() => {
       setVisible(false);
       onComplete();
     }, 2800);
-    return () => { clearTimeout(timer); clearTimeout(voiceTimer); };
+    return () => { clearTimeout(timer); if (voiceTimer) clearTimeout(voiceTimer); };
   }, [onComplete]);
 
   if (!visible) return null;
