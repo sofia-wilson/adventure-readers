@@ -1,6 +1,6 @@
 # Adventure Readers
 
-A free early literacy app that helps children (ages 4-5) learn to read — from letter sounds all the way to reading sentences.
+A free early literacy app that helps children (ages 4-6) learn to read — from letter sounds all the way to reading sentences.
 
 Built by a former 1st grade teacher who taught in Boston & Oakland.
 
