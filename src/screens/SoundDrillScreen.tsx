@@ -22,7 +22,7 @@ interface SoundDrillScreenProps {
 
 const CHUNK_SIZE = 3;
 
-export default function SoundDrillScreen({ unitId, onBack, onRate, recorder, attempts = [] }: SoundDrillScreenProps) {
+export default function SoundDrillScreen({ unitId, onBack, onRate, recorder }: SoundDrillScreenProps) {
   const profile = useContext(ProfileContext);
   const childId = profile?.childId || 'default';
   const unit = getUnitById(unitId);
@@ -33,37 +33,43 @@ export default function SoundDrillScreen({ unitId, onBack, onRate, recorder, att
   const savedSession = getSavedSession();
 
   // Adaptive filtering: use attempts to determine which sounds need practice
-  // If every sound has been attempted at least once, only show unmastered ones
-  const unitAttempts = attempts.filter(a => a.unitId === unitId && a.activityType === 'sound_drill');
+  // Read directly from localStorage to avoid stale closure issues
+  const [{ cards, isAdaptive }] = useState(() => {
+    // Read attempts fresh from localStorage
+    const storedAttempts: Array<{ unitId: string; activityType: string; itemId: string; rating: string }> = (() => {
+      try {
+        const data = localStorage.getItem(`space-reader-progress-${childId}`);
+        return data ? JSON.parse(data) : [];
+      } catch { return []; }
+    })();
 
-  // Snapshot cards on mount so the list doesn't shift mid-session
-  const [cards, isAdaptive] = useMemo(() => {
+    const unitAttempts = storedAttempts.filter(
+      (a: { unitId: string; activityType: string }) => a.unitId === unitId && a.activityType === 'sound_drill'
+    );
+
     // Check: has every sound been attempted at least once?
     const allAttempted = allCards.every(card =>
-      unitAttempts.some(a => a.itemId === card.id)
+      unitAttempts.some((a: { itemId: string }) => a.itemId === card.id)
     );
 
     if (!allAttempted) {
-      // First pass — show all cards, resume from saved position
-      return [allCards, false] as const;
+      return { cards: allCards, isAdaptive: false };
     }
 
     // Find unmastered: latest attempt for each sound was NOT green
     const unmastered = allCards.filter(card => {
-      const cardAttempts = unitAttempts.filter(a => a.itemId === card.id);
+      const cardAttempts = unitAttempts.filter((a: { itemId: string }) => a.itemId === card.id);
       if (cardAttempts.length === 0) return true;
       const latest = cardAttempts[cardAttempts.length - 1];
       return latest.rating !== 'green';
     });
 
     if (unmastered.length === 0) {
-      // All mastered! Show all for celebration/review
-      return [allCards, false] as const;
+      return { cards: allCards, isAdaptive: false };
     }
 
-    return [unmastered, true] as const;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []); // Snapshot on mount only
+    return { cards: unmastered, isAdaptive: true };
+  });
 
   const chunks = useMemo(() => {
     const result: SoundCardType[][] = [];
