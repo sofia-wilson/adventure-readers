@@ -39,6 +39,8 @@ After completing the program, your child will be ready to start reading Level A/
 - **I Do → We Do → You Do scaffolding.** Every blending activity models first, practices together, then lets the child try independently.
 - **Adaptive practice.** The app tracks which sounds and words your child has mastered. When they return to a unit, it only shows what still needs practice.
 - **3 fun themes.** Space Explorer, Ocean Diver, or Nature Ranger — each changes the colors, emojis, and feel of the entire app. You can also fully customize the program for your needs (see [Make it your own](#make-it-your-own) below).
+- **Parent dashboard.** Track your child's progress at a glance — see which sounds, words, and skills they've mastered and which ones still need practice.
+- **Customizable voice prompts.** The app comes with pre-recorded sounds for all letters and words, so you can start right away. Parents can also record a personalized celebration message (e.g., "Great job, Emma!") to keep kids engaged. And if you'd prefer your own voice throughout, you can re-record any of the sounds in the program.
 - **Multiple children.** Each child gets their own profile with separate progress tracking. Great for families or classrooms.
 - **Free.** High-quality, pedagogically correct early literacy programs are hard to find — and the good ones usually cost money, which makes access difficult. This app is free for everyone.
 
