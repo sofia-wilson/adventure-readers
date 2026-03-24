@@ -63,25 +63,24 @@ I made a **Space Transformers** version for my son Liam — removed multi-profil
 
 You can do the same — dinosaurs, princesses, superheroes, whatever your child loves.
 
-## Need help customizing? Use Claude Code
+## Want to customize it? Use Claude Code
 
-[Claude Code](https://claude.ai/download) is a free AI coding assistant that can read your project and make changes for you — no coding experience needed.
+[Claude Code](https://claude.ai/download) is a free AI assistant that can set everything up for you and make changes — no coding or GitHub experience needed.
 
-**How to use it:**
+**Just download it, open it, and say this:**
 
-1. Download [Claude Code](https://claude.ai/download) and open it
-2. Tell it to open your forked project folder (e.g., *"Open my adventure-readers folder"*)
-3. Paste a link to this repo so it understands the project: `https://github.com/sofia-wilson/adventure-readers`
-4. Then just describe what you want in plain language — it will find the right files and make the changes
+> *"I want to create my own version of this reading app: https://github.com/sofia-wilson/adventure-readers — help me fork it, customize it, and deploy it to my own URL."*
 
-**Example prompts you can try:**
+Claude Code will walk you through every step — creating a GitHub account if you need one, copying the project, making your changes, and putting it live on the internet. You don't need to know how any of the technical stuff works.
 
-- *"Change the theme to dinosaurs — use dinosaur emojis and rename the units to dinosaur names"* → It will update the theme file with new colors, emojis, and labels
-- *"Remove the multi-profile system and hardcode my daughter's name as Emma"* → It will simplify the app to skip the profile picker and go straight to Emma's home screen
-- *"Add 3 new practice sentences to Unit 5 using glued sounds"* → It will add sentences to the curriculum file with the correct phonetic breakdowns
-- *"Make the celebration sound play a chime instead of applause"* → It will update the audio code
+**Once your project is set up, you can ask it to make changes like:**
 
-You don't need to know where anything is in the code — just describe what you want and Claude Code will handle the rest.
+- *"Change the theme to dinosaurs"* → It will swap in dinosaur emojis, colors, and unit names
+- *"Make it just for my daughter Emma — remove the profile picker"* → It will simplify the app to go straight to Emma's home screen
+- *"Add new practice sentences to Unit 5"* → It will add them with the correct phonetic breakdowns
+- *"Change the celebration sound to a chime"* → It will update the audio
+
+Just describe what you want in plain language. You don't need to know where anything is in the code — Claude Code will find the right files and make the changes for you.
 
 ## Credits
 
