@@ -359,6 +359,22 @@ export default function SoundDrillScreen({ unitId, onBack, onRate, recorder }: S
           {/* === YOU DO PHASE === */}
           {phase === 'you_do' && (
             <>
+              {/* Parent instruction tip */}
+              <div style={{
+                background: 'rgba(255, 215, 0, 0.08)',
+                border: '1px solid rgba(255, 215, 0, 0.2)',
+                borderRadius: 10, padding: '8px 14px', marginBottom: 12,
+                maxWidth: 340,
+              }}>
+                <p style={{
+                  color: 'rgba(255, 215, 0, 0.7)', fontSize: 12, margin: 0,
+                  fontFamily: "'Nunito', sans-serif", fontStyle: 'italic',
+                  textAlign: 'center',
+                }}>
+                  💡 Tip: Encourage your child to say the sound just by seeing the letter. If they're unsure, they can flip for a visual hint or tap again to hear the sound.
+                </p>
+              </div>
+
               <p style={{
                 color: '#B0BEC5', fontSize: 18,
                 fontFamily: "'Nunito', sans-serif",
