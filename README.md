@@ -52,7 +52,7 @@ Starting in Unit 2, children practice reading real sentences like "The dog is we
 
 ## Make it your own
 
-We encourage you to create your own copy and customize it for your child, classroom, or family. It's free, and your version runs on its own separate website with its own data.
+Feel free to create your own copy of this early literacy program and customize it for your child, classroom, or family. It's free, and your version runs on its own separate website with its own data.
 
 **If you're comfortable with GitHub:**
 
