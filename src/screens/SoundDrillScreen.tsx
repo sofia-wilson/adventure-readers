@@ -34,7 +34,7 @@ export default function SoundDrillScreen({ unitId, onBack, onRate, recorder }: S
 
   // Adaptive filtering: use attempts to determine which sounds need practice
   // Read directly from localStorage to avoid stale closure issues
-  const [{ cards, isAdaptive }] = useState(() => {
+  const [{ cards, isAdaptive, allMastered: initialAllMastered }] = useState(() => {
     // Read attempts fresh from localStorage
     const storedAttempts: Array<{ unitId: string; activityType: string; itemId: string; rating: string }> = (() => {
       try {
@@ -53,7 +53,7 @@ export default function SoundDrillScreen({ unitId, onBack, onRate, recorder }: S
     );
 
     if (!allAttempted) {
-      return { cards: allCards, isAdaptive: false };
+      return { cards: allCards, isAdaptive: false, allMastered: false };
     }
 
     // Find unmastered: latest attempt for each sound was NOT green
@@ -65,11 +65,14 @@ export default function SoundDrillScreen({ unitId, onBack, onRate, recorder }: S
     });
 
     if (unmastered.length === 0) {
-      return { cards: allCards, isAdaptive: false };
+      // All mastered!
+      return { cards: allCards, isAdaptive: false, allMastered: true };
     }
 
-    return { cards: unmastered, isAdaptive: true };
+    return { cards: unmastered, isAdaptive: true, allMastered: false };
   });
+
+  const [showMastered, setShowMastered] = useState(initialAllMastered);
 
   const chunks = useMemo(() => {
     const result: SoundCardType[][] = [];
@@ -174,6 +177,50 @@ export default function SoundDrillScreen({ unitId, onBack, onRate, recorder }: S
       <div style={{ color: '#fff', textAlign: 'center', padding: 40 }}>
         <p>No sound cards for this unit yet.</p>
         <button onClick={onBack} style={btnStyle}>Back to Map</button>
+      </div>
+    );
+  }
+
+  // All sounds mastered — show celebration with option to review
+  if (showMastered) {
+    return (
+      <div style={{
+        display: 'flex', flexDirection: 'column', alignItems: 'center',
+        justifyContent: 'center', minHeight: '100vh', padding: 20, gap: 20,
+      }}>
+        <span style={{ fontSize: 80 }}>🌟</span>
+        <h2 style={{
+          color: '#FFD700', fontFamily: "'Nunito', sans-serif",
+          fontSize: 28, textAlign: 'center', margin: 0,
+        }}>
+          All Sounds Mastered!
+        </h2>
+        <p style={{
+          color: '#B0BEC5', fontSize: 16, textAlign: 'center',
+          fontFamily: "'Nunito', sans-serif", maxWidth: 300,
+        }}>
+          {allCards.length}/{allCards.length} sounds — amazing work!
+        </p>
+
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 12, marginTop: 16 }}>
+          <button
+            onClick={() => setShowMastered(false)}
+            style={{
+              background: 'rgba(79, 195, 247, 0.15)',
+              border: '2px solid rgba(79, 195, 247, 0.4)',
+              borderRadius: 14, color: '#4FC3F7', padding: '14px 32px',
+              cursor: 'pointer', fontSize: 16, fontWeight: 'bold',
+              fontFamily: "'Nunito', sans-serif",
+            }}
+          >
+            🔄 Review All Sounds
+          </button>
+          <button onClick={onBack} style={{
+            ...btnStyle, fontSize: 16, padding: '14px 32px',
+          }}>
+            ← Back
+          </button>
+        </div>
       </div>
     );
   }
