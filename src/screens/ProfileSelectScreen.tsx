@@ -503,15 +503,6 @@ export default function ProfileSelectScreen({
                 <span style={{ color: pTheme.accentColor, fontSize: 11, fontFamily: "'Nunito', sans-serif" }}>
                   {pTheme.titleEmojis[0]} {pTheme.name}
                 </span>
-                {!p.pin && (
-                  <span style={{
-                    color: '#4CAF50', fontSize: 11,
-                    fontFamily: "'Nunito', sans-serif",
-                    fontStyle: 'italic',
-                  }}>
-                    Test it out!
-                  </span>
-                )}
               </button>
             );
           })}
