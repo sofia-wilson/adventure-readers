@@ -12,12 +12,12 @@ import type { Recorder } from '../hooks/useRecorder';
 
 // Decodable reader tips per unit
 const DECODABLE_TIPS: Record<string, string> = {
-  'K-U2': 'Your child can now practice with Level A decodable readers — simple CVC word books like "The cat sat on the mat."',
-  'K-U3': 'Try decodable readers with digraph words (sh, ch, th, wh) — your child is ready!',
-  'K-U4': 'Look for decodable readers that include words with double letters (ff, ll, ss) — great practice!',
-  'K-U5': 'Your child can read words with glued sounds (am, an) — find decodable readers with these patterns!',
-  'K-U6': 'Try decodable readers with simple plural words (dogs, cats, maps) — your child can handle the suffix -s!',
-  'K-U7': 'Your child is ready for decodable readers with ng and nk words — they\'re building a strong foundation!',
+  'K-U2': 'Your child can now practice with Level A books — simple CVC word books like "The cat sat on the mat."',
+  'K-U3': 'Try Level A/B books with digraph words (sh, ch, th, wh) — your child is ready!',
+  'K-U4': 'Look for Level A/B books that include words with double letters (ff, ll, ss) — great practice!',
+  'K-U5': 'Your child can read words with glued sounds (am, an) — find Level B books with these patterns!',
+  'K-U6': 'Try Level B books with simple plural words (dogs, cats, maps) — your child can handle the suffix -s!',
+  'K-U7': 'Your child is ready for Level B/C books with ng and nk words — they\'re building a strong foundation!',
 };
 
 interface SentenceScreenProps {
@@ -334,7 +334,7 @@ export default function SentenceScreen({ onBack, onRate, recorder, unitId }: Sen
               color: '#78909C', fontSize: 12, lineHeight: 1.5,
               fontStyle: 'italic', marginBottom: 24,
             }}>
-              Tip for parents: decodable readers match the phonics skills your child is learning — look for books that practice this unit's sounds!
+              Tip: Leveled readers match the phonics skills your child is learning — look for books that practice this unit's sounds!
             </p>
             <button
               onClick={onBack}
@@ -385,7 +385,7 @@ export default function SentenceScreen({ onBack, onRate, recorder, unitId }: Sen
               color: '#4FC3F7', fontSize: 15, lineHeight: 1.6,
               fontFamily: "'Nunito', sans-serif", marginBottom: 32,
             }}>
-              They're ready to start practicing with decodable Level A/B books at home.
+              They're ready to start practicing with Level A/B/C books at home.
               Keep the reading adventures going! 📖✨
             </p>
             <button

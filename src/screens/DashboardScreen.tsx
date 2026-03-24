@@ -228,7 +228,7 @@ export default function DashboardScreen({ attempts, onBack, onClearProgress }: D
         }}>
           📚 After completing all units, your child will have a strong foundation
           in early literacy — from letter sounds to blending to reading sentences.
-          They'll be ready to start practicing with decodable Level A/B books at home!
+          They'll be ready to start practicing with Level A/B/C books at home!
         </p>
       </div>
 
