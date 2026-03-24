@@ -129,13 +129,14 @@ export default function StreakCelebration({ streak, onComplete }: StreakCelebrat
   const cel = celebrations[celIndex];
 
   useEffect(() => {
+    let cancelled = false;
     playStreakSound();
     // Preload celebration audio immediately, then play after delay
     let voiceTimer: ReturnType<typeof setTimeout>;
     preloadCelebrationAudio(profile?.childId).then(audio => {
-      if (audio) {
+      if (audio && !cancelled) {
         voiceTimer = setTimeout(() => {
-          audio.play().catch(() => {});
+          if (!cancelled) audio.play().catch(() => {});
         }, 400);
       }
     });
@@ -143,8 +144,8 @@ export default function StreakCelebration({ streak, onComplete }: StreakCelebrat
       setVisible(false);
       onComplete();
     }, 2800);
-    return () => { clearTimeout(timer); if (voiceTimer) clearTimeout(voiceTimer); };
-  }, [onComplete]);
+    return () => { cancelled = true; clearTimeout(timer); if (voiceTimer) clearTimeout(voiceTimer); };
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   if (!visible) return null;
 
