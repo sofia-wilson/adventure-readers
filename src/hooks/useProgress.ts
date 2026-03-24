@@ -120,6 +120,18 @@ export function useProgress(childId: string) {
   const clearProgress = useCallback(() => {
     setAttempts([]);
     localStorage.removeItem(`space-reader-progress-${childId}`);
+    // Also clear session resume data and concept intro flags for this child
+    const keysToRemove: string[] = [];
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      if (key && (
+        key.startsWith(`session-${childId}-`) ||
+        key.startsWith(`concept-intro-seen-${childId}-`)
+      )) {
+        keysToRemove.push(key);
+      }
+    }
+    keysToRemove.forEach(key => localStorage.removeItem(key));
   }, [childId]);
 
   return {
