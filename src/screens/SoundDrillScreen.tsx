@@ -390,21 +390,23 @@ export default function SoundDrillScreen({ unitId, onBack, onRate, recorder }: S
                 <ParentRating onRate={handleRate} />
               </div>
 
-              {/* Parent instruction tip */}
-              <div style={{
-                background: 'rgba(255, 215, 0, 0.08)',
-                border: '1px solid rgba(255, 215, 0, 0.2)',
-                borderRadius: 10, padding: '8px 14px', marginTop: 16,
-                maxWidth: 340,
-              }}>
-                <p style={{
-                  color: 'rgba(255, 215, 0, 0.7)', fontSize: 12, margin: 0,
-                  fontFamily: "'Nunito', sans-serif", fontStyle: 'italic',
-                  textAlign: 'center',
+              {/* Parent instruction tip — only on first sound */}
+              {chunkIndex === 0 && wordIndex === 0 && (
+                <div style={{
+                  background: 'rgba(255, 215, 0, 0.08)',
+                  border: '1px solid rgba(255, 215, 0, 0.2)',
+                  borderRadius: 10, padding: '8px 14px', marginTop: 16,
+                  maxWidth: 340,
                 }}>
-                  💡 Tip: Encourage your child to say the sound just by seeing the letter. If they're unsure, they can flip for a visual hint or tap again to hear the sound.
-                </p>
-              </div>
+                  <p style={{
+                    color: 'rgba(255, 215, 0, 0.7)', fontSize: 12, margin: 0,
+                    fontFamily: "'Nunito', sans-serif", fontStyle: 'italic',
+                    textAlign: 'center',
+                  }}>
+                    💡 Tip: Encourage your child to say the sound just by seeing the letter(s). If they're unsure, they can flip for a visual hint or tap again to hear the sound.
+                  </p>
+                </div>
+              )}
 
               {/* Done button */}
               {isDone && (
