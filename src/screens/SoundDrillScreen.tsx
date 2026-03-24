@@ -88,10 +88,20 @@ export default function SoundDrillScreen({ unitId, onBack, onRate, recorder }: S
   const initialPhase = isAdaptive ? 'i_do' as const : savedSession ? (savedSession.phase as 'i_do' | 'you_do' || 'i_do') : 'i_do';
   const initialWordIndex = isAdaptive ? 0 : savedSession ? Math.min(savedSession.wordIndex || 0, Math.max(0, (chunks[initialChunk]?.length || 1) - 1)) : 0;
 
-  // Show concept intro only on first visit (no saved session, not adaptive, and unit has a concept)
+  // Show concept intro until user clicks "Ready for Practice!"
+  // Persist dismissal in localStorage so it only shows once per unit per child
+  const introKey = `concept-intro-seen-${childId}-${unitId}`;
   const [showConceptIntro, setShowConceptIntro] = useState(
-    () => hasConceptIntro(unitId) && !isAdaptive && !savedSession && !initialAllMastered
+    () => {
+      if (!hasConceptIntro(unitId) || isAdaptive || initialAllMastered) return false;
+      try { return !localStorage.getItem(introKey); } catch { return true; }
+    }
   );
+
+  const dismissConceptIntro = useCallback(() => {
+    try { localStorage.setItem(introKey, '1'); } catch { /* */ }
+    setShowConceptIntro(false);
+  }, [introKey]);
 
   const [chunkIndex, setChunkIndex] = useState(initialChunk);
   const [phase, setPhase] = useState<'i_do' | 'you_do'>(initialPhase);
@@ -192,7 +202,7 @@ export default function SoundDrillScreen({ unitId, onBack, onRate, recorder }: S
     return (
       <ConceptIntro
         unitId={unitId}
-        onReady={() => setShowConceptIntro(false)}
+        onReady={dismissConceptIntro}
       />
     );
   }
