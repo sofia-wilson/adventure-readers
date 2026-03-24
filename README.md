@@ -46,9 +46,9 @@ Starting in Unit 2, children practice reading real sentences like "The dog is we
 
 ## Good to know
 
-- **Progress is saved in your browser.** All recordings and data stay on your device — nothing is sent to any server. Pick one device for your child's practice and stick with it.
-- **Switching devices?** Use the Export/Import feature in the Command Station to move data between devices.
-- **Each browser is separate.** Safari and Chrome on the same device have independent data.
+- **All activity and progress is private.** Everything is saved in your browser — recordings, progress, and data all stay on your device. Nothing is ever sent to a server.
+- **Pick one device and stick with it.** Your child's progress lives in the browser they use. If you start on an iPad and later open the app on your phone, it will look like a fresh start — the phone doesn't know what happened on the iPad. For the best experience, choose one device and always use the same browser (e.g., always Safari on the iPad). If you do need to switch devices, you can use the Export/Import feature in the Command Station to transfer your data.
+- **Customize voice recordings.** The program comes with phonetically correct voice recordings for all sounds and words, so you can start right away. But if you'd prefer your own voice, you can re-record any sound in the Command Station. You're also encouraged to record a personalized celebration message for your child (e.g., "Great job, Emma!") — it plays when they hit a streak and makes the experience feel special.
 
 ## Make it your own
 
