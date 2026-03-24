@@ -52,12 +52,48 @@ export default function PhoneticWordScreen({ unitId, onBack, onRate, recorder }:
   const profile = useContext(ProfileContext);
   const childId = profile?.childId || 'default';
   const unit = getUnitById(unitId);
-  const words = getPhoneticHFWForUnit(unitId);
+  const allWords = getPhoneticHFWForUnit(unitId);
 
-  const { getSavedSession, saveProgress, markCompletedOnce } = useSessionResume(childId, unitId, 'phonetic_hfw');
-  const savedSession = getSavedSession();
+  const { saveProgress } = useSessionResume(childId, unitId, 'phonetic_hfw');
 
-  const [currentIndex, setCurrentIndex] = useState(savedSession?.currentIndex || 0);
+  // Adaptive: read attempts from localStorage
+  const [{ words, startIndex, allMastered: initialAllMastered }] = useState(() => {
+    const storedAttempts: Array<{ unitId: string; activityType: string; itemId: string; rating: string }> = (() => {
+      try {
+        const data = localStorage.getItem(`space-reader-progress-${childId}`);
+        return data ? JSON.parse(data) : [];
+      } catch { return []; }
+    })();
+
+    const unitAttempts = storedAttempts.filter(
+      (a: { unitId: string; activityType: string }) => a.unitId === unitId && a.activityType === 'trick_word'
+    );
+
+    const allAttempted = allWords.every(w =>
+      unitAttempts.some((a: { itemId: string }) => a.itemId === `hfw-${w.word}` || a.itemId === w.word)
+    );
+
+    if (!allAttempted) {
+      const firstIdx = allWords.findIndex(w =>
+        !unitAttempts.some((a: { itemId: string }) => a.itemId === `hfw-${w.word}` || a.itemId === w.word)
+      );
+      return { words: allWords, startIndex: Math.max(0, firstIdx), allMastered: false };
+    }
+
+    const unmastered = allWords.filter(w => {
+      const wa = unitAttempts.filter((a: { itemId: string }) => a.itemId === `hfw-${w.word}` || a.itemId === w.word);
+      if (wa.length === 0) return true;
+      return wa[wa.length - 1].rating !== 'green';
+    });
+
+    if (unmastered.length === 0) {
+      return { words: allWords, startIndex: 0, allMastered: true };
+    }
+    return { words: unmastered, startIndex: 0, allMastered: false };
+  });
+
+  const [showMastered, setShowMastered] = useState(initialAllMastered);
+  const [currentIndex, setCurrentIndex] = useState(startIndex);
   const [celebrationRating, setCelebrationRating] = useState<Rating | null>(null);
   const { streak, showStreakCelebration, recordRating, dismissStreakCelebration } = useStreak();
 
@@ -97,6 +133,31 @@ export default function PhoneticWordScreen({ unitId, onBack, onRate, recorder }:
       <div style={{ color: '#fff', textAlign: 'center', padding: 40 }}>
         <p>No regular words for this unit yet.</p>
         <button onClick={onBack} style={btnStyle}>Back</button>
+      </div>
+    );
+  }
+
+  if (showMastered) {
+    return (
+      <div style={{
+        display: 'flex', flexDirection: 'column', alignItems: 'center',
+        justifyContent: 'center', minHeight: '100vh', padding: 20, gap: 20,
+      }}>
+        <span style={{ fontSize: 80 }}>🌟</span>
+        <h2 style={{ color: '#FFD700', fontFamily: "'Nunito', sans-serif", fontSize: 28, textAlign: 'center', margin: 0 }}>
+          All Words Mastered!
+        </h2>
+        <p style={{ color: '#B0BEC5', fontSize: 16, textAlign: 'center', fontFamily: "'Nunito', sans-serif" }}>
+          {allWords.length}/{allWords.length} words — amazing work!
+        </p>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 12, marginTop: 16 }}>
+          <button onClick={() => setShowMastered(false)} style={{
+            background: 'rgba(79, 195, 247, 0.15)', border: '2px solid rgba(79, 195, 247, 0.4)',
+            borderRadius: 14, color: '#4FC3F7', padding: '14px 32px', cursor: 'pointer', fontSize: 16,
+            fontWeight: 'bold', fontFamily: "'Nunito', sans-serif",
+          }}>🔄 Review All Words</button>
+          <button onClick={onBack} style={{ ...btnStyle, fontSize: 16, padding: '14px 32px' }}>← Back</button>
+        </div>
       </div>
     );
   }
@@ -209,7 +270,7 @@ export default function PhoneticWordScreen({ unitId, onBack, onRate, recorder }:
             </button>
 
             {currentIndex === words.length - 1 ? (
-              <button onClick={() => { markCompletedOnce(); onBack(); }} style={{
+              <button onClick={onBack} style={{
                 ...btnStyle,
                 background: 'rgba(76, 175, 80, 0.3)',
                 borderColor: '#4CAF50',

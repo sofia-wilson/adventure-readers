@@ -103,17 +103,38 @@ export default function SentenceScreen({ onBack, onRate, recorder, unitId }: Sen
   const profile = useContext(ProfileContext);
   const childId = profile?.childId || 'default';
   const activityUnitId = unitId || 'K-U10';
-  const { getSavedSession, saveProgress, markCompletedOnce } = useSessionResume(childId, activityUnitId, 'sentences');
-  const savedSession = getSavedSession();
+  const { saveProgress } = useSessionResume(childId, activityUnitId, 'sentences');
 
-  const [currentIndex, setCurrentIndex] = useState(savedSession?.currentIndex || 0);
+  const allSentences = unitId ? getSentencesForUnit(unitId) : sentences.filter(s => s.unit === 'K-U10');
+  const ratingUnitId = unitId || 'K-U10';
+
+  // Adaptive: find resume point from attempts
+  const [startIndex] = useState(() => {
+    const storedAttempts: Array<{ unitId: string; activityType: string; itemId: string; rating: string }> = (() => {
+      try {
+        const data = localStorage.getItem(`space-reader-progress-${childId}`);
+        return data ? JSON.parse(data) : [];
+      } catch { return []; }
+    })();
+
+    const unitAttempts = storedAttempts.filter(
+      (a: { unitId: string }) => a.unitId === ratingUnitId
+    );
+
+    // Find first sentence not attempted
+    const firstIdx = allSentences.findIndex((_, i) =>
+      !unitAttempts.some((a: { itemId: string }) => a.itemId === `sentence-${i}`)
+    );
+
+    return firstIdx >= 0 ? firstIdx : 0;
+  });
+
+  const filteredSentences = allSentences;
+  const [currentIndex, setCurrentIndex] = useState(startIndex);
   const [flipped, setFlipped] = useState(false);
   const [celebrationRating, setCelebrationRating] = useState<Rating | null>(null);
   const [showCompletion, setShowCompletion] = useState(false);
   const [showTip, setShowTip] = useState(false);
-
-  const filteredSentences = unitId ? getSentencesForUnit(unitId) : sentences.filter(s => s.unit === 'K-U10');
-  const ratingUnitId = unitId || 'K-U10';
 
   // Save progress on index change
   useEffect(() => {
@@ -264,7 +285,6 @@ export default function SentenceScreen({ onBack, onRate, recorder, unitId }: Sen
             >← Prev</button>
             {currentIndex === filteredSentences.length - 1 ? (
               <button onClick={() => {
-                markCompletedOnce();
                 if (unitId && DECODABLE_TIPS[unitId]) {
                   setShowTip(true);
                 } else {

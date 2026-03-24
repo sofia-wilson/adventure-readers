@@ -37,13 +37,53 @@ export default function BlendingScreen({ unitId, onBack, onRate, recorder }: Ble
   const childId = profile?.childId || 'default';
   const theme = profile?.theme;
   const unit = getUnitById(unitId);
-  const words = getBlendingWordsForUnit(unitId);
+  const allWords = getBlendingWordsForUnit(unitId);
 
-  const { getSavedSession, saveProgress, markCompletedOnce } = useSessionResume(childId, unitId, 'blending');
-  const savedSession = getSavedSession();
+  const { saveProgress } = useSessionResume(childId, unitId, 'blending');
 
-  const [currentIndex, setCurrentIndex] = useState(savedSession?.currentIndex || 0);
-  const [phase, setPhase] = useState<Phase>((savedSession?.phase as Phase) || 'i_do');
+  // Adaptive: read attempts from localStorage, find resume point or unmastered words
+  const [{ words, startIndex, allMastered: initialAllMastered }] = useState(() => {
+    const storedAttempts: Array<{ unitId: string; activityType: string; itemId: string; rating: string }> = (() => {
+      try {
+        const data = localStorage.getItem(`space-reader-progress-${childId}`);
+        return data ? JSON.parse(data) : [];
+      } catch { return []; }
+    })();
+
+    const unitAttempts = storedAttempts.filter(
+      (a: { unitId: string; activityType: string }) => a.unitId === unitId && a.activityType === 'blending'
+    );
+
+    // Has every word been attempted?
+    const allAttempted = allWords.every(w =>
+      unitAttempts.some((a: { itemId: string }) => a.itemId === w.word)
+    );
+
+    if (!allAttempted) {
+      // Find the first word not yet attempted — resume from there
+      const firstUnattempted = allWords.findIndex(w =>
+        !unitAttempts.some((a: { itemId: string }) => a.itemId === w.word)
+      );
+      return { words: allWords, startIndex: Math.max(0, firstUnattempted), allMastered: false };
+    }
+
+    // All attempted — find unmastered
+    const unmastered = allWords.filter(w => {
+      const wordAttempts = unitAttempts.filter((a: { itemId: string }) => a.itemId === w.word);
+      if (wordAttempts.length === 0) return true;
+      return wordAttempts[wordAttempts.length - 1].rating !== 'green';
+    });
+
+    if (unmastered.length === 0) {
+      return { words: allWords, startIndex: 0, allMastered: true };
+    }
+
+    return { words: unmastered, startIndex: 0, allMastered: false };
+  });
+
+  const [showMastered, setShowMastered] = useState(initialAllMastered);
+  const [currentIndex, setCurrentIndex] = useState(startIndex);
+  const [phase, setPhase] = useState<Phase>('i_do');
   const [droppedSounds, setDroppedSounds] = useState<(string | null)[]>([]);
   const [blendHighlight, setBlendHighlight] = useState(-1);
   const [celebrationRating, setCelebrationRating] = useState<Rating | null>(null);
@@ -56,12 +96,6 @@ export default function BlendingScreen({ unitId, onBack, onRate, recorder }: Ble
   }, [currentIndex, phase, saveProgress]);
 
   const currentWord = words[currentIndex];
-
-  // Mark completed when reaching last word done
-  const isLastDone = currentIndex === words.length - 1 && phase === 'you_do';
-  useEffect(() => {
-    if (isLastDone) markCompletedOnce();
-  }, [isLastDone, markCompletedOnce]);
 
   const initWord = useCallback((idx: number) => {
     if (idx >= words.length) return;
@@ -159,6 +193,43 @@ export default function BlendingScreen({ unitId, onBack, onRate, recorder }: Ble
       <div style={{ color: '#fff', textAlign: 'center', padding: 40 }}>
         <p>No blending words for this unit yet.</p>
         <button onClick={onBack} style={btnStyle}>Back to Map</button>
+      </div>
+    );
+  }
+
+  if (showMastered) {
+    return (
+      <div style={{
+        display: 'flex', flexDirection: 'column', alignItems: 'center',
+        justifyContent: 'center', minHeight: '100vh', padding: 20, gap: 20,
+      }}>
+        <span style={{ fontSize: 80 }}>🌟</span>
+        <h2 style={{
+          color: '#FFD700', fontFamily: "'Nunito', sans-serif",
+          fontSize: 28, textAlign: 'center', margin: 0,
+        }}>
+          All Words Mastered!
+        </h2>
+        <p style={{
+          color: '#B0BEC5', fontSize: 16, textAlign: 'center',
+          fontFamily: "'Nunito', sans-serif", maxWidth: 300,
+        }}>
+          {allWords.length}/{allWords.length} blending words — amazing work!
+        </p>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 12, marginTop: 16 }}>
+          <button onClick={() => setShowMastered(false)} style={{
+            background: 'rgba(79, 195, 247, 0.15)',
+            border: '2px solid rgba(79, 195, 247, 0.4)',
+            borderRadius: 14, color: '#4FC3F7', padding: '14px 32px',
+            cursor: 'pointer', fontSize: 16, fontWeight: 'bold',
+            fontFamily: "'Nunito', sans-serif",
+          }}>
+            🔄 Review All Words
+          </button>
+          <button onClick={onBack} style={{ ...btnStyle, fontSize: 16, padding: '14px 32px' }}>
+            ← Back
+          </button>
+        </div>
       </div>
     );
   }

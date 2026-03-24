@@ -26,15 +26,57 @@ export default function TrickWordScreen({ unitId, onBack, onRate, mode = 'all', 
   const profile = useContext(ProfileContext);
   const childId = profile?.childId || 'default';
   const unit = getUnitById(unitId);
-  const words = mode === 'phonetic'
+  const allWords = mode === 'phonetic'
     ? getPhoneticHFWForUnit(unitId)
     : mode === 'trick'
       ? getTrueTrickWordsForUnit(unitId)
       : getTrickWordsForUnit(unitId);
 
   const activityKey = mode === 'phonetic' ? 'phonetic_hfw' : mode === 'trick' ? 'trick_word' : 'trick_word';
-  const { getSavedSession, saveProgress, markCompletedOnce } = useSessionResume(childId, unitId, activityKey);
-  const savedSession = getSavedSession();
+  const { saveProgress } = useSessionResume(childId, unitId, activityKey);
+
+  // Adaptive: read attempts from localStorage
+  const [{ words, startChunk, startWord, allMastered: initialAllMastered }] = useState(() => {
+    const storedAttempts: Array<{ unitId: string; activityType: string; itemId: string; rating: string }> = (() => {
+      try {
+        const data = localStorage.getItem(`space-reader-progress-${childId}`);
+        return data ? JSON.parse(data) : [];
+      } catch { return []; }
+    })();
+
+    const unitAttempts = storedAttempts.filter(
+      (a: { unitId: string; activityType: string }) => a.unitId === unitId && a.activityType === 'trick_word'
+    );
+
+    const allAttempted = allWords.every(w =>
+      unitAttempts.some((a: { itemId: string }) => a.itemId === `trick-${w.word}` || a.itemId === `hfw-${w.word}` || a.itemId === w.word)
+    );
+
+    if (!allAttempted) {
+      // Find first unattempted word and compute chunk/word position
+      const firstIdx = allWords.findIndex(w =>
+        !unitAttempts.some((a: { itemId: string }) => a.itemId === `trick-${w.word}` || a.itemId === `hfw-${w.word}` || a.itemId === w.word)
+      );
+      const idx = Math.max(0, firstIdx);
+      return { words: allWords, startChunk: Math.floor(idx / CHUNK_SIZE), startWord: idx % CHUNK_SIZE, allMastered: false };
+    }
+
+    const unmastered = allWords.filter(w => {
+      const wordAttempts = unitAttempts.filter((a: { itemId: string }) =>
+        a.itemId === `trick-${w.word}` || a.itemId === `hfw-${w.word}` || a.itemId === w.word
+      );
+      if (wordAttempts.length === 0) return true;
+      return wordAttempts[wordAttempts.length - 1].rating !== 'green';
+    });
+
+    if (unmastered.length === 0) {
+      return { words: allWords, startChunk: 0, startWord: 0, allMastered: true };
+    }
+
+    return { words: unmastered, startChunk: 0, startWord: 0, allMastered: false };
+  });
+
+  const [showMastered, setShowMastered] = useState(initialAllMastered);
 
   // Chunk words into groups of 3
   const chunks = useMemo(() => {
@@ -45,9 +87,9 @@ export default function TrickWordScreen({ unitId, onBack, onRate, mode = 'all', 
     return result;
   }, [words]);
 
-  const [chunkIndex, setChunkIndex] = useState(savedSession?.chunkIndex || 0);
-  const [phase, setPhase] = useState<'i_do' | 'you_do'>((savedSession?.phase as 'i_do' | 'you_do') || 'i_do');
-  const [wordIndex, setWordIndex] = useState(savedSession?.wordIndex || 0);
+  const [chunkIndex, setChunkIndex] = useState(startChunk);
+  const [phase, setPhase] = useState<'i_do' | 'you_do'>('i_do');
+  const [wordIndex, setWordIndex] = useState(startWord);
   const [revealed, setRevealed] = useState(false);
   const [showRating, setShowRating] = useState(false);
   const [celebrationRating, setCelebrationRating] = useState<Rating | null>(null);
@@ -129,15 +171,37 @@ export default function TrickWordScreen({ unitId, onBack, onRate, mode = 'all', 
   const isLastWord = chunkIndex === chunks.length - 1 && wordIndex === currentChunk.length - 1;
   const isDone = phase === 'you_do' && isLastWord && celebrationRating === null && !showRating;
 
-  useEffect(() => {
-    if (isDone) markCompletedOnce();
-  }, [isDone, markCompletedOnce]);
 
   if (!unit || words.length === 0) {
     return (
       <div style={{ color: '#fff', textAlign: 'center', padding: 40 }}>
         <p>No trick words for this unit.</p>
         <button onClick={onBack} style={backBtnStyle}>Back</button>
+      </div>
+    );
+  }
+
+  if (showMastered) {
+    return (
+      <div style={{
+        display: 'flex', flexDirection: 'column', alignItems: 'center',
+        justifyContent: 'center', minHeight: '100vh', padding: 20, gap: 20,
+      }}>
+        <span style={{ fontSize: 80 }}>🌟</span>
+        <h2 style={{ color: '#FFD700', fontFamily: "'Nunito', sans-serif", fontSize: 28, textAlign: 'center', margin: 0 }}>
+          All Words Mastered!
+        </h2>
+        <p style={{ color: '#B0BEC5', fontSize: 16, textAlign: 'center', fontFamily: "'Nunito', sans-serif" }}>
+          {allWords.length}/{allWords.length} words — amazing work!
+        </p>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 12, marginTop: 16 }}>
+          <button onClick={() => setShowMastered(false)} style={{
+            background: 'rgba(79, 195, 247, 0.15)', border: '2px solid rgba(79, 195, 247, 0.4)',
+            borderRadius: 14, color: '#4FC3F7', padding: '14px 32px', cursor: 'pointer', fontSize: 16,
+            fontWeight: 'bold', fontFamily: "'Nunito', sans-serif",
+          }}>🔄 Review All Words</button>
+          <button onClick={onBack} style={backBtnStyle}>← Back</button>
+        </div>
       </div>
     );
   }
