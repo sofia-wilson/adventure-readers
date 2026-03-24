@@ -2,6 +2,7 @@ import { useState, useCallback, useMemo, useEffect, useContext } from 'react';
 import SoundCard from '../components/SoundCard';
 import ParentRating from '../components/ParentRating';
 import SpaceCelebration from '../components/SpaceCelebration';
+import ConceptIntro, { hasConceptIntro } from '../components/ConceptIntro';
 import ProfileContext from '../components/ProfileContext';
 import { getSoundCardsForUnit, getSoundCardsUpToUnit } from '../data/soundCards';
 import { getUnitById } from '../data/curriculum';
@@ -86,6 +87,11 @@ export default function SoundDrillScreen({ unitId, onBack, onRate, recorder }: S
   const initialChunk = isAdaptive ? 0 : savedSession ? Math.min(savedSession.chunkIndex || 0, Math.max(0, chunks.length - 1)) : 0;
   const initialPhase = isAdaptive ? 'i_do' as const : savedSession ? (savedSession.phase as 'i_do' | 'you_do' || 'i_do') : 'i_do';
   const initialWordIndex = isAdaptive ? 0 : savedSession ? Math.min(savedSession.wordIndex || 0, Math.max(0, (chunks[initialChunk]?.length || 1) - 1)) : 0;
+
+  // Show concept intro only on first visit (no saved session, not adaptive, and unit has a concept)
+  const [showConceptIntro, setShowConceptIntro] = useState(
+    () => hasConceptIntro(unitId) && !isAdaptive && !savedSession && !initialAllMastered
+  );
 
   const [chunkIndex, setChunkIndex] = useState(initialChunk);
   const [phase, setPhase] = useState<'i_do' | 'you_do'>(initialPhase);
@@ -178,6 +184,16 @@ export default function SoundDrillScreen({ unitId, onBack, onRate, recorder }: S
         <p>No sound cards for this unit yet.</p>
         <button onClick={onBack} style={btnStyle}>Back to Map</button>
       </div>
+    );
+  }
+
+  // Concept intro page (Units 3-7, first visit only)
+  if (showConceptIntro) {
+    return (
+      <ConceptIntro
+        unitId={unitId}
+        onReady={() => setShowConceptIntro(false)}
+      />
     );
   }
 
