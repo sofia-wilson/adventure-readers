@@ -78,7 +78,7 @@ I made a **Space Transformers** version for my son — took about 10 minutes. Yo
 
 ## Feedback
 
-Have ideas, found a bug, or want to share how your child is using the app? [Open an issue](https://github.com/sofia-wilson/adventure-readers/issues/new) — we'd love to hear from you!
+Have ideas, found a bug, or want to share how your child is using the app? **[Open an issue](https://github.com/sofia-wilson/adventure-readers/issues/new)** — I'd love to hear from you!
 
 ## Credits
 
