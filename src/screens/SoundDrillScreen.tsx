@@ -8,7 +8,7 @@ import { getUnitById } from '../data/curriculum';
 import { playGotItSound, playNotQuiteSound } from '../audio/soundEffects';
 import StreakCelebration from '../components/StreakCelebration';
 import { useStreak } from '../hooks/useStreak';
-import { useSessionResume, getAdaptiveItems } from '../hooks/useSessionResume';
+import { useSessionResume } from '../hooks/useSessionResume';
 import type { Recorder } from '../hooks/useRecorder';
 import type { Rating, SoundCard as SoundCardType, AttemptRecord } from '../types';
 
@@ -29,17 +29,41 @@ export default function SoundDrillScreen({ unitId, onBack, onRate, recorder, att
   const isReview = unitId.startsWith('L1');
   const allCards = isReview ? getSoundCardsUpToUnit(unitId) : getSoundCardsForUnit(unitId);
 
-  const { getSavedSession, saveProgress, markCompletedOnce } = useSessionResume(childId, unitId, 'sound_drill');
-
-  // Check if completed once and filter to unmastered
+  const { getSavedSession, saveProgress } = useSessionResume(childId, unitId, 'sound_drill');
   const savedSession = getSavedSession();
-  const completedOnce = savedSession?.completedOnce || false;
+
+  // Adaptive filtering: use attempts to determine which sounds need practice
+  // If every sound has been attempted at least once, only show unmastered ones
   const unitAttempts = attempts.filter(a => a.unitId === unitId && a.activityType === 'sound_drill');
 
-  // Snapshot cards on mount — don't let the list change mid-session as ratings come in
-  const [cards] = useState(() => {
-    return getAdaptiveItems(allCards, unitAttempts, completedOnce, 'id');
-  });
+  // Snapshot cards on mount so the list doesn't shift mid-session
+  const [cards, isAdaptive] = useMemo(() => {
+    // Check: has every sound been attempted at least once?
+    const allAttempted = allCards.every(card =>
+      unitAttempts.some(a => a.itemId === card.id)
+    );
+
+    if (!allAttempted) {
+      // First pass — show all cards, resume from saved position
+      return [allCards, false] as const;
+    }
+
+    // Find unmastered: latest attempt for each sound was NOT green
+    const unmastered = allCards.filter(card => {
+      const cardAttempts = unitAttempts.filter(a => a.itemId === card.id);
+      if (cardAttempts.length === 0) return true;
+      const latest = cardAttempts[cardAttempts.length - 1];
+      return latest.rating !== 'green';
+    });
+
+    if (unmastered.length === 0) {
+      // All mastered! Show all for celebration/review
+      return [allCards, false] as const;
+    }
+
+    return [unmastered, true] as const;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []); // Snapshot on mount only
 
   const chunks = useMemo(() => {
     const result: SoundCardType[][] = [];
@@ -49,11 +73,10 @@ export default function SoundDrillScreen({ unitId, onBack, onRate, recorder, att
     return result;
   }, [cards]);
 
-  // When in adaptive mode (completedOnce), always start fresh at position 0
-  // When resuming mid-session (not completedOnce), restore saved position
-  const initialChunk = completedOnce ? 0 : savedSession ? Math.min(savedSession.chunkIndex || 0, Math.max(0, chunks.length - 1)) : 0;
-  const initialPhase = completedOnce ? 'i_do' as const : savedSession ? (savedSession.phase as 'i_do' | 'you_do' || 'i_do') : 'i_do';
-  const initialWordIndex = completedOnce ? 0 : savedSession ? Math.min(savedSession.wordIndex || 0, Math.max(0, (chunks[initialChunk]?.length || 1) - 1)) : 0;
+  // In adaptive mode, always start fresh. Otherwise, restore saved position.
+  const initialChunk = isAdaptive ? 0 : savedSession ? Math.min(savedSession.chunkIndex || 0, Math.max(0, chunks.length - 1)) : 0;
+  const initialPhase = isAdaptive ? 'i_do' as const : savedSession ? (savedSession.phase as 'i_do' | 'you_do' || 'i_do') : 'i_do';
+  const initialWordIndex = isAdaptive ? 0 : savedSession ? Math.min(savedSession.wordIndex || 0, Math.max(0, (chunks[initialChunk]?.length || 1) - 1)) : 0;
 
   const [chunkIndex, setChunkIndex] = useState(initialChunk);
   const [phase, setPhase] = useState<'i_do' | 'you_do'>(initialPhase);
@@ -140,13 +163,6 @@ export default function SoundDrillScreen({ unitId, onBack, onRate, recorder, att
   const isLastCard = chunkIndex === chunks.length - 1 && wordIndex === currentChunk.length - 1;
   const isDone = phase === 'you_do' && isLastCard && celebrationRating === null;
 
-  // Mark completed once when done
-  useEffect(() => {
-    if (isDone && !completedOnce) {
-      markCompletedOnce();
-    }
-  }, [isDone, completedOnce, markCompletedOnce]);
-
   if (!unit || cards.length === 0) {
     return (
       <div style={{ color: '#fff', textAlign: 'center', padding: 40 }}>
@@ -184,7 +200,7 @@ export default function SoundDrillScreen({ unitId, onBack, onRate, recorder, att
       </div>
 
       {/* Adaptive mode banner */}
-      {completedOnce && cards.length < allCards.length && (
+      {isAdaptive && (
         <div style={{
           background: 'rgba(255, 152, 0, 0.15)',
           border: '1px solid rgba(255, 152, 0, 0.3)',

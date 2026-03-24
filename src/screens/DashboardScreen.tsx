@@ -68,15 +68,28 @@ export default function DashboardScreen({ attempts, onBack, onClearProgress }: D
       });
     }
 
+    // Count unique items mastered vs total unique items attempted
+    const allItems = new Map<string, string>(); // itemId -> latest rating
+    for (const a of unitAttempts) {
+      allItems.set(a.itemId, a.rating);
+    }
+    const uniqueMastered = [...allItems.values()].filter(r => r === 'green').length;
+    const uniqueTotal = allItems.size;
+
     return {
       unit,
-      totalAttempts: unitAttempts.length,
-      greenCount: unitAttempts.filter(a => a.rating === 'green').length,
+      totalAttempts: uniqueTotal,
+      greenCount: uniqueMastered,
       breakdowns,
     };
   });
 
-  const totalGreen = attempts.filter(a => a.rating === 'green').length;
+  // Total unique items mastered across all units
+  const allItemsGlobal = new Map<string, string>();
+  for (const a of attempts) {
+    allItemsGlobal.set(`${a.unitId}-${a.itemId}`, a.rating);
+  }
+  const totalGreen = [...allItemsGlobal.values()].filter(r => r === 'green').length;
   const totalRed = attempts.filter(a => a.rating === 'red').length;
 
   return (
@@ -140,7 +153,7 @@ export default function DashboardScreen({ attempts, onBack, onClearProgress }: D
                   {unit.name} — {unit.description}
                 </span>
                 <span style={{ color: '#B0BEC5', fontSize: 13 }}>
-                  {greenCount} ✓ / {totalAttempts} total
+                  {greenCount} mastered / {totalAttempts} practiced
                 </span>
               </div>
 
