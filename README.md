@@ -22,16 +22,16 @@ A structured phonics program across 10 units:
 | Unit | What your child learns |
 |------|----------------------|
 | 1 | All letter sounds (a-z) |
-| 2 | Blending simple words (cat, sit, map) + first sight words |
-| 3 | Digraphs — sh, ch, th, wh, ck |
-| 4 | Bonus letters — ff, ll, ss, zz |
-| 5 | Glued sounds — am, an |
-| 6 | Suffix -s (dog → dogs, sit → sits) |
-| 7 | Glued sounds — ng and nk (king, pink, song) |
+| 2 | Blending simple words (cat, sit, map) + first sight words + sentence reading |
+| 3 | Digraphs — sh, ch, th, wh, ck + sentence reading |
+| 4 | Bonus letters — ff, ll, ss, zz + sentence reading |
+| 5 | Glued sounds — am, an + sentence reading |
+| 6 | Suffix -s (dog → dogs, sit → sits) + sentence reading |
+| 7 | Glued sounds — ng and nk (king, pink, song) + sentence reading |
 | 8-9 | Review — blending & sight word speed practice |
-| 10 | Sentence reading — putting it all together |
+| 10 | Sentence review — reading across all skills |
 
-After completing the program, your child will be ready to start reading Level A/B/C books independently.
+Starting in Unit 2, children practice reading real sentences like "The dog is wet" and "The cat sat" using the sounds and words they've learned. By the time they finish the program, your child will be ready to read Level A/B/C books at home — that's about middle to end of Kindergarten level. We highly encourage families to start practicing with leveled books alongside the program!
 
 ## What makes it special?
 
