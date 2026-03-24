@@ -547,6 +547,30 @@ export default function BlendingScreen({ unitId, onBack, onRate, recorder }: Ble
         </div>
       )}
 
+      {/* Skip to You Do button */}
+      {(phase === 'i_do' || phase === 'blending' || phase === 'we_do') && (
+        <div style={{ display: 'flex', justifyContent: 'center', padding: '24px 16px 8px' }}>
+          <button
+            onClick={() => {
+              setPhase('you_do');
+              saveProgress({ currentIndex, phase: 'you_do' });
+            }}
+            style={{
+              background: 'none',
+              border: 'none',
+              color: 'rgba(255,255,255,0.4)',
+              fontSize: 13,
+              fontFamily: "'Nunito', sans-serif",
+              cursor: 'pointer',
+              textDecoration: 'underline',
+              padding: '8px 16px',
+            }}
+          >
+            Skip to Independent Practice — I'm Ready!
+          </button>
+        </div>
+      )}
+
       <SpaceCelebration
         rating={celebrationRating}
         onComplete={handleCelebrationComplete}
