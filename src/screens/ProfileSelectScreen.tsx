@@ -185,7 +185,7 @@ export default function ProfileSelectScreen({
             {mode.step === 'confirm' && '🔒 Confirm PIN'}
           </h2>
           <p style={{ color: '#B0BEC5', fontSize: 14, marginBottom: 24 }}>
-            {mode.step === 'name' && "What's the explorer's name?"}
+            {mode.step === 'name' && "What is the reader's name?"}
             {mode.step === 'theme' && 'Choose an adventure!'}
             {mode.step === 'pin' && 'Choose a 4-digit parent PIN'}
             {mode.step === 'confirm' && 'Enter the PIN again to confirm'}
