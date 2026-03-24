@@ -80,6 +80,8 @@ I made a **Space Transformers** version for my son — took about 10 minutes. Yo
 
 Have ideas, found a bug, or want to share how your child is using the app? **[Open an issue](https://github.com/sofia-wilson/adventure-readers/issues/new)** — I'd love to hear from you!
 
+If you're an early elementary teacher who wants support adapting this for your classroom — especially if you teach in Title I settings — please reach out! I'm happy to help.
+
 ## Credits
 
 Built with love by a former 1st grade teacher — for early readers everywhere.
