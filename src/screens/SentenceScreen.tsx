@@ -1,12 +1,14 @@
 import { useState, useCallback, useEffect, useContext } from 'react';
 import ParentRating from '../components/ParentRating';
 import SpaceCelebration from '../components/SpaceCelebration';
+import StreakCelebration from '../components/StreakCelebration';
 import ProfileContext from '../components/ProfileContext';
 import WordWithDots from '../components/WordWithDots';
 import { sentences, getSentencesForUnit } from '../data/curriculum';
 import type { SentenceWord } from '../data/curriculum';
 import { playGotItSound } from '../audio/soundEffects';
 import { useSessionResume } from '../hooks/useSessionResume';
+import { useStreak } from '../hooks/useStreak';
 import type { Rating } from '../types';
 import type { Recorder } from '../hooks/useRecorder';
 
@@ -135,6 +137,7 @@ export default function SentenceScreen({ onBack, onRate, recorder, unitId }: Sen
   const [celebrationRating, setCelebrationRating] = useState<Rating | null>(null);
   const [showCompletion, setShowCompletion] = useState(false);
   const [showTip, setShowTip] = useState(false);
+  const { streak, showStreakCelebration, recordRating, dismissStreakCelebration } = useStreak();
 
   // Save progress on index change
   useEffect(() => {
@@ -146,17 +149,19 @@ export default function SentenceScreen({ onBack, onRate, recorder, unitId }: Sen
   const handleRate = useCallback((rating: Rating) => {
     if (!current) return;
     onRate(ratingUnitId, `sentence-${currentIndex}`, rating);
+    recordRating(rating);
     if (rating === 'green') playGotItSound();
     setCelebrationRating(rating);
-  }, [current, currentIndex, onRate]);
+  }, [current, currentIndex, onRate, recordRating]);
 
   const handleCelebrationComplete = useCallback(() => {
     setCelebrationRating(null);
+    if (showStreakCelebration) return;
     if (currentIndex < filteredSentences.length - 1) {
       setCurrentIndex(prev => prev + 1);
       setFlipped(false);
     }
-  }, [currentIndex]);
+  }, [currentIndex, showStreakCelebration]);
 
   const handleNext = () => {
     setCurrentIndex(prev => Math.min(filteredSentences.length - 1, prev + 1));
@@ -301,6 +306,12 @@ export default function SentenceScreen({ onBack, onRate, recorder, unitId }: Sen
       )}
 
       <SpaceCelebration rating={celebrationRating} onComplete={handleCelebrationComplete} />
+      {showStreakCelebration && (
+        <StreakCelebration streak={streak} onComplete={() => {
+          dismissStreakCelebration();
+          handleCelebrationComplete();
+        }} />
+      )}
 
       {/* Decodable reader tip overlay (per-unit) */}
       {showTip && unitId && DECODABLE_TIPS[unitId] && (

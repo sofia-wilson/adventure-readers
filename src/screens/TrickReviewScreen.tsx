@@ -1,9 +1,11 @@
 import { useState, useCallback, useMemo } from 'react';
 import ParentRating from '../components/ParentRating';
 import SpaceCelebration from '../components/SpaceCelebration';
+import StreakCelebration from '../components/StreakCelebration';
 import { getAllTrickWords } from '../data/trickWords';
 import { speakWord } from '../audio/speechUtils';
 import { playGotItSound, playNotQuiteSound } from '../audio/soundEffects';
+import { useStreak } from '../hooks/useStreak';
 import type { Rating, TrickWord } from '../types';
 import type { Recorder } from '../hooks/useRecorder';
 
@@ -40,6 +42,7 @@ export default function TrickReviewScreen({ onBack, onRate, recorder }: TrickRev
   const [currentIndex, setCurrentIndex] = useState(0);
   const [celebrationRating, setCelebrationRating] = useState<Rating | null>(null);
   const [roundComplete, setRoundComplete] = useState(false);
+  const { streak, showStreakCelebration, recordRating, dismissStreakCelebration } = useStreak();
 
   const words = rounds[round];
   const currentWord = words?.[currentIndex];
@@ -47,19 +50,21 @@ export default function TrickReviewScreen({ onBack, onRate, recorder }: TrickRev
   const handleRate = useCallback((rating: Rating) => {
     if (!currentWord) return;
     onRate('K-U9', `trick-${currentWord.word}`, rating);
+    recordRating(rating);
     if (rating === 'green') playGotItSound();
     else playNotQuiteSound();
     setCelebrationRating(rating);
-  }, [currentWord, onRate]);
+  }, [currentWord, onRate, recordRating]);
 
   const handleCelebrationComplete = useCallback(() => {
     setCelebrationRating(null);
+    if (showStreakCelebration) return;
     if (currentIndex < words.length - 1) {
       setCurrentIndex(prev => prev + 1);
     } else {
       setRoundComplete(true);
     }
-  }, [currentIndex, words.length]);
+  }, [currentIndex, words.length, showStreakCelebration]);
 
   const startNextRound = () => {
     setRound(prev => prev + 1);
@@ -226,6 +231,12 @@ export default function TrickReviewScreen({ onBack, onRate, recorder }: TrickRev
       )}
 
       <SpaceCelebration rating={celebrationRating} onComplete={handleCelebrationComplete} />
+      {showStreakCelebration && (
+        <StreakCelebration streak={streak} onComplete={() => {
+          dismissStreakCelebration();
+          handleCelebrationComplete();
+        }} />
+      )}
     </div>
   );
 }

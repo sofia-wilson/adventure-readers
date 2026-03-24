@@ -1,9 +1,11 @@
 import { useState, useCallback, useMemo } from 'react';
 import ParentRating from '../components/ParentRating';
 import SpaceCelebration from '../components/SpaceCelebration';
+import StreakCelebration from '../components/StreakCelebration';
 import WordWithDots from '../components/WordWithDots';
 import { getAllBlendingWords } from '../data/curriculum';
 import { playGotItSound, playNotQuiteSound } from '../audio/soundEffects';
+import { useStreak } from '../hooks/useStreak';
 import type { Recorder } from '../hooks/useRecorder';
 import type { Rating, BlendingWord } from '../types';
 
@@ -40,6 +42,7 @@ export default function BlendingReviewScreen({ onBack, onRate, recorder }: Blend
   const [currentIndex, setCurrentIndex] = useState(0);
   const [celebrationRating, setCelebrationRating] = useState<Rating | null>(null);
   const [roundComplete, setRoundComplete] = useState(false);
+  const { streak, showStreakCelebration, recordRating, dismissStreakCelebration } = useStreak();
 
   const words = rounds[round];
   const currentWord = words?.[currentIndex];
@@ -47,19 +50,21 @@ export default function BlendingReviewScreen({ onBack, onRate, recorder }: Blend
   const handleRate = useCallback((rating: Rating) => {
     if (!currentWord) return;
     onRate('K-U8', currentWord.word, rating);
+    recordRating(rating);
     if (rating === 'green') playGotItSound();
     else playNotQuiteSound();
     setCelebrationRating(rating);
-  }, [currentWord, onRate]);
+  }, [currentWord, onRate, recordRating]);
 
   const handleCelebrationComplete = useCallback(() => {
     setCelebrationRating(null);
+    if (showStreakCelebration) return;
     if (currentIndex < words.length - 1) {
       setCurrentIndex(prev => prev + 1);
     } else {
       setRoundComplete(true);
     }
-  }, [currentIndex, words.length]);
+  }, [currentIndex, words.length, showStreakCelebration]);
 
   const startNextRound = () => {
     setRound(prev => prev + 1);
@@ -198,6 +203,12 @@ export default function BlendingReviewScreen({ onBack, onRate, recorder }: Blend
       )}
 
       <SpaceCelebration rating={celebrationRating} onComplete={handleCelebrationComplete} />
+      {showStreakCelebration && (
+        <StreakCelebration streak={streak} onComplete={() => {
+          dismissStreakCelebration();
+          handleCelebrationComplete();
+        }} />
+      )}
     </div>
   );
 }
