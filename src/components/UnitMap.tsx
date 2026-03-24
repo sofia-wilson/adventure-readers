@@ -35,7 +35,7 @@ export default function UnitMap({
         textShadow: `0 0 20px ${theme?.accentColor || '#FFD700'}80`,
         marginBottom: 8,
       }}>
-        {theme?.titleEmojis[0] || '🚀'} {theme?.appTitle || 'Adventure Readers'} {theme?.titleEmojis[1] || '🌟'}
+        {theme?.titleEmojis[0] || '🚀'} {theme?.appTitle || 'Adventure Readers'}
       </h1>
       <p style={{
         color: '#B0BEC5',
