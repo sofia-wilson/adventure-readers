@@ -36,9 +36,10 @@ export default function SoundDrillScreen({ unitId, onBack, onRate, recorder, att
   const completedOnce = savedSession?.completedOnce || false;
   const unitAttempts = attempts.filter(a => a.unitId === unitId && a.activityType === 'sound_drill');
 
-  const cards = useMemo(() => {
+  // Snapshot cards on mount — don't let the list change mid-session as ratings come in
+  const [cards] = useState(() => {
     return getAdaptiveItems(allCards, unitAttempts, completedOnce, 'id');
-  }, [allCards, unitAttempts, completedOnce]);
+  });
 
   const chunks = useMemo(() => {
     const result: SoundCardType[][] = [];
@@ -48,10 +49,11 @@ export default function SoundDrillScreen({ unitId, onBack, onRate, recorder, att
     return result;
   }, [cards]);
 
-  // Restore saved position or start at 0
-  const initialChunk = savedSession ? Math.min(savedSession.chunkIndex || 0, Math.max(0, chunks.length - 1)) : 0;
-  const initialPhase = savedSession ? (savedSession.phase as 'i_do' | 'you_do' || 'i_do') : 'i_do';
-  const initialWordIndex = savedSession ? Math.min(savedSession.wordIndex || 0, Math.max(0, (chunks[initialChunk]?.length || 1) - 1)) : 0;
+  // When in adaptive mode (completedOnce), always start fresh at position 0
+  // When resuming mid-session (not completedOnce), restore saved position
+  const initialChunk = completedOnce ? 0 : savedSession ? Math.min(savedSession.chunkIndex || 0, Math.max(0, chunks.length - 1)) : 0;
+  const initialPhase = completedOnce ? 'i_do' as const : savedSession ? (savedSession.phase as 'i_do' | 'you_do' || 'i_do') : 'i_do';
+  const initialWordIndex = completedOnce ? 0 : savedSession ? Math.min(savedSession.wordIndex || 0, Math.max(0, (chunks[initialChunk]?.length || 1) - 1)) : 0;
 
   const [chunkIndex, setChunkIndex] = useState(initialChunk);
   const [phase, setPhase] = useState<'i_do' | 'you_do'>(initialPhase);
