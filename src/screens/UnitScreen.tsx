@@ -1,5 +1,7 @@
-import { useContext } from 'react';
-import { getUnitById, units } from '../data/curriculum';
+import { useContext, useMemo } from 'react';
+import { getUnitById, units, getBlendingWordsForUnit, getSentencesForUnit } from '../data/curriculum';
+import { getSoundCardsForUnit } from '../data/soundCards';
+import { getPhoneticHFWForUnit, getTrueTrickWordsForUnit } from '../data/trickWords';
 import ProfileContext from '../components/ProfileContext';
 
 interface UnitScreenProps {
@@ -101,13 +103,105 @@ function getSections(activities: string[]): Section[] {
   return sections;
 }
 
+function getActivityMastery(childId: string, unitId: string): Record<string, boolean> {
+  try {
+    const data = localStorage.getItem(`space-reader-progress-${childId}`);
+    if (!data) return {};
+    const attempts: Array<{ unitId: string; activityType: string; itemId: string; rating: string }> = JSON.parse(data);
+    const unitAttempts = attempts.filter(a => a.unitId === unitId);
+    if (unitAttempts.length === 0) return {};
+
+    const result: Record<string, boolean> = {};
+
+    // Sound Drill
+    const soundCards = getSoundCardsForUnit(unitId);
+    if (soundCards.length > 0) {
+      const soundAttempts = unitAttempts.filter(a => a.activityType === 'sound_drill');
+      const allAttempted = soundCards.every(c => soundAttempts.some(a => a.itemId === c.id));
+      if (allAttempted) {
+        const allGreen = soundCards.every(c => {
+          const ca = soundAttempts.filter(a => a.itemId === c.id);
+          return ca.length > 0 && ca[ca.length - 1].rating === 'green';
+        });
+        result['sound_drill'] = allGreen;
+      }
+    }
+
+    // Blending
+    const blendWords = getBlendingWordsForUnit(unitId);
+    if (blendWords.length > 0) {
+      const blendAttempts = unitAttempts.filter(a => a.activityType === 'blending');
+      const allAttempted = blendWords.every(w => blendAttempts.some(a => a.itemId === w.word));
+      if (allAttempted) {
+        const allGreen = blendWords.every(w => {
+          const wa = blendAttempts.filter(a => a.itemId === w.word);
+          return wa.length > 0 && wa[wa.length - 1].rating === 'green';
+        });
+        result['blending'] = allGreen;
+      }
+    }
+
+    // Trick words (covers both phonetic_hfw and trick_word)
+    const trickAttempts = unitAttempts.filter(a => a.activityType === 'trick_word');
+
+    const phoneticWords = getPhoneticHFWForUnit(unitId);
+    if (phoneticWords.length > 0) {
+      const allAttempted = phoneticWords.every(w =>
+        trickAttempts.some(a => a.itemId === `hfw-${w.word}` || a.itemId === w.word)
+      );
+      if (allAttempted) {
+        const allGreen = phoneticWords.every(w => {
+          const wa = trickAttempts.filter(a => a.itemId === `hfw-${w.word}` || a.itemId === w.word);
+          return wa.length > 0 && wa[wa.length - 1].rating === 'green';
+        });
+        result['phonetic_hfw'] = allGreen;
+      }
+    }
+
+    const trickWords = getTrueTrickWordsForUnit(unitId);
+    if (trickWords.length > 0) {
+      const allAttempted = trickWords.every(w =>
+        trickAttempts.some(a => a.itemId === `trick-${w.word}` || a.itemId === w.word)
+      );
+      if (allAttempted) {
+        const allGreen = trickWords.every(w => {
+          const wa = trickAttempts.filter(a => a.itemId === `trick-${w.word}` || a.itemId === w.word);
+          return wa.length > 0 && wa[wa.length - 1].rating === 'green';
+        });
+        result['trick_word'] = allGreen;
+      }
+    }
+
+    // Sentences
+    const unitSentences = getSentencesForUnit(unitId);
+    if (unitSentences.length > 0) {
+      const allAttempted = unitSentences.every((_, i) =>
+        unitAttempts.some(a => a.itemId === `sentence-${i}`)
+      );
+      if (allAttempted) {
+        const allGreen = unitSentences.every((_, i) => {
+          const sa = unitAttempts.filter(a => a.itemId === `sentence-${i}`);
+          return sa.length > 0 && sa[sa.length - 1].rating === 'green';
+        });
+        result['unit_sentences'] = allGreen;
+      }
+    }
+
+    return result;
+  } catch {
+    return {};
+  }
+}
+
 export default function UnitScreen({ unitId, onBack, onActivity }: UnitScreenProps) {
   const profile = useContext(ProfileContext);
+  const childId = profile?.childId || 'default';
   const theme = profile?.theme;
   const unit = getUnitById(unitId);
   if (!unit) return null;
   const unitIdx = units.findIndex(u => u.id === unitId);
 
+  const mastery = useMemo(() => getActivityMastery(childId, unitId), [childId, unitId]);
   const sections = getSections(unit.activities);
 
   return (
@@ -207,6 +301,7 @@ export default function UnitScreen({ unitId, onBack, onActivity }: UnitScreenPro
                 const info = activity === 'blending' && theme
                   ? { ...rawInfo, label: theme.blendingLabel, emoji: theme.blendingEmoji }
                   : rawInfo;
+                const isMastered = mastery[activity] === true;
                 return (
                   <button
                     key={activity}
@@ -217,18 +312,22 @@ export default function UnitScreen({ unitId, onBack, onActivity }: UnitScreenPro
                       gap: 14,
                       padding: '16px 20px',
                       borderRadius: 18,
-                      border: '2px solid rgba(255,255,255,0.12)',
-                      background: 'rgba(255,255,255,0.05)',
+                      border: isMastered
+                        ? '2px solid rgba(76, 175, 80, 0.6)'
+                        : '2px solid rgba(255,255,255,0.12)',
+                      background: isMastered
+                        ? 'rgba(76, 175, 80, 0.1)'
+                        : 'rgba(255,255,255,0.05)',
                       cursor: 'pointer',
                       textAlign: 'left',
                       transition: 'transform 0.1s, background 0.2s',
                     }}
                     onMouseEnter={e => {
-                      (e.currentTarget as HTMLElement).style.background = 'rgba(255,255,255,0.1)';
+                      (e.currentTarget as HTMLElement).style.background = isMastered ? 'rgba(76, 175, 80, 0.15)' : 'rgba(255,255,255,0.1)';
                       (e.currentTarget as HTMLElement).style.transform = 'scale(1.02)';
                     }}
                     onMouseLeave={e => {
-                      (e.currentTarget as HTMLElement).style.background = 'rgba(255,255,255,0.05)';
+                      (e.currentTarget as HTMLElement).style.background = isMastered ? 'rgba(76, 175, 80, 0.1)' : 'rgba(255,255,255,0.05)';
                       (e.currentTarget as HTMLElement).style.transform = 'scale(1)';
                     }}
                   >
@@ -242,6 +341,16 @@ export default function UnitScreen({ unitId, onBack, onActivity }: UnitScreenPro
                         display: 'block',
                       }}>
                         {info.label}
+                        {isMastered && (
+                          <span style={{
+                            color: '#4CAF50',
+                            fontSize: 12,
+                            fontWeight: 'normal',
+                            marginLeft: 8,
+                          }}>
+                            ✓ Mastered!
+                          </span>
+                        )}
                       </span>
                       <span style={{
                         color: '#B0BEC5',
@@ -251,7 +360,9 @@ export default function UnitScreen({ unitId, onBack, onActivity }: UnitScreenPro
                         {info.description}
                       </span>
                     </div>
-                    <span style={{ fontSize: 20, color: 'rgba(255,255,255,0.25)' }}>→</span>
+                    <span style={{ fontSize: 20, color: isMastered ? '#4CAF50' : 'rgba(255,255,255,0.25)' }}>
+                      {isMastered ? '✓' : '→'}
+                    </span>
                   </button>
                 );
               })}
