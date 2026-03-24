@@ -119,10 +119,11 @@ export default function PhoneticWordScreen({ unitId, onBack, onRate, recorder }:
 
   const handleCelebrationComplete = useCallback(() => {
     setCelebrationRating(null);
+    if (showStreakCelebration) return;
     if (currentIndex < words.length - 1) {
       setCurrentIndex(prev => prev + 1);
     }
-  }, [currentIndex, words.length]);
+  }, [currentIndex, words.length, showStreakCelebration]);
 
   const goToCard = (idx: number) => {
     setCurrentIndex(idx);
@@ -291,7 +292,10 @@ export default function PhoneticWordScreen({ unitId, onBack, onRate, recorder }:
         onComplete={handleCelebrationComplete}
       />
       {showStreakCelebration && (
-        <StreakCelebration streak={streak} onComplete={dismissStreakCelebration} />
+        <StreakCelebration streak={streak} onComplete={() => {
+          dismissStreakCelebration();
+          handleCelebrationComplete();
+        }} />
       )}
     </div>
   );

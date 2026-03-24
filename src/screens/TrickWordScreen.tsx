@@ -150,6 +150,7 @@ export default function TrickWordScreen({ unitId, onBack, onRate, mode = 'all', 
 
   const handleCelebrationComplete = useCallback(() => {
     setCelebrationRating(null);
+    if (showStreakCelebration) return;
 
     if (wordIndex < currentChunk.length - 1) {
       const nextWord = wordIndex + 1;
@@ -166,7 +167,7 @@ export default function TrickWordScreen({ unitId, onBack, onRate, mode = 'all', 
       saveProgress({ currentIndex: nextChunk * CHUNK_SIZE, chunkIndex: nextChunk, wordIndex: 0, phase: 'i_do' });
     }
     // else: last chunk done — stay, Done button is visible
-  }, [wordIndex, currentChunk.length, chunkIndex, chunks.length, saveProgress]);
+  }, [wordIndex, currentChunk.length, chunkIndex, chunks.length, saveProgress, showStreakCelebration]);
 
   const isLastWord = chunkIndex === chunks.length - 1 && wordIndex === currentChunk.length - 1;
   const isDone = phase === 'you_do' && isLastWord && celebrationRating === null && !showRating;
@@ -353,7 +354,10 @@ export default function TrickWordScreen({ unitId, onBack, onRate, mode = 'all', 
         onComplete={handleCelebrationComplete}
       />
       {showStreakCelebration && (
-        <StreakCelebration streak={streak} onComplete={dismissStreakCelebration} />
+        <StreakCelebration streak={streak} onComplete={() => {
+          dismissStreakCelebration();
+          handleCelebrationComplete();
+        }} />
       )}
     </div>
   );

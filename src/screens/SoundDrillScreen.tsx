@@ -168,6 +168,9 @@ export default function SoundDrillScreen({ unitId, onBack, onRate, recorder }: S
   const handleCelebrationComplete = useCallback(() => {
     setCelebrationRating(null);
 
+    // If streak celebration is pending, show it before advancing
+    if (showStreakCelebration) return;
+
     if (wordIndex < currentChunk.length - 1) {
       const nextWord = wordIndex + 1;
       setWordIndex(nextWord);
@@ -183,7 +186,7 @@ export default function SoundDrillScreen({ unitId, onBack, onRate, recorder }: S
       saveProgress({ currentIndex: nextChunk * CHUNK_SIZE, chunkIndex: nextChunk, wordIndex: 0, phase: 'i_do' });
     }
     // else: last chunk done — Done button visible
-  }, [wordIndex, currentChunk.length, chunkIndex, chunks.length, phase, saveProgress]);
+  }, [wordIndex, currentChunk.length, chunkIndex, chunks.length, phase, saveProgress, showStreakCelebration]);
 
   const isLastCard = chunkIndex === chunks.length - 1 && wordIndex === currentChunk.length - 1;
   const isDone = phase === 'you_do' && isLastCard && celebrationRating === null;
@@ -454,7 +457,10 @@ export default function SoundDrillScreen({ unitId, onBack, onRate, recorder }: S
         onComplete={handleCelebrationComplete}
       />
       {showStreakCelebration && (
-        <StreakCelebration streak={streak} onComplete={dismissStreakCelebration} />
+        <StreakCelebration streak={streak} onComplete={() => {
+          dismissStreakCelebration();
+          handleCelebrationComplete();
+        }} />
       )}
     </div>
   );

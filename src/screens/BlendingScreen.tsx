@@ -179,13 +179,14 @@ export default function BlendingScreen({ unitId, onBack, onRate, recorder }: Ble
 
   const handleCelebrationComplete = useCallback(() => {
     setCelebrationRating(null);
+    if (showStreakCelebration) return;
     if (currentIndex < words.length - 1) {
       const nextIdx = currentIndex + 1;
       setCurrentIndex(nextIdx);
       initWord(nextIdx);
       saveProgress({ currentIndex: nextIdx, phase: 'i_do' });
     }
-  }, [currentIndex, words.length, initWord, saveProgress]);
+  }, [currentIndex, words.length, initWord, saveProgress, showStreakCelebration]);
 
   const handleReset = () => { initWord(currentIndex); };
 
@@ -576,7 +577,10 @@ export default function BlendingScreen({ unitId, onBack, onRate, recorder }: Ble
         onComplete={handleCelebrationComplete}
       />
       {showStreakCelebration && (
-        <StreakCelebration streak={streak} onComplete={dismissStreakCelebration} />
+        <StreakCelebration streak={streak} onComplete={() => {
+          dismissStreakCelebration();
+          handleCelebrationComplete();
+        }} />
       )}
     </div>
   );
