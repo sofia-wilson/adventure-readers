@@ -40,7 +40,7 @@ Starting in Unit 2, children practice reading real sentences like "The dog is we
 - **Adaptive practice.** The app tracks which sounds and words your child has mastered. When they return to a unit, it only shows what still needs practice.
 - **3 fun themes.** Space Explorer, Ocean Diver, or Nature Ranger — each changes the colors, emojis, and feel of the entire app. You can also fully customize the program for your needs (see [Make it your own](#make-it-your-own) below).
 - **Parent/Teacher dashboard.** Track your child's progress at a glance — see which sounds, words, and skills they've mastered and which ones still need practice.
-- **Customizable voice prompts.** The app comes with pre-recorded sounds for all letters and words, so you can start right away. Parents can also record a personalized celebration message (e.g., "Great job, Emma!") to keep kids engaged. And if you'd prefer your own voice throughout, you can re-record any of the sounds in the program.
+- **Customizable voice prompts.** The app comes with pre-recorded sounds for all letters and words, so you can start right away. Parents can also record a personalized celebration message (e.g., "Great job, Camila!") to keep kids engaged. And if you'd prefer your own voice throughout, you can re-record any of the sounds in the program.
 - **Multiple children.** Each child gets their own profile with separate progress tracking. Great for families or classrooms.
 - **Free.** High-quality, pedagogically correct early literacy programs are hard to find — and the good ones usually cost money, which makes access difficult. This app is free for everyone.
 
@@ -48,7 +48,7 @@ Starting in Unit 2, children practice reading real sentences like "The dog is we
 
 - **All activity and progress is private.** Everything is saved in your browser — recordings, progress, and data all stay on your device. Nothing is ever sent to a server.
 - **Pick one device and stick with it.** Your child's progress lives in the browser they use. If you start on an iPad and later open the app on your phone, it will look like a fresh start — the phone doesn't know what happened on the iPad. For the best experience, choose one device and always use the same browser (e.g., always Safari on the iPad). If you do need to switch devices, you can use the Export/Import feature in the Command Station to transfer your data.
-- **Customize voice recordings.** The program comes with phonetically correct voice recordings for all sounds and words, so you can start right away. But if you'd prefer your own voice, you can re-record any sound in the Command Station. You're also encouraged to record a personalized celebration message for your child (e.g., "Great job, Emma!") — it plays when they hit a streak and makes the experience feel special.
+- **Customize voice recordings.** The program comes with phonetically correct voice recordings for all sounds and words, so you can start right away. But if you'd prefer your own voice, you can re-record any sound in the Command Station. You're also encouraged to record a personalized celebration message for your child (e.g., "Great job, Camila!") — it plays when they hit a streak and makes the experience feel special.
 
 ## Make it your own
 
