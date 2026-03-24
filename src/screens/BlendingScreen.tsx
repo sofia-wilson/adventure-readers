@@ -489,9 +489,28 @@ export default function BlendingScreen({ unitId, onBack, onRate, recorder }: Ble
           {/* Navigation */}
           <div style={{ display: 'flex', gap: 16, marginTop: 40 }}>
             <button
-              onClick={() => goToCard(Math.max(0, currentIndex - 1))}
-              disabled={currentIndex === 0}
-              style={{ ...btnStyle, opacity: currentIndex === 0 ? 0.3 : 1 }}
+              onClick={() => {
+                if (phase === 'you_do') {
+                  // You Do → back to We Do (same word)
+                  setPhase('we_do');
+                } else if (phase === 'we_do') {
+                  // We Do → back to I Do (same word, re-build)
+                  initWord(currentIndex);
+                } else if (phase === 'i_do' || phase === 'blending') {
+                  // I Do → back to previous word's You Do
+                  if (currentIndex > 0) {
+                    const prevIdx = currentIndex - 1;
+                    setCurrentIndex(prevIdx);
+                    const prevWord = words[prevIdx];
+                    setDroppedSounds(prevWord.sounds.map(s => s));
+                    setAvailableSounds([]);
+                    setPhase('you_do');
+                    setBlendHighlight(-1);
+                  }
+                }
+              }}
+              disabled={currentIndex === 0 && (phase === 'i_do' || phase === 'blending')}
+              style={{ ...btnStyle, opacity: (currentIndex === 0 && (phase === 'i_do' || phase === 'blending')) ? 0.3 : 1 }}
             >
               ← Prev
             </button>
