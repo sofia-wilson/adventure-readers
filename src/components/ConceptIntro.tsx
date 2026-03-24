@@ -155,7 +155,7 @@ function HighlightedWord({ word, highlight, accentColor }: WordExample & { accen
 
 export default function ConceptIntro({ unitId, onReady }: ConceptIntroProps) {
   const profile = useContext(ProfileContext);
-  const theme = getTheme(profile?.theme);
+  const theme = getTheme(profile?.theme as any);
   const concept = CONCEPTS[unitId];
   const accentColor = theme?.accentColor || '#FFD700';
 
