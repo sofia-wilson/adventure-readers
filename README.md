@@ -31,7 +31,7 @@ A structured phonics program across 10 units:
 | 8-9 | Review — blending & sight word speed practice |
 | 10 | Sentence review — reading across all skills |
 
-Starting in Unit 2, children practice reading real sentences like "The dog is wet" and "The cat sat" using the sounds and words they've learned. By the time they finish the program, your child will be ready to read Level A/B/C books at home — that's about middle to end of Kindergarten level. We highly encourage families to start practicing with leveled books alongside the program!
+Starting in Unit 2, children practice reading real sentences like "The dog is wet" using the sounds and words they've learned. By the time they finish the program, your child will be ready to read Level B/C books at home — that's about middle to end of Kindergarten level. We highly encourage families to start practicing with decodable books alongside the program — each unit includes tips on which level of decodable texts are best for your child's current skills.
 
 ## What makes it special?
 
