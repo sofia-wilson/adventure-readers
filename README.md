@@ -76,6 +76,10 @@ Once your copy is set up, you can ask Claude Code to make changes anytime:
 
 I made a **Space Transformers** version for my son — took about 10 minutes. You can do the same with whatever your child loves.
 
+## Feedback
+
+Have ideas, found a bug, or want to share how your child is using the app? [Open an issue](https://github.com/sofia-wilson/adventure-readers/issues/new) — we'd love to hear from you!
+
 ## Credits
 
 Built with love by a former 1st grade teacher — for early readers everywhere.
