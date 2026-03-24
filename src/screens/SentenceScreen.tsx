@@ -1,10 +1,12 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect, useContext } from 'react';
 import ParentRating from '../components/ParentRating';
 import SpaceCelebration from '../components/SpaceCelebration';
+import ProfileContext from '../components/ProfileContext';
 import WordWithDots from '../components/WordWithDots';
 import { sentences, getSentencesForUnit } from '../data/curriculum';
 import type { SentenceWord } from '../data/curriculum';
 import { playGotItSound } from '../audio/soundEffects';
+import { useSessionResume } from '../hooks/useSessionResume';
 import type { Rating } from '../types';
 import type { Recorder } from '../hooks/useRecorder';
 
@@ -98,7 +100,13 @@ function ScaffoldedWord({ word, recorder }: { word: SentenceWord; recorder: Reco
 }
 
 export default function SentenceScreen({ onBack, onRate, recorder, unitId }: SentenceScreenProps) {
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const profile = useContext(ProfileContext);
+  const childId = profile?.childId || 'default';
+  const activityUnitId = unitId || 'K-U10';
+  const { getSavedSession, saveProgress, markCompletedOnce } = useSessionResume(childId, activityUnitId, 'sentences');
+  const savedSession = getSavedSession();
+
+  const [currentIndex, setCurrentIndex] = useState(savedSession?.currentIndex || 0);
   const [flipped, setFlipped] = useState(false);
   const [celebrationRating, setCelebrationRating] = useState<Rating | null>(null);
   const [showCompletion, setShowCompletion] = useState(false);
@@ -106,6 +114,11 @@ export default function SentenceScreen({ onBack, onRate, recorder, unitId }: Sen
 
   const filteredSentences = unitId ? getSentencesForUnit(unitId) : sentences.filter(s => s.unit === 'K-U10');
   const ratingUnitId = unitId || 'K-U10';
+
+  // Save progress on index change
+  useEffect(() => {
+    saveProgress({ currentIndex });
+  }, [currentIndex, saveProgress]);
 
   const current = filteredSentences[currentIndex];
 
@@ -251,6 +264,7 @@ export default function SentenceScreen({ onBack, onRate, recorder, unitId }: Sen
             >← Prev</button>
             {currentIndex === filteredSentences.length - 1 ? (
               <button onClick={() => {
+                markCompletedOnce();
                 if (unitId && DECODABLE_TIPS[unitId]) {
                   setShowTip(true);
                 } else {

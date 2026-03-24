@@ -1,12 +1,14 @@
-import { useState, useCallback, useMemo } from 'react';
+import { useState, useCallback, useMemo, useEffect, useContext } from 'react';
 import ParentRating from '../components/ParentRating';
 import SpaceCelebration from '../components/SpaceCelebration';
+import ProfileContext from '../components/ProfileContext';
 import { getTrickWordsForUnit, getPhoneticHFWForUnit, getTrueTrickWordsForUnit } from '../data/trickWords';
 import { getUnitById } from '../data/curriculum';
 import { speakWord } from '../audio/speechUtils';
 import { playGotItSound } from '../audio/soundEffects';
 import StreakCelebration from '../components/StreakCelebration';
 import { useStreak } from '../hooks/useStreak';
+import { useSessionResume } from '../hooks/useSessionResume';
 import type { Rating, TrickWord } from '../types';
 import type { Recorder } from '../hooks/useRecorder';
 
@@ -21,12 +23,18 @@ interface TrickWordScreenProps {
 const CHUNK_SIZE = 3;
 
 export default function TrickWordScreen({ unitId, onBack, onRate, mode = 'all', recorder }: TrickWordScreenProps) {
+  const profile = useContext(ProfileContext);
+  const childId = profile?.childId || 'default';
   const unit = getUnitById(unitId);
   const words = mode === 'phonetic'
     ? getPhoneticHFWForUnit(unitId)
     : mode === 'trick'
       ? getTrueTrickWordsForUnit(unitId)
       : getTrickWordsForUnit(unitId);
+
+  const activityKey = mode === 'phonetic' ? 'phonetic_hfw' : mode === 'trick' ? 'trick_word' : 'trick_word';
+  const { getSavedSession, saveProgress, markCompletedOnce } = useSessionResume(childId, unitId, activityKey);
+  const savedSession = getSavedSession();
 
   // Chunk words into groups of 3
   const chunks = useMemo(() => {
@@ -37,13 +45,18 @@ export default function TrickWordScreen({ unitId, onBack, onRate, mode = 'all', 
     return result;
   }, [words]);
 
-  const [chunkIndex, setChunkIndex] = useState(0);
-  const [phase, setPhase] = useState<'i_do' | 'you_do'>('i_do');
-  const [wordIndex, setWordIndex] = useState(0); // index within current chunk
+  const [chunkIndex, setChunkIndex] = useState(savedSession?.chunkIndex || 0);
+  const [phase, setPhase] = useState<'i_do' | 'you_do'>((savedSession?.phase as 'i_do' | 'you_do') || 'i_do');
+  const [wordIndex, setWordIndex] = useState(savedSession?.wordIndex || 0);
   const [revealed, setRevealed] = useState(false);
   const [showRating, setShowRating] = useState(false);
   const [celebrationRating, setCelebrationRating] = useState<Rating | null>(null);
   const { streak, showStreakCelebration, recordRating, dismissStreakCelebration } = useStreak();
+
+  // Save progress on position/phase change
+  useEffect(() => {
+    saveProgress({ currentIndex: chunkIndex * CHUNK_SIZE + wordIndex, chunkIndex, wordIndex, phase });
+  }, [chunkIndex, wordIndex, phase, saveProgress]);
 
   const currentChunk = chunks[chunkIndex] || [];
   const currentWord = currentChunk[wordIndex];
@@ -113,6 +126,10 @@ export default function TrickWordScreen({ unitId, onBack, onRate, mode = 'all', 
 
   const isLastWord = chunkIndex === chunks.length - 1 && wordIndex === currentChunk.length - 1;
   const isDone = phase === 'you_do' && isLastWord && celebrationRating === null && !showRating;
+
+  useEffect(() => {
+    if (isDone) markCompletedOnce();
+  }, [isDone, markCompletedOnce]);
 
   if (!unit || words.length === 0) {
     return (

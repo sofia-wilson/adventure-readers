@@ -7,6 +7,7 @@ import { getBlendingWordsForUnit, getUnitById } from '../data/curriculum';
 import { playGotItSound, playNotQuiteSound } from '../audio/soundEffects';
 import StreakCelebration from '../components/StreakCelebration';
 import { useStreak } from '../hooks/useStreak';
+import { useSessionResume } from '../hooks/useSessionResume';
 import type { Recorder } from '../hooks/useRecorder';
 import type { Rating } from '../types';
 
@@ -33,19 +34,34 @@ type Phase = 'i_do' | 'blending' | 'we_do' | 'you_do';
 
 export default function BlendingScreen({ unitId, onBack, onRate, recorder }: BlendingScreenProps) {
   const profile = useContext(ProfileContext);
+  const childId = profile?.childId || 'default';
   const theme = profile?.theme;
   const unit = getUnitById(unitId);
   const words = getBlendingWordsForUnit(unitId);
 
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [phase, setPhase] = useState<Phase>('i_do');
+  const { getSavedSession, saveProgress, markCompletedOnce } = useSessionResume(childId, unitId, 'blending');
+  const savedSession = getSavedSession();
+
+  const [currentIndex, setCurrentIndex] = useState(savedSession?.currentIndex || 0);
+  const [phase, setPhase] = useState<Phase>((savedSession?.phase as Phase) || 'i_do');
   const [droppedSounds, setDroppedSounds] = useState<(string | null)[]>([]);
   const [blendHighlight, setBlendHighlight] = useState(-1);
   const [celebrationRating, setCelebrationRating] = useState<Rating | null>(null);
   const [availableSounds, setAvailableSounds] = useState<string[]>([]);
   const { streak, showStreakCelebration, recordRating, dismissStreakCelebration } = useStreak();
 
+  // Save progress on position/phase change
+  useEffect(() => {
+    saveProgress({ currentIndex, phase });
+  }, [currentIndex, phase, saveProgress]);
+
   const currentWord = words[currentIndex];
+
+  // Mark completed when reaching last word done
+  const isLastDone = currentIndex === words.length - 1 && phase === 'you_do';
+  useEffect(() => {
+    if (isLastDone) markCompletedOnce();
+  }, [isLastDone, markCompletedOnce]);
 
   const initWord = useCallback((idx: number) => {
     if (idx >= words.length) return;

@@ -1,12 +1,14 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect, useContext } from 'react';
 import ParentRating from '../components/ParentRating';
 import SpaceCelebration from '../components/SpaceCelebration';
+import ProfileContext from '../components/ProfileContext';
 import WordWithDots from '../components/WordWithDots';
 import { getPhoneticHFWForUnit } from '../data/trickWords';
 import { getUnitById } from '../data/curriculum';
 import { playGotItSound, playNotQuiteSound } from '../audio/soundEffects';
 import StreakCelebration from '../components/StreakCelebration';
 import { useStreak } from '../hooks/useStreak';
+import { useSessionResume } from '../hooks/useSessionResume';
 import type { Recorder } from '../hooks/useRecorder';
 import type { Rating } from '../types';
 
@@ -47,12 +49,22 @@ function wordToSounds(word: string): string[] {
 }
 
 export default function PhoneticWordScreen({ unitId, onBack, onRate, recorder }: PhoneticWordScreenProps) {
+  const profile = useContext(ProfileContext);
+  const childId = profile?.childId || 'default';
   const unit = getUnitById(unitId);
   const words = getPhoneticHFWForUnit(unitId);
 
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const { getSavedSession, saveProgress, markCompletedOnce } = useSessionResume(childId, unitId, 'phonetic_hfw');
+  const savedSession = getSavedSession();
+
+  const [currentIndex, setCurrentIndex] = useState(savedSession?.currentIndex || 0);
   const [celebrationRating, setCelebrationRating] = useState<Rating | null>(null);
   const { streak, showStreakCelebration, recordRating, dismissStreakCelebration } = useStreak();
+
+  // Save progress
+  useEffect(() => {
+    saveProgress({ currentIndex });
+  }, [currentIndex, saveProgress]);
 
   const currentWord = words[currentIndex];
   const sounds = currentWord ? wordToSounds(currentWord.word) : [];
@@ -197,7 +209,7 @@ export default function PhoneticWordScreen({ unitId, onBack, onRate, recorder }:
             </button>
 
             {currentIndex === words.length - 1 ? (
-              <button onClick={onBack} style={{
+              <button onClick={() => { markCompletedOnce(); onBack(); }} style={{
                 ...btnStyle,
                 background: 'rgba(76, 175, 80, 0.3)',
                 borderColor: '#4CAF50',

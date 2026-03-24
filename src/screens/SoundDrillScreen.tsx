@@ -1,28 +1,44 @@
-import { useState, useCallback, useMemo } from 'react';
+import { useState, useCallback, useMemo, useEffect, useContext } from 'react';
 import SoundCard from '../components/SoundCard';
 import ParentRating from '../components/ParentRating';
 import SpaceCelebration from '../components/SpaceCelebration';
+import ProfileContext from '../components/ProfileContext';
 import { getSoundCardsForUnit, getSoundCardsUpToUnit } from '../data/soundCards';
 import { getUnitById } from '../data/curriculum';
 import { playGotItSound, playNotQuiteSound } from '../audio/soundEffects';
 import StreakCelebration from '../components/StreakCelebration';
 import { useStreak } from '../hooks/useStreak';
+import { useSessionResume, getAdaptiveItems } from '../hooks/useSessionResume';
 import type { Recorder } from '../hooks/useRecorder';
-import type { Rating, SoundCard as SoundCardType } from '../types';
+import type { Rating, SoundCard as SoundCardType, AttemptRecord } from '../types';
 
 interface SoundDrillScreenProps {
   unitId: string;
   onBack: () => void;
   onRate: (unitId: string, itemId: string, rating: Rating) => void;
   recorder: Recorder;
+  attempts?: AttemptRecord[];
 }
 
 const CHUNK_SIZE = 3;
 
-export default function SoundDrillScreen({ unitId, onBack, onRate, recorder }: SoundDrillScreenProps) {
+export default function SoundDrillScreen({ unitId, onBack, onRate, recorder, attempts = [] }: SoundDrillScreenProps) {
+  const profile = useContext(ProfileContext);
+  const childId = profile?.childId || 'default';
   const unit = getUnitById(unitId);
   const isReview = unitId.startsWith('L1');
-  const cards = isReview ? getSoundCardsUpToUnit(unitId) : getSoundCardsForUnit(unitId);
+  const allCards = isReview ? getSoundCardsUpToUnit(unitId) : getSoundCardsForUnit(unitId);
+
+  const { getSavedSession, saveProgress, markCompletedOnce } = useSessionResume(childId, unitId, 'sound_drill');
+
+  // Check if completed once and filter to unmastered
+  const savedSession = getSavedSession();
+  const completedOnce = savedSession?.completedOnce || false;
+  const unitAttempts = attempts.filter(a => a.unitId === unitId && a.activityType === 'sound_drill');
+
+  const cards = useMemo(() => {
+    return getAdaptiveItems(allCards, unitAttempts, completedOnce, 'id');
+  }, [allCards, unitAttempts, completedOnce]);
 
   const chunks = useMemo(() => {
     const result: SoundCardType[][] = [];
@@ -32,13 +48,23 @@ export default function SoundDrillScreen({ unitId, onBack, onRate, recorder }: S
     return result;
   }, [cards]);
 
-  const [chunkIndex, setChunkIndex] = useState(0);
-  const [phase, setPhase] = useState<'i_do' | 'you_do'>('i_do');
-  const [wordIndex, setWordIndex] = useState(0);
+  // Restore saved position or start at 0
+  const initialChunk = savedSession && !completedOnce ? Math.min(savedSession.chunkIndex || 0, chunks.length - 1) : 0;
+  const initialPhase = savedSession && !completedOnce ? (savedSession.phase as 'i_do' | 'you_do' || 'i_do') : 'i_do';
+  const initialWordIndex = savedSession && !completedOnce ? (savedSession.wordIndex || 0) : 0;
+
+  const [chunkIndex, setChunkIndex] = useState(initialChunk);
+  const [phase, setPhase] = useState<'i_do' | 'you_do'>(initialPhase);
+  const [wordIndex, setWordIndex] = useState(initialWordIndex);
   const [iDoRevealed, setIDoRevealed] = useState(false);
   const [flipped, setFlipped] = useState(false);
   const [celebrationRating, setCelebrationRating] = useState<Rating | null>(null);
   const { streak, showStreakCelebration, recordRating, dismissStreakCelebration } = useStreak();
+
+  // Save progress whenever position changes
+  useEffect(() => {
+    saveProgress({ currentIndex: chunkIndex * CHUNK_SIZE + wordIndex, chunkIndex, wordIndex, phase });
+  }, [chunkIndex, wordIndex, phase, saveProgress]);
 
   const currentChunk = chunks[chunkIndex] || [];
   const currentCard = currentChunk[wordIndex];
@@ -105,6 +131,13 @@ export default function SoundDrillScreen({ unitId, onBack, onRate, recorder }: S
   const isLastCard = chunkIndex === chunks.length - 1 && wordIndex === currentChunk.length - 1;
   const isDone = phase === 'you_do' && isLastCard && celebrationRating === null;
 
+  // Mark completed once when done
+  useEffect(() => {
+    if (isDone && !completedOnce) {
+      markCompletedOnce();
+    }
+  }, [isDone, completedOnce, markCompletedOnce]);
+
   if (!unit || cards.length === 0) {
     return (
       <div style={{ color: '#fff', textAlign: 'center', padding: 40 }}>
@@ -140,6 +173,22 @@ export default function SoundDrillScreen({ unitId, onBack, onRate, recorder }: S
           Group {chunkIndex + 1}/{chunks.length}
         </span>
       </div>
+
+      {/* Adaptive mode banner */}
+      {completedOnce && cards.length < allCards.length && (
+        <div style={{
+          background: 'rgba(255, 152, 0, 0.15)',
+          border: '1px solid rgba(255, 152, 0, 0.3)',
+          borderRadius: 10, padding: '6px 16px', marginBottom: 12,
+        }}>
+          <p style={{
+            color: '#FFB74D', fontSize: 13, margin: 0,
+            fontFamily: "'Nunito', sans-serif", textAlign: 'center',
+          }}>
+            ✨ Practicing {cards.length} sound{cards.length !== 1 ? 's' : ''} that need more work
+          </p>
+        </div>
+      )}
 
       {/* Phase label */}
       <div style={{

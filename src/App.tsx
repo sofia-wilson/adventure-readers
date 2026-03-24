@@ -245,6 +245,7 @@ function MainContent({
           onBack={() => setScreen({ type: 'unit', unitId: screen.unitId })}
           onRate={handleRate}
           recorder={recorder}
+          attempts={attempts}
         />
       )}
 
