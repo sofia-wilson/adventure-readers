@@ -35,11 +35,12 @@ After completing the program, your child will be ready to start reading Level A/
 
 ## What makes it special?
 
-- **Phonetically correct sequencing.** Glued sounds like "ang" in *fang* and "an" in *can* are taught as single sounds — not broken apart letter by letter. This prevents common mistakes that free apps often miss.
+- **Phonetically correct sound pronunciations and sequencing.** It's surprisingly hard to know the correct way to teach kids certain sounds — or in which order. Sounds like /b/ in *bat* are often taught as "buh" instead of a quick /b/, which can confuse readers when it's time to blend. Letter combinations that go together — like "ang" in *fang* and "an" in *can* — are glued sounds that need to be taught as a single unit, not broken apart letter by letter. The app also distinguishes between words that can be phonetically sounded out and words that benefit from memorization (sight words like *the*, *is*, *was*). Getting all of this right matters, and the app handles it for you.
 - **I Do → We Do → You Do scaffolding.** Every blending activity models first, practices together, then lets the child try independently.
 - **Adaptive practice.** The app tracks which sounds and words your child has mastered. When they return to a unit, it only shows what still needs practice.
-- **3 fun themes.** Space Explorer, Ocean Diver, or Nature Ranger — each changes the colors, emojis, and feel of the entire app.
+- **3 fun themes.** Space Explorer, Ocean Diver, or Nature Ranger — each changes the colors, emojis, and feel of the entire app. You can also fully customize the program for your needs (see [Make it your own](#make-it-your-own) below).
 - **Multiple children.** Each child gets their own profile with separate progress tracking. Great for families or classrooms.
+- **Free.** High-quality, pedagogically correct early literacy programs are hard to find — and the good ones usually cost money, which makes access difficult. This app is free for everyone.
 
 ## Good to know
 
