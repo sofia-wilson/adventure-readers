@@ -84,10 +84,16 @@ export default function BlendingScreen({ unitId, onBack, onRate, recorder }: Ble
   const [showMastered, setShowMastered] = useState(initialAllMastered);
   const [currentIndex, setCurrentIndex] = useState(startIndex);
   const [phase, setPhase] = useState<Phase>('i_do');
-  const [droppedSounds, setDroppedSounds] = useState<(string | null)[]>([]);
+  // Initialize blending mat for the starting word directly
+  const initialWord = words[startIndex];
+  const [droppedSounds, setDroppedSounds] = useState<(string | null)[]>(
+    initialWord ? new Array(initialWord.sounds.length).fill(null) : []
+  );
   const [blendHighlight, setBlendHighlight] = useState(-1);
   const [celebrationRating, setCelebrationRating] = useState<Rating | null>(null);
-  const [availableSounds, setAvailableSounds] = useState<string[]>([]);
+  const [availableSounds, setAvailableSounds] = useState<string[]>(
+    initialWord ? [...initialWord.sounds] : []
+  );
   const { streak, showStreakCelebration, recordRating, dismissStreakCelebration } = useStreak();
 
   // Save progress on position/phase change
@@ -106,7 +112,7 @@ export default function BlendingScreen({ unitId, onBack, onRate, recorder }: Ble
     setAvailableSounds([...word.sounds]);
   }, [words]);
 
-  useEffect(() => { initWord(startIndex); }, []);
+  // No useEffect needed — initial state set directly in useState above
 
   const handleSoundTap = (sound: string) => {
     const emptyIdx = droppedSounds.indexOf(null);
