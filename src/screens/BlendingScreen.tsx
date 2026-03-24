@@ -440,6 +440,24 @@ export default function BlendingScreen({ unitId, onBack, onRate, recorder }: Ble
                 </button>
               </div>
 
+              {/* Parent tip — first word only */}
+              {currentIndex === 0 && (
+                <div style={{
+                  background: 'rgba(255, 215, 0, 0.08)',
+                  border: '1px solid rgba(255, 215, 0, 0.2)',
+                  borderRadius: 10, padding: '8px 14px', marginTop: 4,
+                  maxWidth: 340,
+                }}>
+                  <p style={{
+                    color: 'rgba(255, 215, 0, 0.7)', fontSize: 12, margin: 0,
+                    fontFamily: "'Nunito', sans-serif", fontStyle: 'italic',
+                    textAlign: 'center',
+                  }}>
+                    💡 Tip: After hearing it blended slowly, encourage your child to "say it fast" — the whole word at once. If they still space out the sounds, play the blend again or tap the word card for a hint.
+                  </p>
+                </div>
+              )}
+
               {/* Next step */}
               <button onClick={() => { setPhase('you_do'); saveProgress({ currentIndex, phase: 'you_do' }); }} style={{
                 background: 'rgba(255, 215, 0, 0.15)',
