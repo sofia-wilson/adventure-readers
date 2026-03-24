@@ -104,7 +104,7 @@ export default function DashboardScreen({ attempts, onBack, onClearProgress }: D
         <h2 style={{
           color: '#FFD700', fontFamily: "'Nunito', sans-serif", fontSize: 24, margin: 0,
         }}>
-          📊 {childName ? `${childName}'s Progress` : 'Parent Dashboard'}
+          📊 {childName ? `${childName}'s Progress` : 'Progress Dashboard'}
         </h2>
         <div />
       </div>

@@ -206,7 +206,7 @@ function MainContent({
               onClick={() => setScreen({ type: 'dashboard' })}
               style={footerBtn}
             >
-              📊 Parent Dashboard
+              📊 Progress Dashboard
             </button>
           </div>
         </>

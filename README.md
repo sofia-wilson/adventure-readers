@@ -39,7 +39,7 @@ Starting in Unit 2, children practice reading real sentences like "The dog is we
 - **I Do → We Do → You Do scaffolding.** Every blending activity models first, practices together, then lets the child try independently.
 - **Adaptive practice.** The app tracks which sounds and words your child has mastered. When they return to a unit, it only shows what still needs practice.
 - **3 fun themes.** Space Explorer, Ocean Diver, or Nature Ranger. You can also fully customize the program for your needs (see [Make it your own](#make-it-your-own) below).
-- **Parent/Teacher dashboard.** Track your child's progress at a glance — see which sounds, words, and skills they've mastered and which ones still need practice.
+- **Progress dashboard.** Track your child's progress at a glance — see which sounds, words, and skills they've mastered and which ones still need practice.
 - **Customizable voice prompts.** The app comes with pre-recorded sounds for all letters and words, so you can start right away. Parents can also record a personalized celebration message (e.g., "Great job, Camila!") to keep kids engaged. And if you'd prefer your own voice throughout, you can re-record any of the sounds in the program.
 - **Multiple children.** Each child gets their own profile with separate progress tracking. Great for families or classrooms.
 - **Free.** High-quality, pedagogically correct early literacy programs are hard to find — and the good ones usually cost money, which makes access difficult. This app is free for everyone.
